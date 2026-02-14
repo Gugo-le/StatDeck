@@ -428,6 +428,64 @@ body{
  letter-spacing:.4px;
 }
 
+.profile-streak{
+ margin-top:8px;
+ font-size:11px;
+ color:#b9c4d6;
+}
+
+.profile-badge-head{
+ margin-top:8px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+}
+
+.profile-badge-title{
+ font-size:11px;
+ color:#9eabc0;
+ letter-spacing:.35px;
+}
+
+.profile-badge-count{
+ font-size:10px;
+ color:#cad4e4;
+ border:1px solid #333d4d;
+ border-radius:999px;
+ padding:3px 7px;
+}
+
+.badge-guide-btn{
+ margin-top:0;
+ width:auto;
+ padding:6px 8px;
+ border-radius:8px;
+ border:1px solid #333d4d;
+ background:#151c26;
+ color:#d3dded;
+ font-size:10px;
+ font-weight:700;
+}
+
+.profile-badges{
+ margin-top:8px;
+ display:flex;
+ flex-wrap:wrap;
+ gap:6px;
+}
+
+.badge-chip{
+ padding:5px 8px;
+ border-radius:999px;
+ border:1px solid #344055;
+ background:linear-gradient(160deg,#182233,#111923);
+ color:#dfe9fb;
+ font-size:10px;
+ font-weight:700;
+ letter-spacing:.2px;
+}
+
 .profile-stat-grid{
  margin-top:12px;
  display:grid;
@@ -689,6 +747,184 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 .pitch-speed-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .pitch-speed-grid input{margin-bottom:0}
 .input-subtitle{font-size:11px;color:#9aa0aa;margin:4px 0 8px}
+.entry-card{
+ background:linear-gradient(150deg,#101214,#161a20);
+ border-color:#2a313c;
+}
+.entry-top{
+ margin-bottom:10px;
+}
+.entry-top h3{
+ margin:0;
+ font-size:15px;
+ color:#edf2fb;
+}
+.entry-top p{
+ margin:6px 0 0;
+ font-size:11px;
+ color:#9ca6b6;
+}
+.entry-core-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-bottom:8px;
+}
+.entry-core-grid input,
+.entry-core-grid select{
+ margin-bottom:0;
+}
+.entry-role-picker{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin:8px 0 10px;
+}
+.entry-role-btn{
+ margin-top:0;
+ padding:10px 8px;
+ border-radius:10px;
+ border:1px solid #303847;
+ background:#131a24;
+ color:#ccd7e8;
+ font-size:12px;
+ font-weight:700;
+}
+.entry-role-btn.active{
+ background:linear-gradient(160deg,#e7eefc,#d8e0ef);
+ border-color:#c6d2e8;
+ color:#111722;
+}
+.entry-group{
+ border:1px solid #2a303a;
+ border-radius:12px;
+ background:#12161c;
+ padding:10px;
+ margin-bottom:8px;
+}
+.entry-group-title{
+ font-size:11px;
+ color:#97a2b3;
+ margin-bottom:8px;
+ letter-spacing:.2px;
+}
+.entry-mini-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+.entry-mini-grid input{
+ margin-bottom:0;
+}
+.entry-collapse-btn{
+ margin-top:0;
+ border:1px solid #313845;
+ background:#161c25;
+ color:#d2dceb;
+ font-size:11px;
+ padding:9px 10px;
+}
+.entry-advanced{
+ margin-top:8px;
+}
+@media (max-width: 460px){
+ .entry-core-grid{
+  grid-template-columns:1fr;
+ }
+ .entry-mini-grid{
+  grid-template-columns:1fr 1fr;
+ }
+}
+.section-hero{
+ margin-bottom:12px;
+ border:1px solid #2a2f38;
+ border-radius:16px;
+ padding:12px 14px;
+ background:linear-gradient(130deg,#111822,#141b29);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.section-hero-title{
+ margin:0;
+ font-size:13px;
+ letter-spacing:.8px;
+ color:#e7edf8;
+ font-weight:800;
+}
+.section-hero-sub{
+ margin-top:4px;
+ font-size:11px;
+ color:#98a4b8;
+}
+.input-hero{
+ border-color:#29384f;
+ background:
+  radial-gradient(circle at 10% 10%, rgba(193,18,31,0.18), transparent 36%),
+  radial-gradient(circle at 90% 90%, rgba(0,87,183,0.18), transparent 38%),
+  linear-gradient(130deg,#111926,#151f30);
+}
+.calendar-hero{
+ border-color:#2c3440;
+ background:
+  radial-gradient(circle at 88% 12%, rgba(99,194,255,0.18), transparent 34%),
+  linear-gradient(130deg,#101822,#171f2a);
+}
+.mental-hero{
+ border-color:#3a2d2d;
+ background:
+  radial-gradient(circle at 12% 12%, rgba(193,18,31,0.2), transparent 36%),
+  radial-gradient(circle at 85% 75%, rgba(0,87,183,0.16), transparent 38%),
+  linear-gradient(130deg,#171313,#1a1a1d);
+}
+.stats-hero{
+ border-color:#2e3441;
+ background:
+  radial-gradient(circle at 18% 14%, rgba(0,87,183,0.17), transparent 34%),
+  radial-gradient(circle at 86% 78%, rgba(193,18,31,0.13), transparent 36%),
+  linear-gradient(130deg,#10161f,#171d29);
+}
+#inputSection .card{
+ background:linear-gradient(150deg,#101214,#15181c);
+ border-color:#27313d;
+}
+#inputSection .card h3{
+ color:#e9eef9;
+ letter-spacing:.4px;
+}
+#inputSection input:focus,
+#inputSection select:focus{
+ outline:none;
+ border-color:#4f6788;
+ box-shadow:0 0 0 2px rgba(79,103,136,0.18);
+}
+#calendarSection .card{
+ background:#111;
+ border-color:#222;
+}
+#statsSection .card{
+ background:#111;
+ border-color:#222;
+}
+#statsSection .card h3{
+ color:#e5ecf8;
+ letter-spacing:.35px;
+}
+#quoteSection .quote-input-card{
+ border-color:#3a2c32;
+ background:
+  radial-gradient(circle at 12% 10%, rgba(193,18,31,0.12), transparent 26%),
+  radial-gradient(circle at 88% 90%, rgba(0,87,183,0.1), transparent 30%),
+  linear-gradient(145deg,#101011,#161518),
+  repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,.015),
+    rgba(255,255,255,.015) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+#quoteSection .quote-header{
+ border-bottom-color:#2a2226;
+}
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat-box{background:#1a1a1a;padding:12px;border-radius:12px;text-align:center}
 .stat-grid.pitcher-template{
@@ -1631,7 +1867,11 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </div>
 <div class="container">
 
-<div id="inputSection" class="section active">
+<div id="inputSection" class="section">
+<div class="section-hero input-hero">
+  <h4 class="section-hero-title">GAME ENTRY STUDIO</h4>
+  <div class="section-hero-sub">기록 입력부터 시즌 데이터 구축까지 한 화면에서 빠르게.</div>
+</div>
 
 <div class="card">
 <h3>시즌 선택</h3>
@@ -1646,70 +1886,114 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </select>
 </div>
 
-<div class="card">
-<h3>경기 기록 입력</h3>
-<select id="entryRole" onchange="changeEntryRole()">
-<option value="batter" selected>타자 기록</option>
-<option value="pitcher">투수 기록</option>
+<div class="card entry-card">
+<div class="entry-top">
+  <h3>경기 기록 입력</h3>
+  <p>핵심 기록 먼저 입력하고, 필요한 항목만 펼쳐서 입력하세요.</p>
+</div>
+<div class="entry-core-grid">
+  <input type="date" id="gameDate">
+  <input type="text" id="gameName" placeholder="경기 이름">
+  <select id="result">
+    <option value="W">승 (W)</option>
+    <option value="L">패 (L)</option>
+  </select>
+  <select id="gameCondition">
+    <option value="normal">컨디션: 보통</option>
+    <option value="good">컨디션: 좋음</option>
+    <option value="bad">컨디션: 나쁨</option>
+  </select>
+</div>
+
+<div class="entry-role-picker">
+  <button type="button" id="entryRoleBatterBtn" class="entry-role-btn active" onclick="setEntryRole('batter')">타자 기록</button>
+  <button type="button" id="entryRolePitcherBtn" class="entry-role-btn" onclick="setEntryRole('pitcher')">투수 기록</button>
+</div>
+<select id="entryRole" onchange="changeEntryRole()" class="hidden">
+  <option value="batter" selected>타자 기록</option>
+  <option value="pitcher">투수 기록</option>
 </select>
-<input type="date" id="gameDate">
-<input type="text" id="gameName" placeholder="경기 이름">
+
 <div class="batter-fields">
-<input type="number" id="ab" placeholder="타수">
-<input type="number" id="hits" placeholder="안타">
-<input type="number" id="double" placeholder="2루타">
-<input type="number" id="triple" placeholder="3루타">
-<input type="number" id="hr" placeholder="홈런">
-<input type="number" id="bb" placeholder="볼넷">
-<input type="number" id="hbp" placeholder="사구">
-<input type="number" id="rbi" placeholder="타점">
-<input type="number" id="run" placeholder="득점">
-<input type="number" id="sb" placeholder="도루">
+  <div class="entry-group">
+    <div class="entry-group-title">핵심 타격 기록</div>
+    <div class="entry-mini-grid">
+      <input type="number" id="ab" placeholder="타수">
+      <input type="number" id="hits" placeholder="안타">
+      <input type="number" id="hr" placeholder="홈런">
+      <input type="number" id="bb" placeholder="볼넷">
+      <input type="number" id="rbi" placeholder="타점">
+      <input type="number" id="run" placeholder="득점">
+    </div>
+  </div>
+  <button type="button" class="entry-collapse-btn" data-open="세부 타자 기록 펼치기" data-close="세부 타자 기록 접기" onclick="toggleEntryGroup('batterAdvancedGroup', this)">세부 타자 기록 펼치기</button>
+  <div id="batterAdvancedGroup" class="entry-advanced hidden">
+    <div class="entry-mini-grid">
+      <input type="number" id="double" placeholder="2루타">
+      <input type="number" id="triple" placeholder="3루타">
+      <input type="number" id="hbp" placeholder="사구">
+      <input type="number" id="sb" placeholder="도루">
+    </div>
+  </div>
 </div>
+
 <div class="pitcher-fields hidden">
-<input type="number" id="ipOuts" placeholder="이닝 아웃카운트 (예: 7이닝 = 21)">
-<input type="number" id="ra" placeholder="실점 (R)">
-<input type="number" id="er" placeholder="자책점 (ER)">
-<input type="number" id="pHits" placeholder="피안타">
-<input type="number" id="pBb" placeholder="볼넷 허용">
-<input type="number" id="pHbp" placeholder="사구 허용 (HBP)">
-<input type="number" id="pHr" placeholder="피홈런">
-<input type="number" id="so" placeholder="탈삼진">
-<div class="input-subtitle">구종별 평균속도 (km/h)</div>
-<div class="pitch-speed-grid">
-<input type="number" id="veloFastball" placeholder="직구">
-<input type="number" id="veloTwoSeam" placeholder="투심">
-<input type="number" id="veloCutter" placeholder="커터">
-<input type="number" id="veloSlider" placeholder="슬라이더">
-<input type="number" id="veloSweeper" placeholder="스위퍼">
-<input type="number" id="veloCurve" placeholder="커브">
-<input type="number" id="veloChangeup" placeholder="체인지업">
-<input type="number" id="veloSplitter" placeholder="스플리터">
-<input type="number" id="veloFork" placeholder="포크">
+  <div class="entry-group">
+    <div class="entry-group-title">핵심 투수 기록</div>
+    <div class="entry-mini-grid">
+      <input type="number" id="ipOuts" placeholder="이닝 아웃카운트">
+      <input type="number" id="er" placeholder="자책점 (ER)">
+      <input type="number" id="so" placeholder="탈삼진">
+      <input type="number" id="pHits" placeholder="피안타">
+      <input type="number" id="pBb" placeholder="볼넷 허용">
+      <input type="number" id="pHr" placeholder="피홈런">
+    </div>
+  </div>
+  <button type="button" class="entry-collapse-btn" data-open="세부 투수 기록 펼치기" data-close="세부 투수 기록 접기" onclick="toggleEntryGroup('pitcherAdvancedGroup', this)">세부 투수 기록 펼치기</button>
+  <div id="pitcherAdvancedGroup" class="entry-advanced hidden">
+    <div class="entry-mini-grid">
+      <input type="number" id="ra" placeholder="실점 (R)">
+      <input type="number" id="pHbp" placeholder="사구 허용 (HBP)">
+    </div>
+  </div>
+  <button type="button" class="entry-collapse-btn" data-open="구속 입력 펼치기" data-close="구속 입력 접기" onclick="toggleEntryGroup('pitcherVeloGroup', this)">구속 입력 펼치기</button>
+  <div id="pitcherVeloGroup" class="entry-advanced hidden">
+    <div class="input-subtitle">구종별 평균속도 (km/h)</div>
+    <div class="pitch-speed-grid">
+      <input type="number" id="veloFastball" placeholder="직구">
+      <input type="number" id="veloTwoSeam" placeholder="투심">
+      <input type="number" id="veloCutter" placeholder="커터">
+      <input type="number" id="veloSlider" placeholder="슬라이더">
+      <input type="number" id="veloSweeper" placeholder="스위퍼">
+      <input type="number" id="veloCurve" placeholder="커브">
+      <input type="number" id="veloChangeup" placeholder="체인지업">
+      <input type="number" id="veloSplitter" placeholder="스플리터">
+      <input type="number" id="veloFork" placeholder="포크">
+    </div>
+    <div class="input-subtitle">구종별 최고속도 (km/h)</div>
+    <div class="pitch-speed-grid">
+      <input type="number" id="maxVeloFastball" placeholder="직구">
+      <input type="number" id="maxVeloTwoSeam" placeholder="투심">
+      <input type="number" id="maxVeloCutter" placeholder="커터">
+      <input type="number" id="maxVeloSlider" placeholder="슬라이더">
+      <input type="number" id="maxVeloSweeper" placeholder="스위퍼">
+      <input type="number" id="maxVeloCurve" placeholder="커브">
+      <input type="number" id="maxVeloChangeup" placeholder="체인지업">
+      <input type="number" id="maxVeloSplitter" placeholder="스플리터">
+      <input type="number" id="maxVeloFork" placeholder="포크">
+    </div>
+  </div>
 </div>
-<div class="input-subtitle">구종별 최고속도 (km/h)</div>
-<div class="pitch-speed-grid">
-<input type="number" id="maxVeloFastball" placeholder="직구">
-<input type="number" id="maxVeloTwoSeam" placeholder="투심">
-<input type="number" id="maxVeloCutter" placeholder="커터">
-<input type="number" id="maxVeloSlider" placeholder="슬라이더">
-<input type="number" id="maxVeloSweeper" placeholder="스위퍼">
-<input type="number" id="maxVeloCurve" placeholder="커브">
-<input type="number" id="maxVeloChangeup" placeholder="체인지업">
-<input type="number" id="maxVeloSplitter" placeholder="스플리터">
-<input type="number" id="maxVeloFork" placeholder="포크">
-</div>
-</div>
-<select id="result">
-<option value="W">승 (W)</option>
-<option value="L">패 (L)</option>
-</select>
 <button id="saveGameBtn" onclick="saveGame()">경기 추가</button>
 </div>
 
 </div>
 
 <div id="statsSection" class="section">
+<div class="section-hero stats-hero">
+  <h4 class="section-hero-title">PERFORMANCE DASHBOARD</h4>
+  <div class="section-hero-sub">시즌 지표, 변화 추세, 주간 리포트를 한눈에 확인.</div>
+</div>
 
 <div class="card">
 <h3>시즌 지표</h3>
@@ -1738,6 +2022,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </div>
 
 <div id="calendarSection" class="section">
+<div class="section-hero calendar-hero">
+  <h4 class="section-hero-title">SEASON CALENDAR</h4>
+  <div class="section-hero-sub">날짜별 성과 흐름과 경기 디테일을 한 번에 확인.</div>
+</div>
 
 <div class="card">
 <div class="calendar-toolbar">
@@ -1754,6 +2042,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </div>
 
 <div id="quoteSection" class="section">
+  <div class="section-hero mental-hero">
+    <h4 class="section-hero-title">MENTAL JOURNAL</h4>
+    <div class="section-hero-sub">경기 직후 생각을 남기고 다음 경기 루틴으로 연결.</div>
+  </div>
   <div class="quote-header">
     <div>
       <h2>⚾ Mental Entry</h2>
@@ -1792,7 +2084,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </div>
 </div>
 
-<div id="profileSection" class="section">
+<div id="profileSection" class="section active">
   <div class="card profile-card">
     <div class="profile-subtabs">
       <button id="profileHomeTabBtn" class="profile-subtab-btn active" onclick="switchProfileSubTab('home')">프로필 홈</button>
@@ -1808,6 +2100,15 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
           <h3 id="profileNamePreview">Player</h3>
           <p id="profileBioPreview">나만의 플레이 스타일과 목표를 기록하세요.</p>
           <div class="profile-season-note" id="profileSeasonNote">2026 시즌 기준</div>
+          <div class="profile-streak" id="profileStreakLine">연속 기록 없음</div>
+          <div class="profile-badge-head">
+            <div class="profile-badge-title">업적 뱃지</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="profile-badge-count" id="profileBadgeCount">0개</span>
+              <button type="button" class="badge-guide-btn" onclick="showBadgeGuide()">기준 보기</button>
+            </div>
+          </div>
+          <div class="profile-badges" id="profileBadgeList"></div>
         </div>
       </div>
 
@@ -1873,7 +2174,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 </div>
 
 <div class="tab-bar">
-  <div class="tab active" onclick="switchTab('inputSection',this)">
+  <div class="tab" onclick="switchTab('inputSection',this)">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 5v14M5 12h14"/>
     </svg>
@@ -1900,7 +2201,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
     </svg>
     <span>Mental</span>
   </div>
-<div class="tab" onclick="switchTab('profileSection',this)">
+<div class="tab active" onclick="switchTab('profileSection',this)">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20 21a8 8 0 0 0-16 0"/>
     <circle cx="12" cy="8" r="4"/>
@@ -2084,6 +2385,9 @@ function renderProfile(){
   const namePreview = document.getElementById("profileNamePreview");
   const bioPreview = document.getElementById("profileBioPreview");
   const seasonNote = document.getElementById("profileSeasonNote");
+  const streakLineEl = document.getElementById("profileStreakLine");
+  const badgeCountEl = document.getElementById("profileBadgeCount");
+  const badgeListEl = document.getElementById("profileBadgeList");
   const gamesCountEl = document.getElementById("profileGamesCount");
   const metric1LabelEl = document.getElementById("profileMetric1Label");
   const metric2LabelEl = document.getElementById("profileMetric2Label");
@@ -2098,7 +2402,7 @@ function renderProfile(){
   const editorPanel = document.getElementById("profileEditorPanel");
   const grid = document.getElementById("profileGrid");
   const recordList = document.getElementById("recordManageList");
-  if(!avatar || !namePreview || !bioPreview || !seasonNote || !gamesCountEl || !metric1LabelEl || !metric2LabelEl || !avgEl || !abEl || !nameInput || !bioInput || !homeTabBtn || !manageTabBtn || !homePanel || !managePanel || !editorPanel || !grid || !recordList) return;
+  if(!avatar || !namePreview || !bioPreview || !seasonNote || !streakLineEl || !badgeCountEl || !badgeListEl || !gamesCountEl || !metric1LabelEl || !metric2LabelEl || !avgEl || !abEl || !nameInput || !bioInput || !homeTabBtn || !manageTabBtn || !homePanel || !managePanel || !editorPanel || !grid || !recordList) return;
 
   const safeName = (profileData.name || "Player").trim() || "Player";
   const safeBio = (profileData.bio || "나만의 플레이 스타일과 목표를 기록하세요.").trim() || "나만의 플레이 스타일과 목표를 기록하세요.";
@@ -2131,6 +2435,12 @@ function renderProfile(){
     ? `${profileData.pitcherType ? ` · ${profileData.pitcherType}` : ""}${profileData.throwHand ? ` · ${profileData.throwHand}` : ""}${profileData.releasePoint ? ` · ${profileData.releasePoint}` : ""}`
     : (profileData.position ? ` · ${profileData.position}` : "");
   seasonNote.innerText = `${seasonKey} 시즌 기준 · ${roleLabel}${extraLabel}`;
+  streakLineEl.innerText = getRoleStreakText(roleSeasonGames, profileData.role || "batter");
+  const badges = getRoleBadges(roleSeasonGames, profileData.role || "batter");
+  badgeCountEl.innerText = `${badges.length}개`;
+  badgeListEl.innerHTML = badges.length
+    ? badges.map((b)=>`<span class="badge-chip">${b}</span>`).join("")
+    : `<span class="badge-chip" style="opacity:.7;">기록 누적 중 · 첫 뱃지 도전</span>`;
   gamesCountEl.innerText = String(roleSeasonGames.length);
   if(profileData.role === "pitcher"){
     metric1LabelEl.innerText = "ERA";
@@ -2176,6 +2486,8 @@ function renderProfile(){
     const line = role === "pitcher"
       ? `IP ${((g.ipOuts||0)/3).toFixed(1)} · R ${g.ra||0} · ERA ${era} · SO ${g.so||0} · 사사구 ${walksPlus}${velo ? ` · 평균구속 ${velo}` : ""}${topVelo ? ` · 최고구속 ${topVelo}` : ""}`
       : `${g.hits}H ${g.hr || 0}HR ${g.bb || 0}BB · AVG ${avg}`;
+    const condMap = { good:"좋음", normal:"보통", bad:"나쁨" };
+    const condText = condMap[g.condition] || "보통";
     return `
       <div class="record-item">
         <div class="record-item-top">
@@ -2183,7 +2495,7 @@ function renderProfile(){
           <span>${g.result || "-"}</span>
         </div>
         <div class="record-item-title">${title}</div>
-        <div class="record-item-line">${line}</div>
+        <div class="record-item-line">${line} · 컨디션 ${condText}</div>
         <div class="record-item-actions">
           <button class="mini-btn" onclick="startEditGame('${g._season}', ${g._index})">수정</button>
           <button class="mini-btn danger" onclick="deleteGame('${g._season}', ${g._index})">삭제</button>
@@ -2618,13 +2930,33 @@ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 el.classList.add('active');
 }
 
+function setEntryRole(role){
+  const roleEl = document.getElementById("entryRole");
+  if(roleEl) roleEl.value = role;
+  changeEntryRole();
+}
+
+function toggleEntryGroup(groupId, btn){
+  const target = document.getElementById(groupId);
+  if(!target || !btn) return;
+  target.classList.toggle("hidden");
+  const isOpen = !target.classList.contains("hidden");
+  const openText = btn.dataset.open || "펼치기";
+  const closeText = btn.dataset.close || "접기";
+  btn.textContent = isOpen ? closeText : openText;
+}
+
 function changeEntryRole(){
   const roleEl = document.getElementById("entryRole");
   const role = roleEl ? roleEl.value : "batter";
   const batterFields = document.querySelector(".batter-fields");
   const pitcherFields = document.querySelector(".pitcher-fields");
+  const batterBtn = document.getElementById("entryRoleBatterBtn");
+  const pitcherBtn = document.getElementById("entryRolePitcherBtn");
   if(batterFields) batterFields.classList.toggle("hidden", role !== "batter");
   if(pitcherFields) pitcherFields.classList.toggle("hidden", role !== "pitcher");
+  if(batterBtn) batterBtn.classList.toggle("active", role === "batter");
+  if(pitcherBtn) pitcherBtn.classList.toggle("active", role === "pitcher");
 }
 
 function setStatsMode(mode){
@@ -2655,6 +2987,14 @@ const roleEl = document.getElementById("entryRole");
 if(roleEl) roleEl.value = profileData.role || "batter";
 changeEntryRole();
 result.value = "W";
+gameCondition.value = "normal";
+["batterAdvancedGroup","pitcherAdvancedGroup","pitcherVeloGroup"].forEach((id)=>{
+  const panel = document.getElementById(id);
+  if(panel) panel.classList.add("hidden");
+});
+document.querySelectorAll(".entry-collapse-btn").forEach((btn)=>{
+  if(btn.dataset.open) btn.textContent = btn.dataset.open;
+});
 editingGame = null;
 const saveBtn = document.getElementById("saveGameBtn");
 if(saveBtn) saveBtn.innerText = "경기 추가";
@@ -2717,6 +3057,7 @@ function startEditGame(season, index){
  maxVeloSplitter.value = target.maxVeloSplitter || "";
  maxVeloFork.value = target.maxVeloFork || "";
  result.value = target.result || "W";
+ gameCondition.value = target.condition || "normal";
 
  const saveBtn = document.getElementById("saveGameBtn");
  if(saveBtn) saveBtn.innerText = "수정 저장";
@@ -2794,6 +3135,7 @@ maxVeloCurve: +maxVeloCurve.value || 0,
 maxVeloChangeup: +maxVeloChangeup.value || 0,
 maxVeloSplitter: +maxVeloSplitter.value || 0,
 maxVeloFork: +maxVeloFork.value || 0,
+condition: gameCondition.value || "normal",
 result: result.value
 };
 
@@ -2860,6 +3202,82 @@ function getTopPitchVelo(g){
   const list = getPitchMaxVelocities(g);
   if(!list.length) return null;
   return Math.max(...list).toFixed(1);
+}
+
+function calcStreak(gamesList, predicate){
+  const sorted = [...gamesList].sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+  let count = 0;
+  for(const g of sorted){
+    if(predicate(g)) count += 1;
+    else break;
+  }
+  return count;
+}
+
+function getRoleBadges(roleGames, role){
+  if(!roleGames.length) return [];
+  if(role === "pitcher"){
+    const outs = roleGames.reduce((s,g)=>s+(g.ipOuts||0),0);
+    const er = roleGames.reduce((s,g)=>s+(g.er||0),0);
+    const so = roleGames.reduce((s,g)=>s+(g.so||0),0);
+    const wins = roleGames.filter((g)=>g.result==="W").length;
+    const era = outs ? (er*27/outs) : 99;
+    const topVelo = roleGames.flatMap((g)=>getPitchMaxVelocities(g));
+    const badges = [];
+    if(era <= 2.50 && roleGames.length >= 5) badges.push("ERA 장인");
+    if(so >= 30) badges.push("K 머신");
+    if(wins >= 5) badges.push("클러치 마운드");
+    if(topVelo.length && Math.max(...topVelo) >= 145) badges.push("파이어볼러");
+    return badges.slice(0,4);
+  }
+  const ab = roleGames.reduce((s,g)=>s+(g.ab||0),0);
+  const hits = roleGames.reduce((s,g)=>s+(g.hits||0),0);
+  const hr = roleGames.reduce((s,g)=>s+(g.hr||0),0);
+  const bb = roleGames.reduce((s,g)=>s+(g.bb||0),0);
+  const avg = ab ? (hits/ab) : 0;
+  const badges = [];
+  if(avg >= 0.35 && ab >= 20) badges.push("정교한 타격");
+  if(hr >= 5) badges.push("파워 배트");
+  if((hits + bb) >= 25) badges.push("출루 마스터");
+  if(roleGames.filter((g)=>(g.hits||0)>=2).length >= 3) badges.push("멀티히트 감각");
+  return badges.slice(0,4);
+}
+
+function getRoleStreakText(roleGames, role){
+  if(!roleGames.length) return "연속 기록 없음";
+  if(role === "pitcher"){
+    const scoreless = calcStreak(roleGames, (g)=>(g.er||0)===0);
+    const k = calcStreak(roleGames, (g)=>(g.so||0)>=1);
+    if(scoreless >= 2) return `연속 무실점 ${scoreless}경기`;
+    if(k >= 2) return `연속 탈삼진 경기 ${k}경기`;
+    return "최근 투수 기록 축적 중";
+  }
+  const hit = calcStreak(roleGames, (g)=>(g.hits||0)>=1);
+  const onBase = calcStreak(roleGames, (g)=>((g.hits||0)+(g.bb||0)+(g.hbp||0))>0);
+  if(hit >= 2) return `연속 안타 ${hit}경기`;
+  if(onBase >= 2) return `연속 출루 ${onBase}경기`;
+  return "최근 타격 기록 축적 중";
+}
+
+function showBadgeGuide(){
+  const role = profileData.role || "batter";
+  if(role === "pitcher"){
+    alert(
+`투수 업적 뱃지 기준
+- ERA 장인: 시즌 ERA 2.50 이하 (5경기 이상)
+- K 머신: 시즌 탈삼진 30개 이상
+- 클러치 마운드: 시즌 5승 이상
+- 파이어볼러: 최고구속 145km/h 이상`
+    );
+    return;
+  }
+  alert(
+`타자 업적 뱃지 기준
+- 정교한 타격: 시즌 AVG 0.350 이상 (20타수 이상)
+- 파워 배트: 시즌 홈런 5개 이상
+- 출루 마스터: 시즌 안타+볼넷 25개 이상
+- 멀티히트 감각: 2안타 이상 경기 3번 이상`
+  );
 }
 
 function renderCalendar(){
