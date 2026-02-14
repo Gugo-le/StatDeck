@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatDeck AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:'Inter',sans-serif;
+ background:#000;
+ color:#f5f5f5;
+ padding:20px;
+}
+.header{
+ text-align:center;
+ margin-bottom:24px;
+}
+.header h1{
+ margin:0;
+ font-size:22px;
+ font-weight:800;
+}
+.sub{
+ font-size:12px;
+ color:#888;
+ margin-top:6px;
+}
+.card{
+ background:#111;
+ border:1px solid #222;
+ border-radius:22px;
+ padding:20px;
+ margin-bottom:18px;
+ transition:transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{
+ transform:translateY(-4px);
+ box-shadow:0 12px 30px rgba(0,0,0,0.5);
+}
+.card h3{
+ margin:0 0 14px 0;
+ font-size:13px;
+ color:#aaa;
+ letter-spacing:0.5px;
+}
+.result{
+ font-size:14px;
+ line-height:1.7;
+}
+.footer{
+ margin-top:30px;
+ text-align:center;
+ font-size:12px;
+ color:#555;
+}
+
+.back-btn{
+ margin-top:14px;
+ padding:10px 16px;
+ background:#1c1c1c;
+ border:1px solid #333;
+ border-radius:14px;
+ color:#fff;
+ font-size:13px;
+ cursor:pointer;
+ transition:all 0.2s ease;
+}
+
+.back-btn:hover{
+ background:#2a2a2a;
+ transform:translateY(-2px);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🧠 StatDeck AI</h1>
+  <div class="sub">폼 분석 · 슬럼프 감지 · 유형 분석</div>
+  <button class="back-btn" onclick="location.href='index.html'">← 기록 페이지로</button>
+</div>
+
+<div class="card">
+  <h3 id="pregameTitle">PRE-GAME PREDICTION</h3>
+  <div id="pregame" class="result" style="text-align:center;font-size:18px;font-weight:600"></div>
+</div>
+
+<div class="card">
+  <h3 id="scoreTitle">SCOUT SCORE</h3>
+  <div style="display:flex;justify-content:center;align-items:center;">
+    <svg width="180" height="180" viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="70" stroke="#222" stroke-width="14" fill="none"/>
+      <circle id="gauge" cx="90" cy="90" r="70" 
+        stroke="#4cd964" stroke-width="14" fill="none"
+        stroke-linecap="round"
+        stroke-dasharray="440"
+        stroke-dashoffset="440"
+        transform="rotate(-90 90 90)"/>
+      <text id="scoreText" x="90" y="100" text-anchor="middle" 
+        font-size="42" font-weight="800" fill="#fff">--</text>
+    </svg>
+  </div>
+  <div id="scoreMsg" class="result" style="text-align:center;margin-top:10px"></div>
+  <div id="mseDisplay" class="result" style="text-align:center;margin-top:6px;font-size:12px;color:#888"></div>
+  <div id="modelMeta" class="result" style="text-align:center;margin-top:4px;font-size:11px;color:#666"></div>
+</div>
+
+<div class="card">
+  <h3 id="recentTitle">최근 5경기 분석</h3>
+  <div id="recentAnalysis" class="result"></div>
+</div>
+
+<div class="card">
+  <h3 id="slumpTitle">슬럼프 감지</h3>
+  <div id="slumpAnalysis" class="result"></div>
+</div>
+
+<div class="card">
+  <h3 id="typeTitle">타자 유형 분석</h3>
+  <div id="typeAnalysis" class="result"></div>
+</div>
+
+<div class="footer">by StatDeck AI Engine</div>
+
+<script>
+
+const DB_NAME = "statdeck-db";
+const DB_VERSION = 1;
+const KV_STORE = "kv";
+
+let seasonData = {};
+let currentSeason = "";
+let games = [];
+
+function openDB(){
+ return new Promise((resolve,reject)=>{
+  const req = indexedDB.open(DB_NAME, DB_VERSION);
+  req.onupgradeneeded = ()=>{
+   const db = req.result;
+   if(!db.objectStoreNames.contains(KV_STORE)){
+    db.createObjectStore(KV_STORE, { keyPath:"key" });
+   }
+  };
+  req.onsuccess = ()=> resolve(req.result);
+  req.onerror = ()=> reject(req.error);
+ });
+}
+
+async function idbGet(key){
+ try{
+  const db = await openDB();
+  return await new Promise((resolve,reject)=>{
+   const tx = db.transaction(KV_STORE, "readonly");
+   const req = tx.objectStore(KV_STORE).get(key);
+   req.onsuccess = ()=> resolve(req.result ? req.result.value : undefined);
+   req.onerror = ()=> reject(req.error);
+  });
+ }catch(e){
+  return undefined;
+ }
+}
+
+async function idbSet(key, value){
+ try{
+  const db = await openDB();
+  return await new Promise((resolve,reject)=>{
+   const tx = db.transaction(KV_STORE, "readwrite");
+   tx.objectStore(KV_STORE).put({key, value});
+   tx.oncomplete = ()=> resolve(true);
+   tx.onerror = ()=> reject(tx.error);
+  });
+ }catch(e){
+  return false;
+ }
+}
+
+function resolveSeasonKey(lastSeasonKey){
+ const keys = Object.keys(seasonData);
+ if(!keys.length) return "";
+
+ const params = new URLSearchParams(location.search);
+ const fromUrl = params.get("season");
+ if(fromUrl && seasonData[fromUrl]) return fromUrl;
+
+ const fromStorage = lastSeasonKey || localStorage.getItem("lastSeasonKey");
+ if(fromStorage && seasonData[fromStorage]) return fromStorage;
+
+ return keys
+  .map((k)=>({key:k,count:(seasonData[k] || []).length}))
+  .sort((a,b)=> b.count - a.count)[0].key;
+}
+
+function dataHash(data){
+ return btoa(JSON.stringify(data));
+}
+
+function setDataInsufficient(message){
+ const gaugeCircle = document.getElementById('gauge');
+ document.getElementById('scoreText').textContent = "--";
+ gaugeCircle.style.strokeDashoffset = 440;
+ document.getElementById('scoreMsg').innerHTML = message || "데이터 부족";
+ document.getElementById('pregame').innerHTML = "데이터 부족";
+ document.getElementById('recentAnalysis').innerHTML = "데이터 부족";
+ document.getElementById('slumpAnalysis').innerHTML = "데이터 부족";
+ document.getElementById('typeAnalysis').innerHTML = "데이터 부족";
+}
+
+function setGauge(score, message){
+ const gaugeCircle = document.getElementById('gauge');
+ document.getElementById('scoreText').textContent = String(score);
+ document.getElementById('scoreMsg').innerHTML = message;
+ const circumference = 440;
+ const offset = circumference - (score/100)*circumference;
+ gaugeCircle.style.strokeDashoffset = offset;
+}
+
+function getPitchVelocities(game){
+ return [
+  game.veloFastball, game.veloTwoSeam, game.veloCutter, game.veloSlider, game.veloSweeper,
+  game.veloCurve, game.veloChangeup, game.veloSplitter, game.veloFork
+ ].map((v)=>+v || 0).filter((v)=>v > 0);
+}
+
+function getPitchMaxVelocities(game){
+ return [
+  game.maxVeloFastball, game.maxVeloTwoSeam, game.maxVeloCutter, game.maxVeloSlider, game.maxVeloSweeper,
+  game.maxVeloCurve, game.maxVeloChangeup, game.maxVeloSplitter, game.maxVeloFork
+ ].map((v)=>+v || 0).filter((v)=>v > 0);
+}
+
+async function analyzeBatter(dataGames, position){
+ if(!dataGames || dataGames.length < 5){
+  setDataInsufficient("데이터 부족 · 타자 분석 최소 5경기 필요");
+  return;
+ }
+
+ document.getElementById("pregameTitle").innerText = "PRE-GAME PREDICTION (Batter)";
+ document.getElementById("scoreTitle").innerText = "BATTER SCOUT SCORE";
+ document.getElementById("typeTitle").innerText = "타자 유형 분석";
+
+ const avgs = dataGames.map(g=> g.ab ? g.hits/g.ab : 0);
+ const isoArr = dataGames.map(g=>{
+  const singles = (g.hits||0) - (g.double||0) - (g.triple||0) - (g.hr||0);
+  const tb = singles + (g.double||0)*2 + (g.triple||0)*3 + (g.hr||0)*4;
+  return g.ab ? (tb/g.ab) - ((g.hits||0)/g.ab) : 0;
+ });
+
+ const inputs = avgs.map((v,i)=> [v, isoArr[i]]);
+ const labels = avgs.slice(1);
+ const xs = tf.tensor2d(inputs.slice(0,-1));
+ const ys = tf.tensor2d(labels, [labels.length,1]);
+ const modelStorageKey = `indexeddb://statdeck-model-batter-${currentSeason}`;
+ const hashStorageKey = `statdeck-model-hash-batter-${currentSeason}`;
+
+ let model;
+ const currentHash = dataHash(dataGames);
+ const savedHash = (await idbGet(hashStorageKey)) || localStorage.getItem(hashStorageKey);
+ try{
+  if(savedHash !== currentHash) throw new Error("retrain");
+  model = await tf.loadLayersModel(modelStorageKey);
+ }catch(e){
+  model = tf.sequential();
+  model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[2]}));
+  model.add(tf.layers.dense({units:8, activation:'relu'}));
+  model.add(tf.layers.dense({units:1}));
+  model.compile({optimizer:'adam', loss:'meanSquaredError'});
+  const history = await model.fit(xs, ys, {epochs:80, verbose:0});
+  document.getElementById('mseDisplay').innerHTML = `Model MSE: ${history.history.loss.slice(-1)[0].toFixed(6)}`;
+  await model.save(modelStorageKey);
+  await idbSet(hashStorageKey, currentHash);
+ }
+
+ const nextAvg = tf.tidy(()=>{
+  const output = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
+  return output.dataSync()[0];
+ });
+ document.getElementById('pregame').innerHTML = `🎯 다음 경기 예상 타율: <strong>${nextAvg.toFixed(3)}</strong>${position?` (${position})`:""}`;
+
+ const xVals = avgs.map((_,i)=>i+1);
+ const meanX = xVals.reduce((a,b)=>a+b)/xVals.length;
+ const meanY = avgs.reduce((a,b)=>a+b)/avgs.length;
+ const slope = xVals.reduce((sum,x,i)=> sum + (x-meanX)*(avgs[i]-meanY),0) / xVals.reduce((sum,x)=> sum + (x-meanX)**2,0);
+ const std = Math.sqrt(avgs.map(x => (x - meanY) ** 2).reduce((a,b)=>a+b,0) / avgs.length);
+ const consistency = Math.max(0, 1 - std*5);
+ const obp = dataGames.reduce((s,g)=>s+((g.hits||0)+(g.bb||0)),0) / (dataGames.reduce((s,g)=>s+((g.ab||0)+(g.bb||0)+(g.hbp||0)),0) || 1);
+ const score = Math.min(100, Math.max(0, Math.round((meanY*130)+(obp*100)+(nextAvg*120)+(consistency*80)+(slope*500))));
+
+ setGauge(score, score>=80 ? "⭐ 타자 퍼포먼스 우수" : (score>=60 ? "📈 타자 성장 구간" : "⚠️ 타격 보완 필요"));
+ document.getElementById('recentAnalysis').innerHTML = slope > 0 ? `📊 상승 기울기 (${slope.toFixed(4)})` : `📉 하락 기울기 (${slope.toFixed(4)})`;
+ document.getElementById('slumpAnalysis').innerHTML = nextAvg < 0.220 ? "⚠️ 다음 경기 슬럼프 위험" : "✅ 타격 컨디션 안정";
+
+ const typeIndex = isoArr[isoArr.length-1] > 0.200 ? 0 : (nextAvg > 0.320 ? 1 : 2);
+ const typeText = ["💥 파워 히터","🎯 교타형","⚖️ 밸런스형"][typeIndex];
+ document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}`;
+
+ document.getElementById('modelMeta').innerHTML = `🧠 batter model · ${dataGames.length} games`;
+ xs.dispose(); ys.dispose(); model.dispose();
+}
+
+async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint, throwHand){
+ if(!dataGames || dataGames.length < 5){
+  setDataInsufficient("데이터 부족 · 투수 분석 최소 5경기 필요");
+  return;
+ }
+
+ document.getElementById("pregameTitle").innerText = "PRE-GAME PREDICTION (Pitcher)";
+ document.getElementById("scoreTitle").innerText = "PITCHER SCOUT SCORE";
+ document.getElementById("typeTitle").innerText = "투수 유형 분석";
+
+ const eras = dataGames.map((g)=> (g.ipOuts ? ((g.er||0)*27/(g.ipOuts||1)) : 0));
+ const whips = dataGames.map((g)=> (g.ipOuts ? (((g.pHits||0)+(g.pBb||0)+(g.pHbp||0))/((g.ipOuts||0)/3 || 1)) : 0));
+ const kRates = dataGames.map((g)=>{
+  const bf = (g.ipOuts||0)+(g.pHits||0)+(g.pBb||0)+(g.pHbp||0);
+  return bf ? ((g.so||0)/bf) : 0;
+ });
+ const velos = dataGames.map((g)=>{
+  const list = getPitchVelocities(g);
+  if(!list.length) return 0;
+  return list.reduce((a,b)=>a+b,0) / list.length;
+ });
+ const maxVelos = dataGames.map((g)=>{
+  const list = getPitchMaxVelocities(g);
+  if(!list.length) return 0;
+  return Math.max(...list);
+ });
+
+ const inputs = eras.map((v,i)=> [v, whips[i], velos[i], maxVelos[i]]);
+ const labels = eras.slice(1);
+ const xs = tf.tensor2d(inputs.slice(0,-1));
+ const ys = tf.tensor2d(labels, [labels.length,1]);
+ const modelStorageKey = `indexeddb://statdeck-model-pitcher-${currentSeason}`;
+ const hashStorageKey = `statdeck-model-hash-pitcher-${currentSeason}`;
+
+ let model;
+ const currentHash = dataHash(dataGames);
+ const savedHash = (await idbGet(hashStorageKey)) || localStorage.getItem(hashStorageKey);
+ try{
+  if(savedHash !== currentHash) throw new Error("retrain");
+  model = await tf.loadLayersModel(modelStorageKey);
+ }catch(e){
+  model = tf.sequential();
+  model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[4]}));
+  model.add(tf.layers.dense({units:8, activation:'relu'}));
+  model.add(tf.layers.dense({units:1}));
+  model.compile({optimizer:'adam', loss:'meanSquaredError'});
+  const history = await model.fit(xs, ys, {epochs:90, verbose:0});
+  document.getElementById('mseDisplay').innerHTML = `Model MSE: ${history.history.loss.slice(-1)[0].toFixed(6)}`;
+  await model.save(modelStorageKey);
+  await idbSet(hashStorageKey, currentHash);
+ }
+
+ const nextEra = tf.tidy(()=>{
+  const pred = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
+  return pred.dataSync()[0];
+ });
+ const profileTag = [pitcherType, throwHand, releasePoint].filter(Boolean).join(" · ");
+ document.getElementById('pregame').innerHTML = `🎯 다음 경기 예상 ERA: <strong>${nextEra.toFixed(2)}</strong>${profileTag?` (${profileTag})`:""}`;
+
+ const meanEra = eras.reduce((a,b)=>a+b,0)/eras.length;
+ const meanWhip = whips.reduce((a,b)=>a+b,0)/whips.length;
+ const meanKRate = kRates.reduce((a,b)=>a+b,0)/kRates.length;
+ const veloSamples = velos.filter((v)=>v>0);
+ const topVeloSamples = maxVelos.filter((v)=>v>0);
+ const meanVelo = veloSamples.length ? (veloSamples.reduce((a,b)=>a+b,0)/veloSamples.length) : 0;
+ const topVelo = topVeloSamples.length ? (topVeloSamples.reduce((a,b)=>a+b,0)/topVeloSamples.length) : 0;
+ const eraScore = Math.max(0, 100 - (meanEra*13));
+ const whipScore = Math.max(0, 100 - (meanWhip*22));
+ const kScore = Math.min(100, meanKRate*250);
+ const veloScore = meanVelo ? Math.min(100, Math.max(0, (meanVelo-115)*2.8)) : 50;
+ const topVeloScore = topVelo ? Math.min(100, Math.max(0, (topVelo-120)*2.5)) : 50;
+ const nextEraBonus = Math.max(0, 100 - (nextEra*14));
+ const score = Math.max(0, Math.min(100, Math.round((eraScore*0.27)+(whipScore*0.22)+(kScore*0.17)+(nextEraBonus*0.18)+(veloScore*0.08)+(topVeloScore*0.08))));
+
+ setGauge(score, score>=80 ? "🔥 투수 퍼포먼스 우수" : (score>=60 ? "📈 투수 성장 구간" : "⚠️ 투수 보완 필요"));
+ document.getElementById('recentAnalysis').innerHTML = `최근 평균 ERA ${meanEra.toFixed(2)} · WHIP ${meanWhip.toFixed(2)}${meanVelo ? ` · 평균구속 ${meanVelo.toFixed(1)}` : ""}${topVelo ? ` · 최고구속 ${topVelo.toFixed(1)}` : ""}`;
+ document.getElementById('slumpAnalysis').innerHTML = nextEra > 4.50 ? "⚠️ 다음 경기 난조 위험" : "✅ 컨디션 안정";
+ const typeText = (meanVelo >= 138 || meanKRate >= 0.26) ? "💥 파워 피처" : (meanWhip <= 1.25 ? "🎯 제구형" : "⚖️ 밸런스형");
+ const arsenalText = (pitchArsenal || []).length ? ` · 구종 ${pitchArsenal.join("/")}` : "";
+ document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}${arsenalText}`;
+ document.getElementById('modelMeta').innerHTML = `🧠 pitcher model · ${dataGames.length} games${throwHand ? ` · ${throwHand}` : ""}${releasePoint ? ` · ${releasePoint}` : ""}`;
+ xs.dispose(); ys.dispose(); model.dispose();
+}
+
+async function analyze(){
+ const profileData = (await idbGet("profileData")) || JSON.parse(localStorage.getItem("profileData") || "{}");
+ const params = new URLSearchParams(location.search);
+ const role = params.get("role") || profileData.role || "batter";
+ const position = params.get("position") || profileData.position || "";
+ const pitcherType = params.get("pitcherType") || profileData.pitcherType || "";
+ const pitchArsenalParam = params.get("pitchArsenal");
+ const pitchArsenal = pitchArsenalParam ? pitchArsenalParam.split(",").filter(Boolean) : (Array.isArray(profileData.pitchArsenal) ? profileData.pitchArsenal : []);
+ const releasePoint = params.get("releasePoint") || profileData.releasePoint || "";
+ const throwHand = params.get("throwHand") || profileData.throwHand || "";
+ const roleGames = games.filter((g)=>(g.role || "batter") === role);
+ const targetGames = roleGames.length ? roleGames : games;
+ if(role === "pitcher"){
+  await analyzePitcher(targetGames, pitcherType, pitchArsenal, releasePoint, throwHand);
+ }else{
+  await analyzeBatter(targetGames, position);
+ }
+}
+
+async function initializeAnalytics(){
+ seasonData = (await idbGet("seasonData")) || JSON.parse(localStorage.getItem("seasonData") || "{}");
+ const lastSeason = (await idbGet("lastSeasonKey")) || localStorage.getItem("lastSeasonKey");
+ currentSeason = resolveSeasonKey(lastSeason);
+ if(!currentSeason){
+  setDataInsufficient("데이터 없음");
+  return;
+ }
+ games = seasonData[currentSeason] || [];
+ analyze();
+}
+
+initializeAnalytics();
+
+</script>
+
+</body>
+</html>
