@@ -108,7 +108,7 @@ button{
  color:#555;
 }
 
-.ad-card{
+.sponsored-slot{
  margin-top:12px;
  padding:12px;
  border:1px solid #2a2a2a;
@@ -116,16 +116,22 @@ button{
  background:#111;
 }
 
-.ad-label{
+.sponsored-label{
  font-size:10px;
  letter-spacing:.5px;
  color:#7f7f7f;
  margin-bottom:6px;
 }
 
-.manual-ad{
- display:block;
+.sponsored-placeholder{
  min-height:90px;
+ border:0;
+ border-radius:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:11px;
+ color:#7f7f7f;
 }
 
 .legal-links{
@@ -214,13 +220,9 @@ button{
   <div id="typeAnalysis" class="result"></div>
 </div>
 
-<div class="ad-card">
-  <div class="ad-label">SPONSORED</div>
-  <ins class="adsbygoogle manual-ad"
-       data-ad-client="ca-pub-8474076663123407"
-       data-ad-slot="6666666666"
-       data-ad-format="horizontal"
-       data-full-width-responsive="true"></ins>
+<div class="sponsored-slot">
+  <div class="sponsored-label">SPONSORED</div>
+  <div class="sponsored-placeholder">광고 영역</div>
 </div>
 
 <div class="footer">by StatDeck AI Engine</div>
@@ -228,6 +230,7 @@ button{
   <a href="contact.html">문의/지원</a>
   <a href="privacy.html">개인정보처리방침</a>
   <a href="terms.html">이용약관</a>
+  <a href="guide.html">사용설명서</a>
 </div>
 
 <script>
@@ -517,21 +520,7 @@ async function initializeAnalytics(){
   return;
  }
  games = seasonData[currentSeason] || [];
- setupManualAds();
  analyze();
-}
-
-function setupManualAds(){
- const units = document.querySelectorAll(".manual-ad");
- units.forEach((unit)=>{
-  if(unit.dataset.initialized === "true") return;
-  if(window.adsbygoogle && Array.isArray(window.adsbygoogle)){
-   try{
-    window.adsbygoogle.push({});
-    unit.dataset.initialized = "true";
-   }catch(e){}
-  }
- });
 }
 
 initializeAnalytics();

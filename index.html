@@ -826,7 +826,7 @@ button{
  margin-top:8px;
 }
 
-.ad-card{
+.sponsored-slot{
  margin-top:10px;
  padding:12px;
  border:1px solid #2a2a2a;
@@ -834,16 +834,22 @@ button{
  background:#111;
 }
 
-.ad-label{
+.sponsored-label{
  font-size:10px;
  letter-spacing:.5px;
  color:#7f7f7f;
  margin-bottom:6px;
 }
 
-.manual-ad{
- display:block;
+.sponsored-placeholder{
  min-height:90px;
+ border:0;
+ border-radius:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:11px;
+ color:#7f7f7f;
 }
 
 .legal-links{
@@ -2629,11 +2635,14 @@ body.light .legal-links a:hover{
  color:#6d543a;
  border-bottom-color:rgba(109,84,58,0.65);
 }
-body.light .ad-card{
+body.light .sponsored-slot{
  border-color:#ddc8aa;
  background:#fbf1df;
 }
-body.light .ad-label{
+body.light .sponsored-label{
+ color:#8b7458;
+}
+body.light .sponsored-placeholder{
  color:#8b7458;
 }
 </style>
@@ -2877,7 +2886,7 @@ body.light .ad-label{
   <div class="entry-group">
     <div class="entry-group-title">핵심 투수 기록</div>
     <div class="entry-mini-grid">
-      <input type="number" id="ipOuts" placeholder="이닝 아웃카운트">
+      <input type="number" id="ipOuts" step="0.1" placeholder="이닝 (예: 5이닝2아웃 = 5.2)">
       <input type="number" id="er" placeholder="자책점 (ER)">
       <input type="number" id="so" placeholder="탈삼진">
       <input type="number" id="pHits" placeholder="피안타">
@@ -2923,13 +2932,9 @@ body.light .ad-label{
 <button id="saveGameBtn" onclick="saveGame()">경기 추가</button>
 </div>
 
-<div class="ad-card">
-  <div class="ad-label">SPONSORED</div>
-  <ins class="adsbygoogle manual-ad"
-       data-ad-client="ca-pub-8474076663123407"
-       data-ad-slot="1111111111"
-       data-ad-format="horizontal"
-       data-full-width-responsive="true"></ins>
+<div class="sponsored-slot">
+  <div class="sponsored-label">SPONSORED</div>
+  <div class="sponsored-placeholder">광고 영역</div>
 </div>
 
 </div>
@@ -2964,13 +2969,9 @@ body.light .ad-label{
 <div id="weeklyReport" class="weekly-report"></div>
 </div>
 
-<div class="ad-card">
-  <div class="ad-label">SPONSORED</div>
-  <ins class="adsbygoogle manual-ad"
-       data-ad-client="ca-pub-8474076663123407"
-       data-ad-slot="2222222222"
-       data-ad-format="horizontal"
-       data-full-width-responsive="true"></ins>
+<div class="sponsored-slot">
+  <div class="sponsored-label">SPONSORED</div>
+  <div class="sponsored-placeholder">광고 영역</div>
 </div>
 
 </div>
@@ -2993,13 +2994,9 @@ body.light .ad-label{
 <div id="dayRecord" class="day-record"></div>
 </div>
 
-<div class="ad-card">
-  <div class="ad-label">SPONSORED</div>
-  <ins class="adsbygoogle manual-ad"
-       data-ad-client="ca-pub-8474076663123407"
-       data-ad-slot="3333333333"
-       data-ad-format="horizontal"
-       data-full-width-responsive="true"></ins>
+<div class="sponsored-slot">
+  <div class="sponsored-label">SPONSORED</div>
+  <div class="sponsored-placeholder">광고 영역</div>
 </div>
 
 </div>
@@ -3033,13 +3030,9 @@ body.light .ad-label{
   </div>
 
   <div id="quoteList" class="quote-grid modern"></div>
-  <div class="ad-card">
-    <div class="ad-label">SPONSORED</div>
-    <ins class="adsbygoogle manual-ad"
-         data-ad-client="ca-pub-8474076663123407"
-         data-ad-slot="4444444444"
-         data-ad-format="horizontal"
-         data-full-width-responsive="true"></ins>
+  <div class="sponsored-slot">
+    <div class="sponsored-label">SPONSORED</div>
+    <div class="sponsored-placeholder">광고 영역</div>
   </div>
   <div id="noteModal" class="note-modal">
   <div class="note-modal-content premium-modal">
@@ -3151,18 +3144,15 @@ body.light .ad-label{
       <div id="recordManageList" class="record-manage-list"></div>
     </div>
   </div>
-  <div class="ad-card" style="margin:0 0 10px;">
-    <div class="ad-label">SPONSORED</div>
-    <ins class="adsbygoogle manual-ad"
-         data-ad-client="ca-pub-8474076663123407"
-         data-ad-slot="5555555555"
-         data-ad-format="horizontal"
-         data-full-width-responsive="true"></ins>
+  <div class="sponsored-slot" style="margin-top:0;">
+    <div class="sponsored-label">SPONSORED</div>
+    <div class="sponsored-placeholder">광고 영역</div>
   </div>
   <div class="legal-links">
     <a href="contact.html">문의/지원</a>
     <a href="privacy.html">개인정보처리방침</a>
     <a href="terms.html">이용약관</a>
+    <a href="guide.html">사용설명서</a>
   </div>
 </div>
 
@@ -3538,19 +3528,6 @@ function setupAppInstall(){
   updateDesktopInstallButton();
 }
 
-function setupManualAds(){
-  const units = document.querySelectorAll(".manual-ad");
-  units.forEach((unit)=>{
-    if(unit.dataset.initialized === "true") return;
-    if(window.adsbygoogle && Array.isArray(window.adsbygoogle)){
-      try{
-        window.adsbygoogle.push({});
-        unit.dataset.initialized = "true";
-      }catch(e){}
-    }
-  });
-}
-
 async function initializeApp(){
   const savedTheme = await loadStoreValue("uiTheme", "light", ()=>readLegacyText("uiTheme", "light"));
   applyTheme(savedTheme, false);
@@ -3580,7 +3557,6 @@ async function initializeApp(){
   renderQuotes();
   render();
   setupAppInstall();
-  setupManualAds();
   setupOnboardingIfNeeded();
 }
 
@@ -3731,7 +3707,7 @@ function renderProfile(){
     const walksPlus = (g.pBb||0) + (g.pHbp||0);
     const title = g.name || "경기명 없음";
     const line = role === "pitcher"
-      ? `IP ${((g.ipOuts||0)/3).toFixed(1)} · R ${g.ra||0} · ERA ${era} · SO ${g.so||0} · 사사구 ${walksPlus}${velo ? ` · 평균구속 ${velo}` : ""}${topVelo ? ` · 최고구속 ${topVelo}` : ""}`
+      ? `IP ${formatOutsToInnings(g.ipOuts||0)} · R ${g.ra||0} · ERA ${era} · SO ${g.so||0} · 사사구 ${walksPlus}${velo ? ` · 평균구속 ${velo}` : ""}${topVelo ? ` · 최고구속 ${topVelo}` : ""}`
       : `${g.hits}H ${g.hr || 0}HR ${g.bb || 0}BB · AVG ${avg}`;
     const condMap = { good:"좋음", normal:"보통", bad:"나쁨" };
     const condText = condMap[g.condition] || "보통";
@@ -4352,7 +4328,7 @@ function startEditGame(season, index){
  rbi.value = target.rbi || "";
  run.value = target.run || "";
  sb.value = target.sb || "";
- ipOuts.value = target.ipOuts || "";
+ ipOuts.value = (target.ipOuts || target.ipOuts === 0) ? formatOutsToInnings(target.ipOuts) : "";
  ra.value = target.ra || "";
  er.value = target.er || "";
  pHits.value = target.pHits || "";
@@ -4411,6 +4387,25 @@ function deleteGame(season, index){
  render();
 }
 
+function parseInningsToOuts(raw){
+  const text = String(raw ?? "").trim();
+  if(!text) return 0;
+  const value = Number(text);
+  if(!Number.isFinite(value) || value < 0) return 0;
+  const whole = Math.floor(value);
+  let tenth = Math.round((value - whole) * 10);
+  if(tenth < 0) tenth = 0;
+  if(tenth > 2) tenth = 2;
+  return (whole * 3) + tenth;
+}
+
+function formatOutsToInnings(outs){
+  const safeOuts = Math.max(0, Math.floor(Number(outs) || 0));
+  const whole = Math.floor(safeOuts / 3);
+  const remain = safeOuts % 3;
+  return remain ? `${whole}.${remain}` : `${whole}`;
+}
+
 function saveGame() {
 const gameName = document.getElementById('gameName');
 persistLastSeason();
@@ -4436,7 +4431,7 @@ hbp: hitByPitch,
 rbi: +rbi.value || 0,
 run: +run.value || 0,
 sb: +sb.value || 0,
-ipOuts: +ipOuts.value || 0,
+ipOuts: parseInningsToOuts(ipOuts.value),
 ra: +ra.value || 0,
 er: +er.value || 0,
 pHits: +pHits.value || 0,
@@ -4761,7 +4756,7 @@ function showDayRecord(list) {
     const topVelo = getTopPitchVelo(g);
     const walksPlus = (g.pBb || 0) + (g.pHbp || 0);
     const line = role === "pitcher"
-      ? `IP ${((g.ipOuts||0)/3).toFixed(1)} · R ${g.ra || 0} · SO ${g.so || 0} · 사사구 ${walksPlus} · 피HR ${g.pHr || 0} · ERA ${era}${velo ? ` · 평균구속 ${velo}` : ""}${topVelo ? ` · 최고구속 ${topVelo}` : ""}`
+      ? `IP ${formatOutsToInnings(g.ipOuts||0)} · R ${g.ra || 0} · SO ${g.so || 0} · 사사구 ${walksPlus} · 피HR ${g.pHr || 0} · ERA ${era}${velo ? ` · 평균구속 ${velo}` : ""}${topVelo ? ` · 최고구속 ${topVelo}` : ""}`
       : `${g.hits || 0}H ${g.hr || 0}HR ${g.bb || 0}BB · AVG ${lineAvg}`;
     const gameTitle = g.name ? g.name : "경기명 없음";
     const seasonText = g._season ? `${g._season} 시즌` : "시즌 미확인";
@@ -4814,7 +4809,7 @@ function showDayRecord(list) {
       <div class='stat-box'><small>최고구속</small><h2>${topVeloD || "-"}</h2></div>
       <div class='stat-box'><small>피안타</small><h2>${pTotal.pHits}</h2></div>
       <div class='stat-box'><small>ER</small><h2>${pTotal.er}</h2></div>
-      <div class='stat-box'><small>이닝</small><h2>${(pTotal.outs/3).toFixed(1)}</h2></div>
+      <div class='stat-box'><small>이닝</small><h2>${formatOutsToInnings(pTotal.outs)}</h2></div>
       <div class='stat-box'><small>승률</small><h2>${list.length ? ((pTotal.wins / list.length) * 100).toFixed(1):"0.0"}%</h2></div>
       <div class='stat-box'><small>경기</small><h2>${list.length}</h2></div>
     </div>
@@ -4945,7 +4940,7 @@ if(statsMode === "pitcher"){
   const kRate = battersFaced ? ((soTotal/battersFaced)*100).toFixed(1) : "0.0";
   const oavg = (outsTotal + hAllowTotal) ? (hAllowTotal / (outsTotal + hAllowTotal)).toFixed(3) : "0.000";
   const walksPlus = bbTotal + hbpTotal;
-  const innings = (outsTotal/3).toFixed(1);
+  const innings = formatOutsToInnings(outsTotal);
   const seasonVeloList = pitcherGames.flatMap((g)=>getPitchVelocities(g));
   const seasonMaxVeloList = pitcherGames.flatMap((g)=>getPitchMaxVelocities(g));
   const seasonAvgVelo = seasonVeloList.length ? (seasonVeloList.reduce((a,b)=>a+b,0) / seasonVeloList.length).toFixed(1) : null;

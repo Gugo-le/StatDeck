@@ -1,9 +1,10 @@
-const CACHE_NAME = "statdeck-v18";
+const CACHE_NAME = "statdeck-v24";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./analytics.html",
   "./contact.html",
+  "./guide.html",
   "./favicon.svg",
   "./manifest.json",
   "./icons/icon-192.png",
