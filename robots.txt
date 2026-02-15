@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://statdeckbb.vercel.app/sitemap.xml
+
+# Private app-like paths are currently not used.
+# Add Disallow rules here only when needed.
