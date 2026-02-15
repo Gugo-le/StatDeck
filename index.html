@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StatDeck</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#efe3cc">
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="apple-touch-icon" href="favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -735,10 +735,35 @@ body::before{
 .header{
  padding:16px;
  text-align:center;
+ position:relative;
  background:rgba(15,15,15,0.7);
  backdrop-filter:blur(20px);
  -webkit-backdrop-filter:blur(20px);
  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.header-sub{
+ font-size:11px;
+ color:#888;
+ margin-top:4px;
+}
+.header-actions{
+ position:absolute;
+ top:10px;
+ right:16px;
+ display:flex;
+ justify-content:flex-end;
+}
+.theme-toggle-btn{
+ width:auto;
+ min-width:96px;
+ margin-top:0;
+ padding:6px 10px;
+ border-radius:999px;
+ border:1px solid #3a3a3a;
+ background:#1c1c1c;
+ color:#ececec;
+ font-size:10px;
+ font-weight:700;
 }
 .container{padding:16px;max-width:520px;margin:auto;padding-bottom:100px}
 .card{background:#111;padding:16px;border-radius:18px;margin-bottom:16px;border:1px solid #222}
@@ -748,8 +773,8 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 .pitch-speed-grid input{margin-bottom:0}
 .input-subtitle{font-size:11px;color:#9aa0aa;margin:4px 0 8px}
 .entry-card{
- background:linear-gradient(150deg,#101214,#161a20);
- border-color:#2a313c;
+ background:linear-gradient(150deg,#101112,#171717);
+ border-color:#2c2c2c;
 }
 .entry-top{
  margin-bottom:10px;
@@ -757,12 +782,12 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 .entry-top h3{
  margin:0;
  font-size:15px;
- color:#edf2fb;
+ color:#f0f0f0;
 }
 .entry-top p{
  margin:6px 0 0;
  font-size:11px;
- color:#9ca6b6;
+ color:#9a9a9a;
 }
 .entry-core-grid{
  display:grid;
@@ -793,27 +818,27 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  margin-top:0;
  padding:10px 8px;
  border-radius:10px;
- border:1px solid #303847;
- background:#131a24;
- color:#ccd7e8;
+ border:1px solid #3a3a3a;
+ background:#171717;
+ color:#dbdbdb;
  font-size:12px;
  font-weight:700;
 }
 .entry-role-btn.active{
- background:linear-gradient(160deg,#e7eefc,#d8e0ef);
- border-color:#c6d2e8;
- color:#111722;
+ background:linear-gradient(160deg,#f2f2f2,#dfdfdf);
+ border-color:#d6d6d6;
+ color:#141414;
 }
 .entry-group{
- border:1px solid #2a303a;
+ border:1px solid #323232;
  border-radius:12px;
- background:#12161c;
+ background:#151515;
  padding:10px;
  margin-bottom:8px;
 }
 .entry-group-title{
  font-size:11px;
- color:#97a2b3;
+ color:#b2b2b2;
  margin-bottom:8px;
  letter-spacing:.2px;
 }
@@ -827,11 +852,16 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 }
 .entry-collapse-btn{
  margin-top:0;
- border:1px solid #313845;
- background:#161c25;
- color:#d2dceb;
+ border:1px solid #505050;
+ background:#222222;
+ color:#f0f0f0;
  font-size:11px;
+ font-weight:700;
  padding:9px 10px;
+}
+.entry-collapse-btn:hover{
+ border-color:#6a6a6a;
+ background:#2a2a2a;
 }
 .entry-advanced{
  margin-top:8px;
@@ -865,11 +895,11 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  color:#98a4b8;
 }
 .input-hero{
- border-color:#29384f;
+ border-color:#3a3330;
  background:
   radial-gradient(circle at 10% 10%, rgba(193,18,31,0.18), transparent 36%),
-  radial-gradient(circle at 90% 90%, rgba(0,87,183,0.18), transparent 38%),
-  linear-gradient(130deg,#111926,#151f30);
+  radial-gradient(circle at 90% 90%, rgba(255,255,255,0.06), transparent 40%),
+  linear-gradient(130deg,#171514,#1b1817);
 }
 .calendar-hero{
  border-color:#2c3440;
@@ -892,18 +922,18 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   linear-gradient(130deg,#10161f,#171d29);
 }
 #inputSection .card{
- background:linear-gradient(150deg,#101214,#15181c);
- border-color:#27313d;
+ background:linear-gradient(150deg,#101112,#171717);
+ border-color:#2f2f2f;
 }
 #inputSection .card h3{
- color:#e9eef9;
+ color:#f0f0f0;
  letter-spacing:.4px;
 }
 #inputSection input:focus,
 #inputSection select:focus{
  outline:none;
- border-color:#4f6788;
- box-shadow:0 0 0 2px rgba(79,103,136,0.18);
+ border-color:#787878;
+ box-shadow:0 0 0 2px rgba(255,255,255,0.1);
 }
 #calendarSection .card{
  background:#111;
@@ -1335,6 +1365,181 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  white-space:pre-line;
 }
 
+.badge-guide-modal-content{
+ width:92%;
+ max-width:520px;
+ background:linear-gradient(145deg,#101010,#171717);
+ border:1px solid #2c2c2c;
+ border-radius:22px;
+ padding:20px;
+ animation:modalUp 0.28s ease;
+ box-shadow:0 30px 60px rgba(0,0,0,0.6);
+}
+
+.badge-guide-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ margin-bottom:10px;
+}
+
+.badge-guide-title{
+ margin:0;
+ font-size:18px;
+ font-weight:800;
+ color:#f2f2f2;
+ letter-spacing:.2px;
+}
+
+.badge-guide-sub{
+ margin:4px 0 12px;
+ font-size:12px;
+ color:#9a9a9a;
+ line-height:1.5;
+}
+
+.badge-guide-role{
+ display:inline-flex;
+ align-items:center;
+ gap:6px;
+ padding:6px 10px;
+ border-radius:999px;
+ border:1px solid #394254;
+ background:#141b25;
+ color:#dbe6f9;
+ font-size:11px;
+ font-weight:700;
+ margin-bottom:10px;
+}
+
+.badge-guide-list{
+ display:grid;
+ gap:8px;
+}
+
+.badge-guide-item{
+ border:1px solid #2d2d2d;
+ background:#131313;
+ border-radius:12px;
+ padding:10px;
+}
+
+.badge-guide-item-head{
+ display:flex;
+ align-items:flex-start;
+ justify-content:space-between;
+ gap:10px;
+}
+
+.badge-guide-copy{
+ min-width:0;
+ flex:1;
+}
+
+.badge-guide-icon{
+ --badge-bg:#2a2a2a;
+ --badge-ring:#6e6e6e;
+ --badge-ribbon:#3a3a3a;
+ width:40px;
+ height:40px;
+ border-radius:50%;
+ border:2px solid var(--badge-ring);
+ background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), transparent 42%), var(--badge-bg);
+ color:#f2f2f2;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ font-size:9px;
+ font-weight:800;
+ letter-spacing:.3px;
+ position:relative;
+ flex-shrink:0;
+ margin-left:8px;
+}
+
+.badge-guide-icon::before,
+.badge-guide-icon::after{
+ content:"";
+ position:absolute;
+ bottom:-7px;
+ width:8px;
+ height:10px;
+ background:var(--badge-ribbon);
+ border-radius:0 0 4px 4px;
+}
+
+.badge-guide-icon::before{
+ left:9px;
+ transform:rotate(8deg);
+}
+
+.badge-guide-icon::after{
+ right:9px;
+ transform:rotate(-8deg);
+}
+
+.badge-guide-icon.precision{
+ --badge-bg:#34516d;
+ --badge-ring:#8eb7df;
+ --badge-ribbon:#2a3f58;
+}
+
+.badge-guide-icon.power{
+ --badge-bg:#6a2a2a;
+ --badge-ring:#e08c8c;
+ --badge-ribbon:#4f1f1f;
+}
+
+.badge-guide-icon.onbase{
+ --badge-bg:#2d5a43;
+ --badge-ring:#8fd3ac;
+ --badge-ribbon:#234733;
+}
+
+.badge-guide-icon.multi{
+ --badge-bg:#4f3a6b;
+ --badge-ring:#c1a4e8;
+ --badge-ribbon:#3a2a4e;
+}
+
+.badge-guide-icon.era{
+ --badge-bg:#3a4f6f;
+ --badge-ring:#9fc1ea;
+ --badge-ribbon:#2d3f5a;
+}
+
+.badge-guide-icon.k{
+ --badge-bg:#6d3d1d;
+ --badge-ring:#efb088;
+ --badge-ribbon:#553016;
+}
+
+.badge-guide-icon.clutch{
+ --badge-bg:#6a2f44;
+ --badge-ring:#e6a6bc;
+ --badge-ribbon:#4f2433;
+}
+
+.badge-guide-icon.fire{
+ --badge-bg:#7a2d19;
+ --badge-ring:#f2a17f;
+ --badge-ribbon:#5d2213;
+}
+
+.badge-guide-item h4{
+ margin:0;
+ font-size:13px;
+ color:#efefef;
+}
+
+.badge-guide-item p{
+ margin:6px 0 0;
+ font-size:12px;
+ color:#aaaaaa;
+ line-height:1.55;
+}
+
 .onboard{
  position:fixed;
  inset:0;
@@ -1584,34 +1789,41 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 .pitch-zone-btn{
  position:relative;
  transform:none;
- width:auto;
- min-width:54px;
- min-height:24px;
+ width:100%;
+ height:100%;
+ min-width:0;
+ min-height:0;
  margin-top:0;
  display:inline-flex;
  align-items:center;
  justify-content:center;
  white-space:nowrap;
- border:none;
+ border:1px solid rgba(155,170,192,0.12);
  border-radius:0;
- background:transparent;
+ background:rgba(8,12,18,0.22);
  color:#b6c2d5;
  font-size:10px;
  font-weight:700;
- padding:2px 4px;
+ padding:0;
  cursor:pointer;
  letter-spacing:.15px;
  text-shadow:0 1px 4px rgba(0,0,0,0.45);
- transition:color .15s ease, text-shadow .15s ease, transform .15s ease;
+ transition:background .16s ease, border-color .16s ease, color .16s ease, text-shadow .16s ease, transform .16s ease;
+ z-index:1;
 }
 
 .pitch-zone-btn.active{
+ background:linear-gradient(180deg, rgba(113,154,210,0.42), rgba(72,111,168,0.34));
+ border-color:rgba(189,213,245,0.68);
  color:#eaf2ff;
  text-shadow:0 0 10px rgba(154,190,247,0.55), 0 1px 6px rgba(0,0,0,0.5);
- transform:scale(1.04);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.24), 0 0 0 1px rgba(24,36,56,0.45);
+ transform:scale(1.01);
 }
 
 .pitch-zone-btn:hover{
+ background:rgba(42,62,94,0.42);
+ border-color:rgba(166,189,223,0.42);
  color:#d3e2ff;
 }
 
@@ -1725,11 +1937,436 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   left:42.8% !important;
   top:58.5% !important;
  }
+ .header{
+  padding:16px 12px;
+ }
+ .header-actions{
+  right:10px;
+  top:8px;
+ }
+ .theme-toggle-btn{
+  min-width:88px;
+  padding:5px 8px;
+ }
 }
 
 </style>
+<style>
+body.light{
+ background:#f8f1e3;
+ color:#352a1d;
+}
+body.light::before{
+ opacity:.06;
+ background-image:
+   radial-gradient(circle at 25% 25%, #9d8467 1px, transparent 1px),
+   radial-gradient(circle at 75% 75%, #9d8467 1px, transparent 1px);
+}
+body.light .header{
+ background:rgba(251,244,231,0.9);
+ border-bottom:1px solid rgba(148,121,91,0.18);
+}
+body.light .header h1{
+ background:linear-gradient(90deg,#4d3a26,#8f6a44);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+}
+body.light .header-sub{
+ color:#7a6248;
+}
+body.light .theme-toggle-btn{
+ border-color:#d6c3a8;
+ background:#fff9ee;
+ color:#5e4830;
+}
+body.light .card,
+body.light #statsSection .card,
+body.light #calendarSection .card,
+body.light #inputSection .card{
+ background:#fff8ec;
+ border-color:#e6d5bd;
+}
+body.light input,
+body.light select,
+body.light .profile-input,
+body.light .profile-textarea,
+body.light .onboard-input{
+ border-color:#dcc9ae;
+ background:#fffdf7;
+ color:#3b2f22;
+}
+body.light .note-area{
+ border-color:#d8c3a5;
+ background:
+   repeating-linear-gradient(
+     to bottom,
+     #fffdf5 0px,
+     #fffdf5 31px,
+     #e7d6bc 31px,
+     #e7d6bc 32px
+   );
+ color:#4a3b2a;
+}
+body.light button{
+ background:#6a5032;
+ color:#fffaf0;
+}
+body.light .upload-btn,
+body.light .mini-btn,
+body.light .profile-subtab-btn,
+body.light .entry-collapse-btn,
+body.light .calendar-nav-btn,
+body.light .mode-btn{
+ background:#f6ecda;
+ color:#5f4a33;
+ border-color:#d8c2a3;
+}
+body.light .mode-btn.active,
+body.light .profile-subtab-btn.active,
+body.light .entry-role-btn.active{
+ background:linear-gradient(160deg,#7e5f3d,#9a7550);
+ border-color:#7e5f3d;
+ color:#fffaf0;
+}
+body.light .entry-role-btn{
+ background:#f6ecda;
+ color:#624c35;
+ border-color:#d7c1a2;
+}
+body.light .entry-card{
+ background:linear-gradient(150deg,#fff7e9,#f8ecd8);
+ border-color:#dfccb0;
+}
+body.light .entry-top p,
+body.light .entry-group-title,
+body.light .input-subtitle,
+body.light .profile-label,
+body.light .record-item-top,
+body.light .quote-header p,
+body.light .quote-tip,
+body.light .weekday,
+body.light .tab{
+ color:#8b7458;
+}
+body.light .entry-group,
+body.light .profile-editor,
+body.light .record-item,
+body.light .day-game-item{
+ background:#fbf2e2;
+ border-color:#dcc7a8;
+}
+body.light .section-hero{
+ border-color:#dac6a8;
+ background:linear-gradient(130deg,#f7ead4,#f1e2c8);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
+}
+body.light .section-hero-title,
+body.light #inputSection .card h3,
+body.light #statsSection .card h3,
+body.light .profile-meta h3,
+body.light .day-game-name,
+body.light .record-item-title{
+ color:#4a3a29;
+}
+body.light .section-hero-sub,
+body.light .day-game-line,
+body.light .record-item-line{
+ color:#766045;
+}
+body.light .stat-box,
+body.light .profile-stat{
+ background:#f9efdd;
+ border:1px solid #dcc7a8;
+}
+body.light .profile-stat .label{
+ color:#786045;
+}
+body.light .profile-stat .value{
+ color:#4c3c2a;
+}
+body.light .weekly-report{
+ background:linear-gradient(145deg,#fbf1df,#f4e7cf);
+ border-color:#ddc8a9;
+}
+body.light .weekly-report h4{
+ color:#3a2d1d;
+}
+body.light .weekly-report p{
+ color:#756044;
+}
+body.light .calendar.modern{
+ background:linear-gradient(145deg,#fcf2e2,#f4e7cf);
+ border-color:#dcc7a8;
+}
+body.light .day{
+ background:#fff7ea;
+ border-color:#e2cfb2;
+ color:#4f3f2d;
+}
+body.light .day:hover{
+ background:#f8ecd7;
+ border-color:#d7bc95;
+}
+body.light .day.has{
+ background:linear-gradient(145deg,#faefd9,#f1e2c5);
+ border-color:#d6bf9f;
+}
+body.light .day.selected{
+ border-color:#856341;
+ background:#f0e0c3;
+ box-shadow:0 0 0 2px rgba(133,99,65,0.14);
+}
+body.light .calendar-title{
+ color:#3c2e1f;
+}
+body.light .tab-bar{
+ background:rgba(249,240,223,0.92);
+ border-top:1px solid rgba(148,121,91,0.2);
+}
+body.light .tab.active{
+ color:#4a3824;
+}
+body.light .profile-card{
+ background:linear-gradient(145deg,#fcf3e3,#f4e6ce);
+ border-color:#ddc8aa;
+}
+body.light .avatar-wrap{
+ border-color:#d6c0a1;
+ background:#f2e5cc;
+}
+body.light .profile-badge-count{
+ border-color:#d6c0a1;
+ color:#765d41;
+ background:#fcf2df;
+}
+body.light .badge-guide-btn{
+ border-color:#d6c0a1;
+ background:#f8edda;
+ color:#6b5238;
+}
+body.light .badge-chip{
+ border-color:#d4bf9f;
+ background:linear-gradient(160deg,#faefdc,#f1e0c3);
+ color:#6a533a;
+}
+body.light .profile-season-note{
+ color:#7d654a;
+}
+body.light .profile-streak{
+ color:#6e563c;
+}
+body.light .profile-ai-entry{
+ border-color:#d7c2a3;
+ background:
+  radial-gradient(circle at 10% 20%, rgba(193,18,31,0.12), transparent 42%),
+  radial-gradient(circle at 88% 78%, rgba(0,87,183,0.12), transparent 44%),
+  linear-gradient(120deg,#fbf1df 0%,#f4e6cd 52%,#eedcbc 100%);
+ color:#4a3a29;
+ box-shadow:
+  inset 0 1px 0 rgba(255,255,255,0.4),
+  0 10px 20px rgba(71,50,28,0.14);
+}
+body.light .profile-ai-title{
+ color:#3d2f20;
+}
+body.light .profile-ai-sub{
+ color:#7a6247;
+}
+body.light .profile-photo{
+ border-color:#d7c1a2;
+ background:#f1e3c8;
+}
+body.light .photo-remove{
+ background:rgba(109,82,52,0.86);
+ color:#fff7eb;
+ border:1px solid rgba(255,247,235,0.32);
+}
+body.light .profile-actions .danger{
+ background:#c97a62;
+ color:#fff6ef;
+ border:1px solid #b96a53;
+}
+body.light .profile-actions .danger:hover{
+ background:#bf6f58;
+}
+body.light .quote-count,
+body.light .quote-card,
+body.light .quote-input-card,
+body.light .quote-empty{
+ background:#fbf1df;
+ border-color:#ddc8aa;
+ color:#4a3a29;
+}
+body.light #quoteSection .quote-input-card{
+ border-color:#dcc7a9;
+ background:
+  radial-gradient(circle at 12% 10%, rgba(193,18,31,0.07), transparent 28%),
+  radial-gradient(circle at 88% 90%, rgba(0,87,183,0.06), transparent 32%),
+  linear-gradient(145deg,#fff8eb,#f8ecd7),
+  repeating-linear-gradient(
+    90deg,
+    rgba(120,93,64,.05),
+    rgba(120,93,64,.05) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+body.light #quoteSection .note-label{
+ color:#7e664a;
+}
+body.light #quoteSection .mental-prompt{
+ background:#f8edda;
+ border-color:#d7c2a3;
+ color:#71583d;
+}
+body.light .quote-text,
+body.light .quote-header h2{
+ color:#4a3a29;
+}
+body.light .quote-meta,
+body.light .logo-sub{
+ color:#8b7458;
+}
+body.light #splash{
+ background:#f7efdf;
+}
+body.light .logo-text{
+ background:linear-gradient(90deg,#5d442b,#8f6b47);
+ -webkit-background-clip:text;
+ -webkit-text-fill-color:transparent;
+ text-shadow:none;
+}
+body.light .onboard{
+ background:
+  radial-gradient(circle at 20% 20%, rgba(193,18,31,0.18), transparent 36%),
+  radial-gradient(circle at 80% 80%, rgba(0,87,183,0.16), transparent 38%),
+  #060606;
+}
+body.light .onboard-card{
+ border:1px solid #262626;
+ background:linear-gradient(145deg,#101010,#161616);
+}
+body.light .onboard-title{
+ color:#f4f4f4;
+}
+body.light .onboard-sub{
+ color:#9d9d9d;
+}
+body.light .onboard button{
+ background:#ffffff;
+ color:#000000;
+ border:none;
+}
+body.light .onboard .onboard-input{
+ border:1px solid #2b2b2b;
+ background:#121212;
+ color:#f2f2f2;
+}
+body.light .onboard .onboard-note{
+ background:
+  repeating-linear-gradient(
+   to bottom,
+   #111 0px,
+   #111 31px,
+   #292929 31px,
+   #292929 32px
+  );
+}
+body.light .onboard .onboard-preview{
+ border:1px solid #2a2a2a;
+ background:#0f0f0f;
+}
+body.light .onboard .role-card{
+ border:1px solid #303030;
+ background:#111;
+ color:#f3f3f3;
+}
+body.light .onboard .role-card.active{
+ border-color:#f2f2f2;
+ box-shadow:0 0 0 1px rgba(255,255,255,0.14);
+}
+body.light .onboard .position-field{
+ border:1px solid #2a2a2a;
+}
+body.light .onboard .pos-btn{
+ border:1px solid #3a3f45;
+ background:linear-gradient(180deg, rgba(33,37,42,0.88), rgba(22,25,29,0.86));
+ color:#eceff4;
+}
+body.light .onboard .pos-btn.active{
+ border-color:#cfd6df;
+ background:linear-gradient(180deg, #e6ebf1, #d5dce6);
+ color:#15181d;
+}
+body.light .onboard .pitcher-role-card{
+ border:1px solid #2f3742;
+ background:linear-gradient(165deg,#131923,#171f2a);
+ color:#d9e3f2;
+}
+body.light .onboard .pitcher-role-card.active{
+ border-color:#c3d1e7;
+ background:linear-gradient(165deg,#e1ecff,#d6e1f0);
+ color:#10151c;
+}
+body.light .onboard .pitch-zone{
+ border:1px solid #2f3946;
+ background:linear-gradient(160deg,#101723,#141d2a);
+}
+body.light .onboard .pitch-zone-btn{
+ background:rgba(8,12,18,0.22);
+ border:1px solid rgba(155,170,192,0.12);
+ color:#b6c2d5;
+}
+body.light .onboard .pitch-zone-btn.active{
+ background:linear-gradient(180deg, rgba(113,154,210,0.42), rgba(72,111,168,0.34));
+ border-color:rgba(189,213,245,0.68);
+ color:#eaf2ff;
+}
+body.light .onboard .release-card{
+ border:1px solid #303743;
+ background:linear-gradient(170deg,#131923,#161d27);
+ color:#dae3f2;
+}
+body.light .onboard .release-card.active{
+ border-color:#c1d0e7;
+ background:linear-gradient(170deg,#deebff,#d3dfef);
+ color:#10141b;
+}
+body.light .onboard .pitcher-help{
+ color:#99a3b2;
+}
+body.light .badge-guide-modal-content{
+ background:linear-gradient(145deg,#fff8ec,#f6ead6);
+ border:1px solid #dcc8a9;
+ box-shadow:0 24px 48px rgba(80,58,34,0.22);
+}
+body.light .badge-guide-title{
+ color:#4a3a29;
+}
+body.light .badge-guide-sub{
+ color:#7f684d;
+}
+body.light .badge-guide-role{
+ border:1px solid #d3be9f;
+ background:#f9eedc;
+ color:#6c5338;
+}
+body.light .badge-guide-item{
+ border:1px solid #dbc6a7;
+ background:#fcf2e2;
+}
+body.light .badge-guide-icon{
+ color:#fffdf8;
+}
+body.light .badge-guide-item h4{
+ color:#4b3a2a;
+}
+body.light .badge-guide-item p{
+ color:#735d42;
+}
+</style>
 </head>
-<body>
+<body class="light">
 <div id="splash">
   <div class="splash-content">
     <svg class="splash-icon" width="60" height="60" viewBox="0 0 100 100" style="margin-bottom:16px;">
@@ -1872,7 +2509,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
     </svg>
     <span>StatDeck</span>
   </h1>
-  <div style="font-size:11px;color:#888;margin-top:4px;">Track. Analyze. Dominate the Diamond.</div>
+  <div class="header-sub">Track. Analyze. Dominate the Diamond.</div>
+  <div class="header-actions">
+    <button id="themeToggleBtn" type="button" class="theme-toggle-btn" onclick="toggleTheme()">다크 모드</button>
+  </div>
 </div>
 <div class="container">
 
@@ -1927,7 +2567,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   <div class="entry-group">
     <div class="entry-group-title">핵심 타격 기록</div>
     <div class="entry-mini-grid">
-      <input type="number" id="ab" placeholder="타수">
+      <input type="number" id="ab" placeholder="타석">
       <input type="number" id="hits" placeholder="안타">
       <input type="number" id="hr" placeholder="홈런">
       <input type="number" id="bb" placeholder="볼넷">
@@ -2091,6 +2731,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
     <div class="modal-divider"></div>
 </div>
 </div>
+
 </div>
 
 <div id="profileSection" class="section active">
@@ -2131,7 +2772,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
           <div class="value" id="profileAvgValue">0.000</div>
         </div>
         <div class="profile-stat">
-          <div class="label" id="profileMetric2Label">총 타수</div>
+          <div class="label" id="profileMetric2Label">총 타석</div>
           <div class="value" id="profileAbTotal">0</div>
         </div>
       </div>
@@ -2180,6 +2821,18 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   </div>
 </div>
 
+</div>
+
+<div id="badgeGuideModal" class="note-modal" onclick="closeBadgeGuideModal()">
+  <div class="badge-guide-modal-content" onclick="event.stopPropagation()">
+    <div class="badge-guide-head">
+      <h3 class="badge-guide-title">업적 뱃지 기준</h3>
+      <button class="modal-close" onclick="closeBadgeGuideModal()">✕</button>
+    </div>
+    <p class="badge-guide-sub">현재 프로필 포지션 기준으로 시즌 누적 조건이 적용됩니다.</p>
+    <div id="badgeGuideRole" class="badge-guide-role"></div>
+    <div id="badgeGuideList" class="badge-guide-list"></div>
+  </div>
 </div>
 
 <div class="tab-bar">
@@ -2248,6 +2901,7 @@ if(!Array.isArray(profileData.photos)) profileData.photos = [];
 let profileEditMode = false;
 let profileSubTab = "home";
 let statsMode = "batter";
+let uiTheme = "light";
 let onboardDraft = { name:"", bio:"", role:"", position:"", pitcherType:"", pitchArsenal:[], releasePoint:"", throwHand:"" };
 let onboardingPreviewTimers = [];
 const seasonSelectEl = document.getElementById("seasonSelect");
@@ -2326,7 +2980,23 @@ function persistLastSeason(){
   void idbSet("lastSeasonKey", seasonKey);
 }
 
+function applyTheme(theme, persist=true){
+  uiTheme = theme === "dark" ? "dark" : "light";
+  document.body.classList.toggle("light", uiTheme === "light");
+  const btn = document.getElementById("themeToggleBtn");
+  if(btn) btn.innerText = uiTheme === "light" ? "다크 모드" : "라이트 모드";
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", uiTheme === "light" ? "#efe3cc" : "#000000");
+  if(persist) void idbSet("uiTheme", uiTheme);
+}
+
+function toggleTheme(){
+  applyTheme(uiTheme === "light" ? "dark" : "light");
+}
+
 async function initializeApp(){
+  const savedTheme = await loadStoreValue("uiTheme", "light", ()=>readLegacyText("uiTheme", "light"));
+  applyTheme(savedTheme, false);
   seasonKey = await loadStoreValue("lastSeasonKey", "2026", ()=>readLegacyText("lastSeasonKey", "2026"));
   allData = await loadStoreValue("seasonData", {2026:[],2027:[],2028:[]}, ()=>readLegacyJSON("seasonData",{2026:[],2027:[],2028:[]}));
   profileData = await loadStoreValue("profileData", profileData, ()=>readLegacyJSON("profileData", profileData));
@@ -2431,6 +3101,7 @@ function renderProfile(){
   const seasonGames = allData[seasonKey] || [];
   const roleSeasonGames = seasonGames.filter((g)=>(g.role || "batter") === (profileData.role || "batter"));
   const totalAB = roleSeasonGames.reduce((sum,g)=>sum + (g.ab || 0), 0);
+  const totalPA = roleSeasonGames.reduce((sum,g)=>sum + getGamePA(g), 0);
   const totalHits = roleSeasonGames.reduce((sum,g)=>sum + (g.hits || 0), 0);
   const seasonAvg = totalAB ? (totalHits / totalAB).toFixed(3) : "0.000";
   const totalIPOuts = roleSeasonGames.reduce((sum,g)=>sum + (g.ipOuts || 0), 0);
@@ -2458,9 +3129,9 @@ function renderProfile(){
     abEl.innerText = `${kRate}%`;
   }else{
     metric1LabelEl.innerText = "타율";
-    metric2LabelEl.innerText = "총 타수";
+    metric2LabelEl.innerText = "총 타석";
     avgEl.innerText = seasonAvg;
-    abEl.innerText = String(totalAB);
+    abEl.innerText = String(totalPA);
   }
 
   const photos = (profileData.photos || []).slice(0,9);
@@ -3029,7 +3700,7 @@ function startEditGame(season, index){
 
  gameDate.value = target.date || "";
  gameName.value = target.name || "";
- ab.value = target.ab || "";
+ ab.value = target.pa || ((target.ab || 0) + (target.bb || 0) + (target.hbp || 0)) || "";
  hits.value = target.hits || "";
  double.value = target.double || "";
  triple.value = target.triple || "";
@@ -3104,17 +3775,22 @@ persistLastSeason();
 if(!allData[seasonKey]) allData[seasonKey]=[];
 games = allData[seasonKey];
 const role = (document.getElementById("entryRole")?.value) || "batter";
+const plateAppearances = +ab.value || 0;
+const walks = +bb.value || 0;
+const hitByPitch = +hbp.value || 0;
+const atBats = Math.max(0, plateAppearances - walks - hitByPitch);
 const game = {
 date: gameDate.value || new Date().toISOString().slice(0,10),
 name: gameName.value || "",
 role,
-ab: +ab.value || 0,
+pa: plateAppearances,
+ab: atBats,
 hits: +hits.value || 0,
 double: +double.value || 0,
 triple: +triple.value || 0,
 hr: +hr.value || 0,
-bb: +bb.value || 0,
-hbp: +hbp.value || 0,
+bb: walks,
+hbp: hitByPitch,
 rbi: +rbi.value || 0,
 run: +run.value || 0,
 sb: +sb.value || 0,
@@ -3213,6 +3889,13 @@ function getTopPitchVelo(g){
   return Math.max(...list).toFixed(1);
 }
 
+function getGamePA(g){
+  if(!g) return 0;
+  const pa = +g.pa;
+  if(Number.isFinite(pa)) return pa;
+  return (g.ab || 0) + (g.bb || 0) + (g.hbp || 0);
+}
+
 function calcStreak(gamesList, predicate){
   const sorted = [...gamesList].sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
   let count = 0;
@@ -3270,23 +3953,46 @@ function getRoleStreakText(roleGames, role){
 
 function showBadgeGuide(){
   const role = profileData.role || "batter";
-  if(role === "pitcher"){
-    alert(
-`투수 업적 뱃지 기준
-- ERA 장인: 시즌 ERA 2.50 이하 (5경기 이상)
-- K 머신: 시즌 탈삼진 30개 이상
-- 클러치 마운드: 시즌 5승 이상
-- 파이어볼러: 최고구속 145km/h 이상`
-    );
-    return;
-  }
-  alert(
-`타자 업적 뱃지 기준
-- 정교한 타격: 시즌 AVG 0.350 이상 (20타수 이상)
-- 파워 배트: 시즌 홈런 5개 이상
-- 출루 마스터: 시즌 안타+볼넷 25개 이상
-- 멀티히트 감각: 2안타 이상 경기 3번 이상`
-  );
+  const modal = document.getElementById("badgeGuideModal");
+  const roleEl = document.getElementById("badgeGuideRole");
+  const listEl = document.getElementById("badgeGuideList");
+  if(!modal || !roleEl || !listEl) return;
+
+  const isPitcher = role === "pitcher";
+  const guideList = isPitcher
+    ? [
+      { title:"ERA 장인", desc:"시즌 ERA 2.50 이하 (5경기 이상)", mark:"ERA", tone:"era" },
+      { title:"K 머신", desc:"시즌 탈삼진 30개 이상", mark:"K", tone:"k" },
+      { title:"클러치 마운드", desc:"시즌 5승 이상", mark:"W", tone:"clutch" },
+      { title:"파이어볼러", desc:"최고구속 145km/h 이상", mark:"145+", tone:"fire" }
+    ]
+    : [
+      { title:"정교한 타격", desc:"시즌 AVG 0.350 이상 (20타수 이상)", mark:"AVG", tone:"precision" },
+      { title:"파워 배트", desc:"시즌 홈런 5개 이상", mark:"HR", tone:"power" },
+      { title:"출루 마스터", desc:"시즌 안타+볼넷 25개 이상", mark:"OBP", tone:"onbase" },
+      { title:"멀티히트 감각", desc:"2안타 이상 경기 3번 이상", mark:"2H", tone:"multi" }
+    ];
+
+  roleEl.innerHTML = `${isPitcher ? "⚾ 투수 템플릿" : "⚾ 타자 템플릿"}`;
+  listEl.innerHTML = guideList.map((item)=>`
+    <div class="badge-guide-item">
+      <div class="badge-guide-item-head">
+        <div class="badge-guide-copy">
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+        </div>
+        <span class="badge-guide-icon ${item.tone}">${item.mark}</span>
+      </div>
+    </div>
+  `).join("");
+
+  modal.classList.add("active");
+}
+
+function closeBadgeGuideModal(){
+  const modal = document.getElementById("badgeGuideModal");
+  if(!modal) return;
+  modal.classList.remove("active");
 }
 
 function renderCalendar(){
@@ -3803,6 +4509,12 @@ function openModal(text){
 function closeModal(){
   document.getElementById("noteModal").classList.remove("active");
 }
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key !== "Escape") return;
+  closeModal();
+  closeBadgeGuideModal();
+});
 </script>
 </body>
 </html>
