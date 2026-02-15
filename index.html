@@ -2026,6 +2026,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 body.light{
  background:#f8f1e3;
  color:#352a1d;
+ color-scheme:light;
+}
+body:not(.light){
+ color-scheme:dark;
 }
 body.light::before{
  opacity:.06;
@@ -2059,12 +2063,36 @@ body.light #inputSection .card{
 }
 body.light input,
 body.light select,
+body.light textarea,
 body.light .profile-input,
 body.light .profile-textarea,
 body.light .onboard-input{
  border-color:#dcc9ae;
  background:#fffdf7;
  color:#3b2f22;
+ -webkit-appearance:none;
+ appearance:none;
+}
+body.light input::placeholder,
+body.light textarea::placeholder{
+ color:#9a7f60;
+ opacity:1;
+}
+body.light input:focus,
+body.light select:focus,
+body.light textarea:focus{
+ outline:none;
+ border-color:#b89b79;
+ box-shadow:0 0 0 2px rgba(184,155,121,0.22);
+}
+body.light input:-webkit-autofill,
+body.light input:-webkit-autofill:hover,
+body.light input:-webkit-autofill:focus,
+body.light textarea:-webkit-autofill,
+body.light select:-webkit-autofill{
+ -webkit-text-fill-color:#3b2f22;
+ -webkit-box-shadow:0 0 0 1000px #fffdf7 inset;
+ transition:background-color 9999s ease-out 0s;
 }
 body.light .note-area{
  border-color:#d8c3a5;
@@ -3163,6 +3191,11 @@ function isIOSDevice(){
   return /iphone|ipad|ipod/i.test(navigator.userAgent);
 }
 
+function isInAppWebView(){
+  const ua = navigator.userAgent || "";
+  return /(KAKAOTALK|FBAN|FBAV|Instagram|NAVER|Line|wv)/i.test(ua);
+}
+
 function isStandaloneMode(){
   return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
 }
@@ -3172,7 +3205,10 @@ function updateOnboardingInstallStep(){
   const btn = document.getElementById("onboardInstallBtn");
   const status = document.getElementById("onboardInstallStatus");
   if(!sub || !btn || !status) return;
-  if(isIOSDevice()){
+  if(isInAppWebView()){
+    sub.innerText = "앱 내 브라우저(카카오톡 등)에서는 설치가 제한될 수 있습니다. Safari/Chrome으로 열어 설치해 주세요.";
+    btn.innerText = "외부 브라우저 열기 안내";
+  }else if(isIOSDevice()){
     sub.innerText = "iPhone에서는 설치 버튼 후 안내대로 `홈 화면에 추가`를 진행해 주세요.";
     btn.innerText = "설치 방법 보기";
   }else{
@@ -3193,7 +3229,13 @@ function openInstallGuideModal(){
   const list = document.getElementById("installGuideList");
   if(!modal || !list) return;
 
-  if(isIOSDevice()){
+  if(isInAppWebView()){
+    list.innerHTML = `
+      <li>현재 앱 내 브라우저에서는 설치 팝업이 제한됩니다.</li>
+      <li>우측 상단 메뉴에서 \`브라우저로 열기\` 또는 \`외부 브라우저 열기\`를 선택하세요.</li>
+      <li>Safari/Chrome에서 다시 열고 \`홈 화면에 추가\` 또는 \`앱 설치\`를 진행하세요.</li>
+    `;
+  }else if(isIOSDevice()){
     list.innerHTML = `
       <li>하단 공유 버튼을 눌러주세요.</li>
       <li>\`홈 화면에 추가\`를 선택하세요.</li>
@@ -3211,6 +3253,11 @@ function openInstallGuideModal(){
 }
 
 async function triggerAppInstall(){
+  // In-app webviews (Kakao, etc.) cannot reliably trigger install prompts.
+  if(isInAppWebView()){
+    openInstallGuideModal();
+    return;
+  }
   // iOS Safari does not support beforeinstallprompt; always show manual guide.
   if(isIOSDevice()){
     openInstallGuideModal();
