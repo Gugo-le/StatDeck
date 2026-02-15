@@ -29,8 +29,10 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8474076663123407" crossorigin="anonymous"></script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -47,13 +49,12 @@
   }
 }
 </script>
-<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+<script async type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
 <script type="text/javascript">
-if(!wcs_add) var wcs_add = {};
-wcs_add["wa"] = "32fb5ee3ee4300";
-if(window.wcs) {
-wcs_do();
-}
+window.wcs_add = window.wcs_add || {};
+window.wcs_add["wa"] = "32fb5ee3ee4300";
+if(window.wcs) wcs_do();
+else window.addEventListener("load", ()=>{ if(window.wcs) wcs_do(); }, { once:true });
 </script>
 
 <style>
@@ -858,6 +859,19 @@ button{
  min-height:90px;
 }
 
+.sponsored-slot.compact{
+ padding:10px;
+}
+
+.sponsored-slot.compact .sponsored-placeholder{
+ min-height:64px;
+}
+
+.sponsored-slot.compact .sponsored-placeholder .adsbygoogle{
+ min-height:64px;
+ max-height:90px;
+}
+
 .legal-links{
  margin:6px 0 14px;
  display:flex;
@@ -1102,11 +1116,11 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   linear-gradient(130deg,#101822,#171f2a);
 }
 .mental-hero{
- border-color:#3a2d2d;
+ border-color:#32363f;
  background:
-  radial-gradient(circle at 12% 12%, rgba(193,18,31,0.2), transparent 36%),
-  radial-gradient(circle at 85% 75%, rgba(0,87,183,0.16), transparent 38%),
-  linear-gradient(130deg,#171313,#1a1a1d);
+  radial-gradient(circle at 85% 75%, rgba(0,87,183,0.12), transparent 36%),
+  radial-gradient(circle at 12% 12%, rgba(255,255,255,0.06), transparent 34%),
+  linear-gradient(130deg,#15181d,#1b2027);
 }
 .stats-hero{
  border-color:#2e3441;
@@ -1142,10 +1156,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  letter-spacing:.35px;
 }
 #quoteSection .quote-input-card{
- border-color:#3a2c32;
+ border-color:#303640;
  background:
-  radial-gradient(circle at 12% 10%, rgba(193,18,31,0.12), transparent 26%),
-  radial-gradient(circle at 88% 90%, rgba(0,87,183,0.1), transparent 30%),
+  radial-gradient(circle at 12% 10%, rgba(255,255,255,0.05), transparent 28%),
+  radial-gradient(circle at 88% 90%, rgba(0,87,183,0.08), transparent 30%),
   linear-gradient(145deg,#101011,#161518),
   repeating-linear-gradient(
     90deg,
@@ -1156,7 +1170,7 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
   );
 }
 #quoteSection .quote-header{
- border-bottom-color:#2a2226;
+ border-bottom-color:#2b313a;
 }
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat-box{background:#1a1a1a;padding:12px;border-radius:12px;text-align:center}
@@ -1545,21 +1559,23 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 }
 
 .premium-text{
- font-size:18px;
- line-height:33px;
+ font-size:17px;
+ line-height:34px;
  letter-spacing:0.3px;
  color:#ffffff;
  min-height:140px;
- padding:14px 12px;
- border-radius:12px;
- border:1px solid #242424;
- background:
+ padding:10px 12px 12px;
+  border-radius:12px;
+  border:1px solid #242424;
+  background:
    repeating-linear-gradient(
      to bottom,
-     #101010,
-     #101010 32px,
-     #252525 33px
+     #101010 0px,
+     #101010 33px,
+     #252525 33px,
+     #252525 34px
    );
+ background-position:0 8px;
  white-space:pre-line;
 }
 
@@ -2491,6 +2507,40 @@ body.light .quote-meta,
 body.light .logo-sub{
  color:#8b7458;
 }
+body.light #noteModal{
+ background:rgba(73,56,36,0.36);
+ backdrop-filter:blur(8px);
+}
+body.light #noteModal .note-modal-content{
+ background:linear-gradient(145deg,#fbf2e2,#f2e3cb);
+ border:1px solid #d8c2a0;
+ box-shadow:0 26px 56px rgba(79,60,36,0.25);
+}
+body.light #noteModal .modal-label{
+ color:#7a6348;
+}
+body.light #noteModal .modal-close{
+ border-color:#ccb48f;
+ background:#f6ead5;
+ color:#684f34;
+}
+body.light #noteModal .modal-close:hover{
+ border-color:#bfa57e;
+ background:#efdfc2;
+}
+body.light #noteModal .premium-text{
+ color:#4a3a29;
+ border-color:#d8c2a1;
+ background:
+   repeating-linear-gradient(
+     to bottom,
+     #fff9ed 0px,
+     #fff9ed 33px,
+     #e5d1af 33px,
+     #e5d1af 34px
+   );
+ background-position:0 8px;
+}
 body.light #splash{
  background:#f7efdf;
 }
@@ -3150,7 +3200,7 @@ body.light .sponsored-placeholder{
       <div id="recordManageList" class="record-manage-list"></div>
     </div>
   </div>
-  <div class="sponsored-slot" style="margin-top:0;">
+  <div class="sponsored-slot compact" style="margin-top:0;">
     <div class="sponsored-label">SPONSORED</div>
     <div class="sponsored-placeholder"></div>
   </div>
@@ -3682,14 +3732,14 @@ function renderProfile(){
   }else{
     grid.innerHTML = photos.map((src,idx)=>`
       <div class="profile-photo">
-        <img src="${src}" alt="profile photo ${idx+1}">
+        <img src="${src}" alt="profile photo ${idx+1}" loading="lazy" decoding="async">
         <button class="photo-remove" onclick="removeProfilePhoto(${idx})">✕</button>
       </div>
     `).join("");
     if(homeGrid){
       homeGrid.innerHTML = photos.map((src,idx)=>`
         <div class="profile-photo">
-          <img src="${src}" alt="profile gallery photo ${idx+1}">
+          <img src="${src}" alt="profile gallery photo ${idx+1}" loading="lazy" decoding="async">
         </div>
       `).join("");
     }
@@ -4232,6 +4282,21 @@ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 el.classList.add('active');
+if(id === "statsSection"){
+  render();
+  return;
+}
+if(id === "calendarSection"){
+  renderCalendar();
+  return;
+}
+if(id === "profileSection"){
+  renderProfile();
+  return;
+}
+if(id === "quoteSection"){
+  renderQuotes();
+}
 }
 
 function setEntryRole(role){
@@ -4906,11 +4971,15 @@ function render(){
 const seasonStatsEl = document.getElementById("seasonStats");
 const batterGames = games.filter((g)=>(g.role || "batter") === "batter");
 const pitcherGames = games.filter((g)=>(g.role || "batter") === "pitcher");
+const activeSectionId = document.querySelector(".section.active")?.id || "profileSection";
+const shouldRenderStats = activeSectionId === "statsSection";
+const shouldRenderCalendar = activeSectionId === "calendarSection";
+const shouldRenderProfile = activeSectionId === "profileSection";
 
 const gameCardTitle = document.querySelector("#gameAvgChart")?.closest(".card")?.querySelector("h3");
 const cumCardTitle = document.querySelector("#cumulativeAvgChart")?.closest(".card")?.querySelector("h3");
 
-if(statsMode === "pitcher"){
+if(shouldRenderStats && statsMode === "pitcher"){
   if(seasonStatsEl) seasonStatsEl.className = "stat-grid pitcher-template";
   if(gameCardTitle) gameCardTitle.innerText = "경기별 ERA";
   if(cumCardTitle) cumCardTitle.innerText = "누적 ERA";
@@ -4975,7 +5044,7 @@ if(statsMode === "pitcher"){
   }
 
   renderCharts(gameEra,cumEra,highlightIndex,{min:0,max:12,baseline:3.5,reverse:true});
-}else{
+}else if(shouldRenderStats){
   if(seasonStatsEl) seasonStatsEl.className = "stat-grid";
   if(gameCardTitle) gameCardTitle.innerText = "경기별 타율";
   if(cumCardTitle) cumCardTitle.innerText = "누적 타율";
@@ -5059,13 +5128,14 @@ if(statsMode === "pitcher"){
   renderCharts(gameAvg,cumulativeAvg,highlightIndex,{min:0,max:0.6,baseline:0.3,reverse:false});
 }
 
-renderWeeklyReport(batterGames,pitcherGames);
-renderCalendar();
-renderProfile();
+if(shouldRenderStats) renderWeeklyReport(batterGames,pitcherGames);
+if(shouldRenderCalendar) renderCalendar();
+if(shouldRenderProfile) renderProfile();
 }
 
 let chart1,chart2;
 function renderCharts(g,c,hIndex,opts){
+if(typeof Chart === "undefined") return;
 if(chart1)chart1.destroy();
 if(chart2)chart2.destroy();
 
@@ -5143,12 +5213,13 @@ function initManualSponsoredAds(){
  if(!/^\d+$/.test(MANUAL_SPONSORED_SLOT)) return;
  document.querySelectorAll(".sponsored-placeholder").forEach((wrap)=>{
   if(wrap.querySelector("ins.adsbygoogle")) return;
+  const compact = !!wrap.closest(".sponsored-slot.compact");
   const ad = document.createElement("ins");
   ad.className = "adsbygoogle";
   ad.style.display = "block";
   ad.setAttribute("data-ad-client", "ca-pub-8474076663123407");
   ad.setAttribute("data-ad-slot", MANUAL_SPONSORED_SLOT);
-  ad.setAttribute("data-ad-format", "auto");
+  ad.setAttribute("data-ad-format", compact ? "horizontal" : "auto");
   ad.setAttribute("data-full-width-responsive", "true");
   wrap.appendChild(ad);
   try{
