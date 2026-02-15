@@ -1,13 +1,15 @@
-const CACHE_NAME = "statdeck-v13";
+const CACHE_NAME = "statdeck-v14";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./analytics.html",
+  "./contact.html",
   "./favicon.svg",
   "./manifest.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon-180.png",
+  "./images/og-cover-1200x630.png",
   "./privacy.html",
   "./terms.html",
   "./robots.txt",
