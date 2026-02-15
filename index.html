@@ -3255,6 +3255,9 @@ function closeInstallGuideModal(){
   if(!modal) return;
   modal.classList.remove("active");
   modal.style.display = "";
+  modal.style.opacity = "";
+  modal.style.pointerEvents = "";
+  modal.style.visibility = "";
 }
 
 function openInstallGuideModal(){
@@ -3284,6 +3287,10 @@ function openInstallGuideModal(){
 
   // Force visible state for mobile browsers/webviews that occasionally ignore class-only transitions.
   modal.style.display = "flex";
+  modal.style.visibility = "visible";
+  modal.style.opacity = "1";
+  modal.style.pointerEvents = "auto";
+  modal.classList.add("active");
   requestAnimationFrame(()=>modal.classList.add("active"));
   return true;
 }
@@ -3301,14 +3308,21 @@ function openInstallGuideFallbackAlert(){
 }
 
 async function triggerAppInstall(){
+  const status = document.getElementById("onboardInstallStatus");
+  if(status) status.innerText = "설치 안내를 여는 중...";
+
   // In-app webviews (Kakao, etc.) cannot reliably trigger install prompts.
   if(isInAppWebView()){
-    if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
+    if(!openInstallGuideModal()){
+      openInstallGuideFallbackAlert();
+    }
     return;
   }
   // iOS Safari does not support beforeinstallprompt; always show manual guide.
   if(isIOSDevice()){
-    if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
+    if(!openInstallGuideModal()){
+      openInstallGuideFallbackAlert();
+    }
     return;
   }
   if(isStandaloneMode()){
@@ -3320,7 +3334,6 @@ async function triggerAppInstall(){
       deferredInstallPrompt.prompt();
       const choice = await deferredInstallPrompt.userChoice;
       if(choice && choice.outcome === "accepted"){
-        const status = document.getElementById("onboardInstallStatus");
         if(status) status.innerText = "설치 완료 후 홈 화면의 StatDeck 앱으로 다시 열어주세요.";
         deferredInstallPrompt = null;
         updateOnboardingInstallStep();
@@ -3328,7 +3341,9 @@ async function triggerAppInstall(){
       }
     }catch(e){}
   }
-  if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
+  if(!openInstallGuideModal()){
+    openInstallGuideFallbackAlert();
+  }
 }
 
 function onboardingContinueAfterInstallCheck(){
