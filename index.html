@@ -5137,10 +5137,10 @@ chart2=new Chart(cumulativeAvgChart,{
 });
 }
 
-const MANUAL_SPONSORED_SLOT = "0000000000";
+const MANUAL_SPONSORED_SLOT = "5015555626";
 
 function initManualSponsoredAds(){
- if(!/^\d+$/.test(MANUAL_SPONSORED_SLOT) || MANUAL_SPONSORED_SLOT === "0000000000") return;
+ if(!/^\d+$/.test(MANUAL_SPONSORED_SLOT)) return;
  document.querySelectorAll(".sponsored-placeholder").forEach((wrap)=>{
   if(wrap.querySelector("ins.adsbygoogle")) return;
   const ad = document.createElement("ins");
