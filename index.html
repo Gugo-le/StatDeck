@@ -4001,8 +4001,8 @@ function renderTodayScheduleBanner(){
     banner.innerHTML = "";
     return;
   }
-  const names = list.map((item)=>`${item.opponent}전`).join(", ");
-  banner.innerHTML = `<strong>오늘 경기 알림</strong><p>오늘은 ${names} 입니다.${list.length > 1 ? " 일정 순서를 다시 확인해 주세요." : ""}</p>`;
+  const names = list.map((item)=>item.opponent).join(", ");
+  banner.innerHTML = `<strong>오늘 경기 알림</strong><p>오늘은 ${names}와의 경기가 있는 날입니다.${list.length > 1 ? " 일정 순서를 다시 확인해 주세요." : ""}</p>`;
   banner.style.display = "block";
 }
 
