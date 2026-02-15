@@ -12,7 +12,7 @@
 <meta name="google-adsense-account" content="ca-pub-8474076663123407">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8474076663123407" crossorigin="anonymous"></script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="apple-touch-icon" href="favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
@@ -720,6 +720,26 @@ body{
  margin-top:8px;
 }
 
+.ad-card{
+ margin-top:10px;
+ padding:12px;
+ border:1px solid #2a2a2a;
+ border-radius:14px;
+ background:#111;
+}
+
+.ad-label{
+ font-size:10px;
+ letter-spacing:.5px;
+ color:#7f7f7f;
+ margin-bottom:6px;
+}
+
+.manual-ad{
+ display:block;
+ min-height:90px;
+}
+
 .legal-links{
  margin:6px 0 14px;
  display:flex;
@@ -1324,6 +1344,10 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 .note-modal.active{
  opacity:1;
  pointer-events:auto;
+}
+
+#installGuideModal{
+ z-index:11050;
 }
 
 .note-modal-content{
@@ -2423,6 +2447,13 @@ body.light .legal-links a:hover{
  color:#6d543a;
  border-bottom-color:rgba(109,84,58,0.65);
 }
+body.light .ad-card{
+ border-color:#ddc8aa;
+ background:#fbf1df;
+}
+body.light .ad-label{
+ color:#8b7458;
+}
 </style>
 </head>
 <body class="light">
@@ -2708,9 +2739,13 @@ body.light .legal-links a:hover{
 <button id="saveGameBtn" onclick="saveGame()">경기 추가</button>
 </div>
 
-<div class="legal-links">
-  <a href="privacy.html">개인정보처리방침</a>
-  <a href="terms.html">이용약관</a>
+<div class="ad-card">
+  <div class="ad-label">SPONSORED</div>
+  <ins class="adsbygoogle manual-ad"
+       data-ad-client="ca-pub-8474076663123407"
+       data-ad-slot="1111111111"
+       data-ad-format="horizontal"
+       data-full-width-responsive="true"></ins>
 </div>
 
 </div>
@@ -2745,6 +2780,15 @@ body.light .legal-links a:hover{
 <div id="weeklyReport" class="weekly-report"></div>
 </div>
 
+<div class="ad-card">
+  <div class="ad-label">SPONSORED</div>
+  <ins class="adsbygoogle manual-ad"
+       data-ad-client="ca-pub-8474076663123407"
+       data-ad-slot="2222222222"
+       data-ad-format="horizontal"
+       data-full-width-responsive="true"></ins>
+</div>
+
 </div>
 
 <div id="calendarSection" class="section">
@@ -2763,6 +2807,15 @@ body.light .legal-links a:hover{
 </div>
 <div id="calendar" class="calendar modern"></div>
 <div id="dayRecord" class="day-record"></div>
+</div>
+
+<div class="ad-card">
+  <div class="ad-label">SPONSORED</div>
+  <ins class="adsbygoogle manual-ad"
+       data-ad-client="ca-pub-8474076663123407"
+       data-ad-slot="3333333333"
+       data-ad-format="horizontal"
+       data-full-width-responsive="true"></ins>
 </div>
 
 </div>
@@ -2796,6 +2849,14 @@ body.light .legal-links a:hover{
   </div>
 
   <div id="quoteList" class="quote-grid modern"></div>
+  <div class="ad-card">
+    <div class="ad-label">SPONSORED</div>
+    <ins class="adsbygoogle manual-ad"
+         data-ad-client="ca-pub-8474076663123407"
+         data-ad-slot="4444444444"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+  </div>
   <div id="noteModal" class="note-modal">
   <div class="note-modal-content premium-modal">
     <div class="modal-top">
@@ -2896,8 +2957,18 @@ body.light .legal-links a:hover{
       <div id="recordManageList" class="record-manage-list"></div>
     </div>
   </div>
-</div>
-
+  <div class="ad-card" style="margin:0 0 10px;">
+    <div class="ad-label">SPONSORED</div>
+    <ins class="adsbygoogle manual-ad"
+         data-ad-client="ca-pub-8474076663123407"
+         data-ad-slot="5555555555"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+  </div>
+  <div class="legal-links">
+    <a href="privacy.html">개인정보처리방침</a>
+    <a href="terms.html">이용약관</a>
+  </div>
 </div>
 
 <div id="badgeGuideModal" class="note-modal" onclick="closeBadgeGuideModal()">
@@ -3183,6 +3254,19 @@ function setupAppInstall(){
   });
 }
 
+function setupManualAds(){
+  const units = document.querySelectorAll(".manual-ad");
+  units.forEach((unit)=>{
+    if(unit.dataset.initialized === "true") return;
+    if(window.adsbygoogle && Array.isArray(window.adsbygoogle)){
+      try{
+        window.adsbygoogle.push({});
+        unit.dataset.initialized = "true";
+      }catch(e){}
+    }
+  });
+}
+
 async function initializeApp(){
   const savedTheme = await loadStoreValue("uiTheme", "light", ()=>readLegacyText("uiTheme", "light"));
   applyTheme(savedTheme, false);
@@ -3212,6 +3296,7 @@ async function initializeApp(){
   renderQuotes();
   render();
   setupAppInstall();
+  setupManualAds();
   setupOnboardingIfNeeded();
 }
 

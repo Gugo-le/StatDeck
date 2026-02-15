@@ -1,10 +1,16 @@
-const CACHE_NAME = "statdeck-v1";
+const CACHE_NAME = "statdeck-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./analytics.html",
   "./favicon.svg",
-  "./manifest.json"
+  "./manifest.json",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./icons/apple-touch-icon-180.png",
+  "./privacy.html",
+  "./terms.html",
+  "./ads.txt"
 ];
 
 self.addEventListener("install", (event) => {
