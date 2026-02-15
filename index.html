@@ -3211,20 +3211,27 @@ function openInstallGuideModal(){
 }
 
 async function triggerAppInstall(){
+  // iOS Safari does not support beforeinstallprompt; always show manual guide.
+  if(isIOSDevice()){
+    openInstallGuideModal();
+    return;
+  }
   if(isStandaloneMode()){
     onboardingStep("start");
     return;
   }
   if(deferredInstallPrompt){
-    deferredInstallPrompt.prompt();
-    const choice = await deferredInstallPrompt.userChoice;
-    if(choice.outcome === "accepted"){
-      const status = document.getElementById("onboardInstallStatus");
-      if(status) status.innerText = "설치 완료 후 홈 화면의 StatDeck 앱으로 다시 열어주세요.";
-    }
-    deferredInstallPrompt = null;
-    updateOnboardingInstallStep();
-    return;
+    try{
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      if(choice && choice.outcome === "accepted"){
+        const status = document.getElementById("onboardInstallStatus");
+        if(status) status.innerText = "설치 완료 후 홈 화면의 StatDeck 앱으로 다시 열어주세요.";
+        deferredInstallPrompt = null;
+        updateOnboardingInstallStep();
+        return;
+      }
+    }catch(e){}
   }
   openInstallGuideModal();
 }
