@@ -1,4 +1,4 @@
-const CACHE_NAME = "statdeck-v39";
+const CACHE_NAME = "statdeck-v40";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -13,6 +13,7 @@ const APP_SHELL = [
   "./images/og-cover-1200x630.png",
   "./privacy.html",
   "./terms.html",
+  "./.well-known/assetlinks.json",
   "./robots.txt",
   "./sitemap.xml",
   "./ads.txt"
