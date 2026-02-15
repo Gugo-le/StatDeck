@@ -1,6 +1,11 @@
+User-agent: Yeti
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
 User-agent: *
 Allow: /
-Sitemap: https://statdeckbb.vercel.app/sitemap.xml
 
-# Private app-like paths are currently not used.
-# Add Disallow rules here only when needed.
+Host: statdeckbb.vercel.app
+Sitemap: https://statdeckbb.vercel.app/sitemap.xml
