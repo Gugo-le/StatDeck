@@ -719,6 +719,14 @@ button{
  margin-top:10px;
 }
 
+.profile-share-row{
+ margin-top:8px;
+}
+
+.profile-share-row .upload-btn{
+ width:100%;
+}
+
 .upload-btn{
  width:100%;
  margin-top:0;
@@ -3164,6 +3172,9 @@ body.light .sponsored-placeholder{
         <button class="upload-btn" onclick="toggleProfileEditor(true)">프로필 수정하기</button>
         <button class="upload-btn" onclick="startPositionEdit()">포지션 수정</button>
       </div>
+      <div class="profile-share-row">
+        <button class="upload-btn" onclick="copyInviteLink()">친구에게 공유하기</button>
+      </div>
 
       <div id="profileEditorPanel" class="profile-editor hidden">
         <div class="profile-label">닉네임</div>
@@ -4701,6 +4712,49 @@ function closeBadgeGuideModal(){
   const modal = document.getElementById("badgeGuideModal");
   if(!modal) return;
   modal.classList.remove("active");
+}
+
+async function copyInviteLink(){
+  const appUrl = "https://statdeckbb.vercel.app/";
+  const sender = (profileData?.name || "StatDeck 유저").trim() || "StatDeck 유저";
+  const message = `${sender}님이 StatDeck을 공유했어요!\n야구 기록 + AI 분석을 한 번에 써보세요.\n${appUrl}`;
+
+  try{
+    await navigator.clipboard.writeText(message);
+    alert("초대 문구가 복사됐어요.\n카톡/문자에 붙여넣어 공유하면 됩니다.");
+    return;
+  }catch(e){}
+
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title: "StatDeck",
+        text: message,
+        url: appUrl
+      });
+      return;
+    }catch(e){}
+  }
+
+  const temp = document.createElement("textarea");
+  temp.value = message;
+  temp.setAttribute("readonly","true");
+  temp.style.position = "fixed";
+  temp.style.opacity = "0";
+  temp.style.pointerEvents = "none";
+  document.body.appendChild(temp);
+  temp.select();
+  let copied = false;
+  try{
+    copied = document.execCommand("copy");
+  }catch(e){}
+  document.body.removeChild(temp);
+
+  if(copied){
+    alert("초대 문구가 복사됐어요.\n카톡/문자에 붙여넣어 공유하면 됩니다.");
+  }else{
+    alert(`복사 권한이 없어 링크만 안내합니다:\n${appUrl}`);
+  }
 }
 
 function renderCalendar(){
