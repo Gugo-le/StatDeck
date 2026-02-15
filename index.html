@@ -827,6 +827,8 @@ body::before{
  right:16px;
  display:flex;
  justify-content:flex-end;
+ align-items:center;
+ gap:6px;
 }
 .theme-toggle-btn{
  width:auto;
@@ -839,6 +841,24 @@ body::before{
  color:#ececec;
  font-size:10px;
  font-weight:700;
+}
+.install-cta-btn{
+ width:auto;
+ min-width:84px;
+ margin-top:0;
+ padding:6px 10px;
+ border-radius:999px;
+ border:1px solid #3c495b;
+ background:linear-gradient(160deg,#1a2738,#24354d);
+ color:#ecf3ff;
+ font-size:10px;
+ font-weight:700;
+ display:none;
+}
+body.desktop-install-ready .install-cta-btn{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
 }
 .container{padding:16px;max-width:520px;margin:auto;padding-bottom:100px}
 .card{background:#111;padding:16px;border-radius:18px;margin-bottom:16px;border:1px solid #222}
@@ -2083,6 +2103,11 @@ body.light .theme-toggle-btn{
  background:#fff9ee;
  color:#5e4830;
 }
+body.light .install-cta-btn{
+ border-color:#cdb89a;
+ background:linear-gradient(160deg,#f7ead4,#eedec4);
+ color:#5a442c;
+}
 body.light .card,
 body.light #statsSection .card,
 body.light #calendarSection .card,
@@ -2672,6 +2697,7 @@ body.light .ad-label{
   </h1>
   <div class="header-sub">Track. Analyze. Dominate the Diamond.</div>
   <div class="header-actions">
+    <button id="desktopInstallBtn" type="button" class="install-cta-btn" onclick="triggerAppInstall()">앱 설치</button>
     <button id="themeToggleBtn" type="button" class="theme-toggle-btn" onclick="toggleTheme()">다크 모드</button>
   </div>
 </div>
@@ -3232,6 +3258,23 @@ function isStandaloneMode(){
   return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
 }
 
+function isDesktopLikeDevice(){
+  return window.matchMedia("(min-width: 900px)").matches && !isInAppWebView();
+}
+
+function updateDesktopInstallButton(){
+  const btn = document.getElementById("desktopInstallBtn");
+  if(!btn) return;
+  const show = isDesktopLikeDevice() && !isStandaloneMode();
+  document.body.classList.toggle("desktop-install-ready", show);
+  if(!show){
+    btn.setAttribute("aria-hidden", "true");
+    return;
+  }
+  btn.removeAttribute("aria-hidden");
+  btn.innerText = deferredInstallPrompt ? "앱 설치" : "설치 방법";
+}
+
 function updateOnboardingInstallStep(){
   const sub = document.getElementById("onboardInstallSub");
   const btn = document.getElementById("onboardInstallBtn");
@@ -3242,12 +3285,13 @@ function updateOnboardingInstallStep(){
     btn.innerText = "외부 브라우저 열기 안내";
   }else if(isIOSDevice()){
     sub.innerText = "iPhone에서는 설치 버튼 후 안내대로 `홈 화면에 추가`를 진행해 주세요.";
-    btn.innerText = "설치 방법 보기";
+    btn.innerText = "홈 화면에 추가 방법";
   }else{
     sub.innerText = "야구장에서 빠르게 쓰려면 앱처럼 설치하는 걸 권장합니다.";
     btn.innerText = deferredInstallPrompt ? "앱 설치하기" : "설치 방법 보기";
   }
   status.innerText = "";
+  updateDesktopInstallButton();
 }
 
 function closeInstallGuideModal(){
@@ -3318,7 +3362,9 @@ function openInstallGuideFallbackAlert(){
 
 async function triggerAppInstall(){
   const status = document.getElementById("onboardInstallStatus");
-  if(status) status.innerText = "설치 안내를 여는 중...";
+  if(status){
+    status.innerText = isIOSDevice() ? "홈 화면 추가 안내를 여는 중..." : "설치 안내를 여는 중...";
+  }
 
   // In-app webviews (Kakao, etc.) cannot reliably trigger install prompts.
   if(isInAppWebView()){
@@ -3379,6 +3425,8 @@ function setupAppInstall(){
     deferredInstallPrompt = null;
     updateOnboardingInstallStep();
   });
+  window.addEventListener("resize", updateDesktopInstallButton);
+  updateDesktopInstallButton();
 }
 
 function setupManualAds(){
