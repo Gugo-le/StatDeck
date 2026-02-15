@@ -852,6 +852,12 @@ button{
  color:#7f7f7f;
 }
 
+.sponsored-placeholder .adsbygoogle{
+ display:block;
+ width:100%;
+ min-height:90px;
+}
+
 .legal-links{
  margin:6px 0 14px;
  display:flex;
@@ -5131,6 +5137,26 @@ chart2=new Chart(cumulativeAvgChart,{
 });
 }
 
+const MANUAL_SPONSORED_SLOT = "0000000000";
+
+function initManualSponsoredAds(){
+ if(!/^\d+$/.test(MANUAL_SPONSORED_SLOT) || MANUAL_SPONSORED_SLOT === "0000000000") return;
+ document.querySelectorAll(".sponsored-placeholder").forEach((wrap)=>{
+  if(wrap.querySelector("ins.adsbygoogle")) return;
+  const ad = document.createElement("ins");
+  ad.className = "adsbygoogle";
+  ad.style.display = "block";
+  ad.setAttribute("data-ad-client", "ca-pub-8474076663123407");
+  ad.setAttribute("data-ad-slot", MANUAL_SPONSORED_SLOT);
+  ad.setAttribute("data-ad-format", "auto");
+  ad.setAttribute("data-full-width-responsive", "true");
+  wrap.appendChild(ad);
+  try{
+   (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }catch(e){}
+ });
+}
+
 window.addEventListener('load',()=>{
  setTimeout(()=>{
    document.getElementById('splash').classList.add('hide');
@@ -5138,6 +5164,7 @@ window.addEventListener('load',()=>{
 });
 
 initializeApp();
+initManualSponsoredAds();
 function openModal(text){
   document.getElementById("noteModalText").innerText = text;
   document.getElementById("noteModal").classList.add("active");
