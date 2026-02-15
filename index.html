@@ -2949,6 +2949,9 @@ body.light .ad-label{
         <span class="profile-ai-sub">폼 분석 · 슬럼프 감지 · 다음 경기 예측 보기</span>
       </button>
 
+      <div class="profile-label">PHOTO GRID</div>
+      <div id="profileHomeGrid" class="profile-grid"></div>
+
       <button class="upload-btn" style="margin-top:10px;" onclick="toggleProfileEditor(true)">프로필 수정하기</button>
 
       <div id="profileEditorPanel" class="profile-editor hidden">
@@ -3222,12 +3225,13 @@ function closeInstallGuideModal(){
   const modal = document.getElementById("installGuideModal");
   if(!modal) return;
   modal.classList.remove("active");
+  modal.style.display = "";
 }
 
 function openInstallGuideModal(){
   const modal = document.getElementById("installGuideModal");
   const list = document.getElementById("installGuideList");
-  if(!modal || !list) return;
+  if(!modal || !list) return false;
 
   if(isInAppWebView()){
     list.innerHTML = `
@@ -3249,18 +3253,33 @@ function openInstallGuideModal(){
     `;
   }
 
-  modal.classList.add("active");
+  // Force visible state for mobile browsers/webviews that occasionally ignore class-only transitions.
+  modal.style.display = "flex";
+  requestAnimationFrame(()=>modal.classList.add("active"));
+  return true;
+}
+
+function openInstallGuideFallbackAlert(){
+  if(isInAppWebView()){
+    alert("앱 내 브라우저에서는 설치가 제한됩니다.\n메뉴에서 '브라우저로 열기' 후 Safari/Chrome에서 설치를 진행해 주세요.");
+    return;
+  }
+  if(isIOSDevice()){
+    alert("iPhone 설치 안내:\n1) 하단 공유 버튼\n2) '홈 화면에 추가'\n3) '추가' 선택");
+    return;
+  }
+  alert("브라우저 메뉴에서 '앱 설치' 또는 '홈 화면에 추가'를 선택해 주세요.");
 }
 
 async function triggerAppInstall(){
   // In-app webviews (Kakao, etc.) cannot reliably trigger install prompts.
   if(isInAppWebView()){
-    openInstallGuideModal();
+    if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
     return;
   }
   // iOS Safari does not support beforeinstallprompt; always show manual guide.
   if(isIOSDevice()){
-    openInstallGuideModal();
+    if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
     return;
   }
   if(isStandaloneMode()){
@@ -3280,7 +3299,7 @@ async function triggerAppInstall(){
       }
     }catch(e){}
   }
-  openInstallGuideModal();
+  if(!openInstallGuideModal()) openInstallGuideFallbackAlert();
 }
 
 function onboardingContinueAfterInstallCheck(){
@@ -3409,6 +3428,7 @@ function renderProfile(){
   const homePanel = document.getElementById("profileHomePanel");
   const managePanel = document.getElementById("profileManagePanel");
   const editorPanel = document.getElementById("profileEditorPanel");
+  const homeGrid = document.getElementById("profileHomeGrid");
   const grid = document.getElementById("profileGrid");
   const recordList = document.getElementById("recordManageList");
   if(!avatar || !namePreview || !bioPreview || !seasonNote || !streakLineEl || !badgeCountEl || !badgeListEl || !gamesCountEl || !metric1LabelEl || !metric2LabelEl || !avgEl || !abEl || !nameInput || !bioInput || !homeTabBtn || !manageTabBtn || !homePanel || !managePanel || !editorPanel || !grid || !recordList) return;
@@ -3467,6 +3487,7 @@ function renderProfile(){
   const photos = (profileData.photos || []).slice(0,9);
   if(!photos.length){
     grid.innerHTML = `<div class="profile-photo" style="display:flex;align-items:center;justify-content:center;color:#676767;font-size:11px;">사진 없음</div>`;
+    if(homeGrid) homeGrid.innerHTML = `<div class="profile-photo" style="display:flex;align-items:center;justify-content:center;color:#676767;font-size:11px;">업로드된 사진 없음</div>`;
   }else{
     grid.innerHTML = photos.map((src,idx)=>`
       <div class="profile-photo">
@@ -3474,6 +3495,13 @@ function renderProfile(){
         <button class="photo-remove" onclick="removeProfilePhoto(${idx})">✕</button>
       </div>
     `).join("");
+    if(homeGrid){
+      homeGrid.innerHTML = photos.map((src,idx)=>`
+        <div class="profile-photo">
+          <img src="${src}" alt="profile gallery photo ${idx+1}">
+        </div>
+      `).join("");
+    }
   }
 
   const recentGames = getCalendarGames()
