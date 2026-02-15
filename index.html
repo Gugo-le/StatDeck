@@ -3265,6 +3265,12 @@ function openInstallGuideModal(){
   const list = document.getElementById("installGuideList");
   if(!modal || !list) return false;
 
+  // Some mobile browsers/webviews clip fixed overlays if they stay inside section wrappers.
+  // Move the modal to body to guarantee viewport-level rendering.
+  if(modal.parentElement !== document.body){
+    document.body.appendChild(modal);
+  }
+
   if(isInAppWebView()){
     list.innerHTML = `
       <li>현재 앱 내 브라우저에서는 설치 팝업이 제한됩니다.</li>
@@ -3287,6 +3293,9 @@ function openInstallGuideModal(){
 
   // Force visible state for mobile browsers/webviews that occasionally ignore class-only transitions.
   modal.style.display = "flex";
+  modal.style.position = "fixed";
+  modal.style.inset = "0";
+  modal.style.zIndex = "2147483647";
   modal.style.visibility = "visible";
   modal.style.opacity = "1";
   modal.style.pointerEvents = "auto";
