@@ -55,14 +55,85 @@ a{color:#9ec7ff}
   padding:12px;
 }
 .cta{
-  display:inline-block;
-  margin-top:12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:44px;
   padding:10px 14px;
-  border:1px solid #3d4f67;
+  border:1px solid #3f526c;
   border-radius:12px;
   color:#e8f2ff;
   text-decoration:none;
-  background:linear-gradient(150deg,#1a2738,#24364d);
+  background:linear-gradient(150deg,#1c2c40,#2a3f59);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.2;
+  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.28);
+}
+.cta-row{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.cta-secondary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid #3b4657;
+  border-radius:12px;
+  color:#e8edf7;
+  text-decoration:none;
+  background:linear-gradient(150deg,#1a2330,#202d3f);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.2;
+  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.24);
+}
+.copy-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid #4a4a4a;
+  border-radius:12px;
+  color:#f0f0f0;
+  background:linear-gradient(150deg,#1d1d1d,#262626);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.2;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.24);
+}
+.cta:hover,
+.cta-secondary:hover,
+.copy-btn:hover{
+  transform:translateY(-1px);
+  border-color:#7a96bc;
+  box-shadow:0 10px 24px rgba(0,0,0,0.3);
+}
+.copy-btn:active,
+.cta:active,
+.cta-secondary:active{
+  transform:translateY(0);
+}
+@media (max-width:680px){
+  .cta-row{
+    grid-template-columns:1fr;
+  }
+}
+.copy-status{
+  margin-top:8px;
+  font-size:12px;
+  color:#9fc0e8;
+  min-height:18px;
 }
 .links{
   margin-top:18px;
@@ -101,7 +172,12 @@ a{color:#9ec7ff}
         <li>운영자: 구현승</li>
         <li>이메일: <a href="mailto:guhyunseung0718@gmail.com">guhyunseung0718@gmail.com</a></li>
       </ul>
-      <a class="cta" href="mailto:guhyunseung0718@gmail.com?subject=StatDeck%20문의">이메일로 문의하기</a>
+      <div class="cta-row">
+        <a class="cta" href="mailto:guhyunseung0718@gmail.com?subject=StatDeck%20문의">이메일로 문의하기</a>
+        <a class="cta-secondary" target="_blank" rel="noopener noreferrer" href="https://mail.google.com/mail/?view=cm&fs=1&to=guhyunseung0718@gmail.com&su=StatDeck%20%EB%AC%B8%EC%9D%98">Gmail로 문의하기</a>
+        <button class="copy-btn" type="button" onclick="copySupportEmail()">이메일 주소 복사</button>
+      </div>
+      <div class="copy-status" id="copyStatus"></div>
     </div>
 
     <h2>문의 시 포함하면 좋은 정보</h2>
@@ -120,5 +196,35 @@ a{color:#9ec7ff}
 
     <a class="back" href="index.html">← StatDeck으로 돌아가기</a>
   </div>
+  <script>
+    function copySupportEmail(){
+      const status = document.getElementById("copyStatus");
+      const email = "guhyunseung0718@gmail.com";
+      const done = ()=>{
+        if(status) status.textContent = "이메일 주소를 복사했습니다.";
+      };
+      const fail = ()=>{
+        if(status) status.textContent = "복사에 실패했습니다. 직접 선택해서 복사해 주세요.";
+      };
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(email).then(done).catch(fail);
+        return;
+      }
+      const ta = document.createElement("textarea");
+      ta.value = email;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try{
+        document.execCommand("copy");
+        done();
+      }catch(e){
+        fail();
+      }
+      document.body.removeChild(ta);
+    }
+  </script>
 </body>
 </html>
