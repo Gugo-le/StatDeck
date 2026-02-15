@@ -29,6 +29,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
 <style>
 *{box-sizing:border-box}
+:root{
+ --bg-0:#0f1115;
+ --bg-1:#141821;
+ --card:#171c26;
+ --card-soft:#1a202b;
+ --card-border:#2a3240;
+ --text:#eef1f5;
+ --muted:#9ea7b4;
+ --line:#303a49;
+}
 html{
  -webkit-text-size-adjust:100%;
  text-size-adjust:100%;
@@ -39,11 +49,17 @@ html{
 body{
  margin:0;
  font-family:'Inter',sans-serif;
- background:#000;
- color:#f5f5f5;
- padding:20px;
+ background:linear-gradient(180deg,var(--bg-0),var(--bg-1));
+ color:var(--text);
+ padding:20px 14px 28px;
  -webkit-font-smoothing:antialiased;
  text-rendering:optimizeLegibility;
+}
+.page-shell{
+ max-width:860px;
+ margin:0 auto;
+ position:relative;
+ z-index:1;
 }
 input,
 select,
@@ -67,59 +83,178 @@ button{
 }
 .header{
  text-align:center;
- margin-bottom:24px;
+ margin-bottom:18px;
+ padding:16px 14px;
+ border:1px solid var(--line);
+ border-radius:20px;
+ background:#141b25;
+ box-shadow:none;
 }
 .header h1{
  margin:0;
- font-size:22px;
+ font-size:25px;
  font-weight:800;
+ letter-spacing:.2px;
+ text-shadow:none;
 }
 .sub{
- font-size:12px;
- color:#888;
- margin-top:6px;
+ font-size:13px;
+ color:var(--muted);
+ margin-top:7px;
 }
 .card{
- background:#111;
- border:1px solid #222;
- border-radius:22px;
+ background:var(--card);
+ border:1px solid var(--card-border);
+ border-radius:20px;
  padding:20px;
- margin-bottom:18px;
- transition:transform .25s ease, box-shadow .25s ease;
+ margin-bottom:14px;
+ transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+ position:relative;
+ overflow:hidden;
 }
 .card:hover{
- transform:translateY(-4px);
- box-shadow:0 12px 30px rgba(0,0,0,0.5);
+ transform:translateY(-2px);
+ box-shadow:0 10px 20px rgba(0,0,0,0.2);
+ border-color:#374152;
 }
 .card h3{
  margin:0 0 14px 0;
- font-size:13px;
- color:#aaa;
- letter-spacing:0.5px;
+ font-size:12px;
+ color:#d8e0ef;
+ letter-spacing:.8px;
+ text-transform:uppercase;
 }
 .result{
  font-size:14px;
- line-height:1.7;
+ line-height:1.75;
+ color:#e8effc;
+ word-break:keep-all;
+}
+.card--hero{
+ border-color:#374152;
+ background:var(--card);
+}
+.card--hero .result{
+ font-size:18px;
+ font-weight:700;
+ text-align:center;
+ letter-spacing:.2px;
+}
+.card--score{
+ border-color:#374152;
+}
+.gauge-wrap{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ padding:4px 0 2px;
+}
+.score-sub{
+ text-align:center;
+ margin-top:8px;
+ color:#a8b2c0;
+ font-size:12px;
+}
+.analysis-grid{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:14px;
+ margin-bottom:14px;
+}
+.analysis-grid .card{
+ margin-bottom:0;
+}
+.confidence-row{
+ margin-top:10px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:8px;
+ flex-wrap:wrap;
+}
+.confidence-badge{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ padding:5px 11px;
+ border-radius:999px;
+ font-size:11px;
+ font-weight:700;
+ border:1px solid #4a5567;
+ background:#232b39;
+ color:#edf1f7;
+}
+.confidence-badge.low{
+ border-color:#6a4d52;
+ background:#2f2528;
+ color:#f3e7ea;
+}
+.confidence-badge.mid{
+ border-color:#66604c;
+ background:#2d2a21;
+ color:#f0ead9;
+}
+.confidence-badge.high{
+ border-color:#4c6156;
+ background:#223029;
+ color:#e2f0e8;
+}
+.priority-list{
+ margin:0;
+ padding-left:18px;
+ display:grid;
+ gap:8px;
+}
+.priority-list li{
+ font-size:13px;
+ color:#dfe7f6;
+}
+.condition-grid{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:10px;
+ margin-top:10px;
+}
+.condition-item{
+ border:1px solid #354154;
+ border-radius:12px;
+ background:var(--card-soft);
+ padding:10px;
+}
+.condition-name{
+ font-size:10px;
+ color:#a7b7cf;
+ letter-spacing:.6px;
+}
+.condition-value{
+ margin-top:4px;
+ font-size:12px;
+ color:#f0f5ff;
+ font-weight:600;
+}
+@media (max-width:560px){
+ .analysis-grid{grid-template-columns:1fr;gap:12px;}
+ .condition-grid{grid-template-columns:1fr;}
 }
 .footer{
- margin-top:30px;
+ margin-top:18px;
  text-align:center;
  font-size:12px;
- color:#555;
+ color:#95a8c5;
 }
 
 .sponsored-slot{
- margin-top:12px;
- padding:12px;
- border:1px solid #2a2a2a;
- border-radius:14px;
- background:#111;
+ margin-top:10px;
+ padding:13px;
+ border:1px solid var(--line);
+ border-radius:16px;
+ background:#141b25;
 }
 
 .sponsored-label{
  font-size:10px;
- letter-spacing:.5px;
- color:#7f7f7f;
+ letter-spacing:.8px;
+ color:#b3c2d9;
  margin-bottom:6px;
 }
 
@@ -130,8 +265,9 @@ button{
  display:flex;
  align-items:center;
  justify-content:center;
- font-size:11px;
- color:#7f7f7f;
+ font-size:12px;
+ color:#b4bfce;
+ background:transparent;
 }
 
 .legal-links{
@@ -140,54 +276,59 @@ button{
  justify-content:center;
  gap:10px;
  font-size:11px;
- color:#777;
+ color:#8ea1bf;
 }
 
 .legal-links a{
  color:inherit;
  text-decoration:none;
- border-bottom:1px solid rgba(119,119,119,0.45);
+ border-bottom:1px solid rgba(142,161,191,0.45);
 }
 
 .legal-links a:hover{
- color:#cfcfcf;
- border-bottom-color:rgba(207,207,207,0.65);
+ color:#dfe9f8;
+ border-bottom-color:rgba(223,233,248,0.65);
 }
 
 .back-btn{
  margin-top:14px;
  padding:10px 16px;
- background:#1c1c1c;
- border:1px solid #333;
+ background:#232d3d;
+ border:1px solid #455165;
  border-radius:14px;
- color:#fff;
+ color:#edf4ff;
  font-size:13px;
  cursor:pointer;
  transition:all 0.2s ease;
 }
 
 .back-btn:hover{
- background:#2a2a2a;
+ background:#2c3850;
  transform:translateY(-2px);
+}
+@media (max-width:560px){
+ .card{padding:16px}
+ .header{padding:14px 12px}
+ .header h1{font-size:22px}
 }
 </style>
 </head>
 <body>
-
+<div class="page-shell">
 <div class="header">
   <h1>🧠 StatDeck AI</h1>
   <div class="sub">폼 분석 · 슬럼프 감지 · 유형 분석</div>
   <button class="back-btn" onclick="location.href='index.html'">← 기록 페이지로</button>
 </div>
 
-<div class="card">
+<div class="card card--hero">
   <h3 id="pregameTitle">PRE-GAME PREDICTION</h3>
-  <div id="pregame" class="result" style="text-align:center;font-size:18px;font-weight:600"></div>
+  <div id="pregame" class="result"></div>
 </div>
 
-<div class="card">
+<div class="card card--score">
   <h3 id="scoreTitle">SCOUT SCORE</h3>
-  <div style="display:flex;justify-content:center;align-items:center;">
+  <div class="gauge-wrap">
     <svg width="180" height="180" viewBox="0 0 180 180">
       <circle cx="90" cy="90" r="70" stroke="#222" stroke-width="14" fill="none"/>
       <circle id="gauge" cx="90" cy="90" r="70" 
@@ -201,10 +342,15 @@ button{
     </svg>
   </div>
   <div id="scoreMsg" class="result" style="text-align:center;margin-top:10px"></div>
-  <div id="mseDisplay" class="result" style="text-align:center;margin-top:6px;font-size:12px;color:#888"></div>
-  <div id="modelMeta" class="result" style="text-align:center;margin-top:4px;font-size:11px;color:#666"></div>
+  <div class="confidence-row">
+    <span id="confidenceBadge" class="confidence-badge">신뢰도 확인 중</span>
+    <span id="confidenceText" class="result score-sub">데이터 품질 계산 중</span>
+  </div>
+  <div id="mseDisplay" class="result score-sub" style="margin-top:6px"></div>
+  <div id="modelMeta" class="result score-sub" style="margin-top:4px;font-size:11px"></div>
 </div>
 
+<div class="analysis-grid">
 <div class="card">
   <h3 id="recentTitle">최근 5경기 분석</h3>
   <div id="recentAnalysis" class="result"></div>
@@ -220,9 +366,25 @@ button{
   <div id="typeAnalysis" class="result"></div>
 </div>
 
+<div class="card">
+  <h3>개선 우선순위 Top 3</h3>
+  <ol id="priorityList" class="priority-list"></ol>
+</div>
+
+<div class="card">
+  <h3>컨디션 연동 인사이트</h3>
+  <div id="conditionInsight" class="result"></div>
+</div>
+
+<div class="card">
+  <h3>다음 경기 운영 포인트</h3>
+  <div id="gamePlanInsight" class="result"></div>
+</div>
+</div>
+
 <div class="sponsored-slot">
   <div class="sponsored-label">SPONSORED</div>
-  <div class="sponsored-placeholder">광고 영역</div>
+  <div class="sponsored-placeholder"></div>
 </div>
 
 <div class="footer">by StatDeck AI Engine</div>
@@ -231,6 +393,7 @@ button{
   <a href="privacy.html">개인정보처리방침</a>
   <a href="terms.html">이용약관</a>
   <a href="guide.html">사용설명서</a>
+</div>
 </div>
 
 <script>
@@ -314,6 +477,12 @@ function setDataInsufficient(message){
  document.getElementById('recentAnalysis').innerHTML = "데이터 부족";
  document.getElementById('slumpAnalysis').innerHTML = "데이터 부족";
  document.getElementById('typeAnalysis').innerHTML = "데이터 부족";
+ document.getElementById('priorityList').innerHTML = "<li>데이터 부족</li>";
+ document.getElementById('conditionInsight').innerHTML = "데이터 부족";
+ document.getElementById('gamePlanInsight').innerHTML = "데이터 부족";
+ document.getElementById('confidenceBadge').className = "confidence-badge low";
+ document.getElementById('confidenceBadge').textContent = "신뢰도 낮음";
+ document.getElementById('confidenceText').textContent = "최소 5경기 이상 누적 필요";
 }
 
 function setGauge(score, message){
@@ -337,6 +506,102 @@ function getPitchMaxVelocities(game){
   game.maxVeloFastball, game.maxVeloTwoSeam, game.maxVeloCutter, game.maxVeloSlider, game.maxVeloSweeper,
   game.maxVeloCurve, game.maxVeloChangeup, game.maxVeloSplitter, game.maxVeloFork
  ].map((v)=>+v || 0).filter((v)=>v > 0);
+}
+
+function setConfidence(gamesCount){
+ const badge = document.getElementById("confidenceBadge");
+ const text = document.getElementById("confidenceText");
+ if(!badge || !text) return;
+ if(gamesCount >= 15){
+  badge.className = "confidence-badge high";
+  badge.textContent = "신뢰도 높음";
+  text.textContent = `표본 ${gamesCount}경기 · 추세 판단 신뢰도 양호`;
+  return;
+ }
+ if(gamesCount >= 8){
+  badge.className = "confidence-badge mid";
+  badge.textContent = "신뢰도 보통";
+  text.textContent = `표본 ${gamesCount}경기 · 추가 누적 시 정확도 향상`;
+  return;
+ }
+ badge.className = "confidence-badge low";
+ badge.textContent = "신뢰도 낮음";
+ text.textContent = `표본 ${gamesCount}경기 · 최소 8경기 이상 권장`;
+}
+
+function renderPriorities(items){
+ const list = document.getElementById("priorityList");
+ if(!list) return;
+ if(!items || !items.length){
+  list.innerHTML = "<li>현재 뚜렷한 보완 포인트가 적습니다. 루틴 유지 중심으로 운영하세요.</li>";
+  return;
+ }
+ list.innerHTML = items.slice(0,3).map((x)=>`<li>${x}</li>`).join("");
+}
+
+function renderConditionInsight(games, role){
+ const el = document.getElementById("conditionInsight");
+ if(!el) return;
+ const conds = ["good","normal","bad"];
+ const labels = {good:"좋음", normal:"보통", bad:"나쁨"};
+ const entries = conds.map((key)=>{
+  const list = games.filter((g)=>(g.condition || "normal") === key);
+  if(!list.length) return null;
+  if(role === "pitcher"){
+   const outs = list.reduce((s,g)=>s + (g.ipOuts || 0), 0);
+   const er = list.reduce((s,g)=>s + (g.er || 0), 0);
+   const hits = list.reduce((s,g)=>s + (g.pHits || 0), 0);
+   const walks = list.reduce((s,g)=>s + (g.pBb || 0) + (g.pHbp || 0), 0);
+   const era = outs ? ((er*27)/outs).toFixed(2) : "0.00";
+   const whip = outs ? ((hits+walks)/((outs/3)||1)).toFixed(2) : "0.00";
+   return {label: labels[key], value: `ERA ${era} · WHIP ${whip}`};
+  }
+  const ab = list.reduce((s,g)=>s + (g.ab || 0), 0);
+  const hits = list.reduce((s,g)=>s + (g.hits || 0), 0);
+  const bb = list.reduce((s,g)=>s + (g.bb || 0), 0);
+  const hbp = list.reduce((s,g)=>s + (g.hbp || 0), 0);
+  const pa = list.reduce((s,g)=>s + ((g.ab || 0) + (g.bb || 0) + (g.hbp || 0)), 0);
+  const avg = ab ? (hits/ab).toFixed(3) : "0.000";
+  const obp = pa ? ((hits+bb+hbp)/pa).toFixed(3) : "0.000";
+  return {label: labels[key], value: `AVG ${avg} · OBP ${obp}`};
+ }).filter(Boolean);
+
+ if(!entries.length){
+  el.innerHTML = "컨디션 데이터가 부족합니다.";
+  return;
+ }
+
+ el.innerHTML = `
+  <div class="condition-grid">
+    ${entries.map((x)=>`
+      <div class="condition-item">
+        <div class="condition-name">${x.label}</div>
+        <div class="condition-value">${x.value}</div>
+      </div>
+    `).join("")}
+  </div>
+  <div style="margin-top:8px;font-size:12px;color:#9a9a9a;">컨디션 체크를 계속 누적하면 경기 전 루틴 설계 정확도가 올라갑니다.</div>
+ `;
+}
+
+function renderGamePlanInsight(role, metrics){
+ const el = document.getElementById("gamePlanInsight");
+ if(!el) return;
+
+ if(role === "pitcher"){
+  const points = [];
+  points.push(metrics.nextEra > 4.5 ? "1. 초반 9타자 구간은 코너 위주로 안전 운영" : "1. 초반 9타자 구간부터 승부구 비율 적극 운영");
+  points.push(metrics.meanWhip > 1.4 ? "2. 볼넷/사구 합계 목표를 경기당 2개 이하로 제한" : "2. 유리카운트에서 결정구 비율을 유지해 타자 카운트 선점");
+  points.push(metrics.meanKRate < 0.18 ? "3. 2스트라이크 이후 헛스윙 유도 구종 사용 빈도 증가" : "3. 삼진이 필요한 상황에선 주력 결정구 존 경계 공략");
+  el.innerHTML = points.join("<br>");
+  return;
+ }
+
+ const points = [];
+ points.push(metrics.nextAvg < 0.24 ? "1. 첫 타석은 강한 스윙보다 컨택 우선으로 타이밍 확보" : "1. 초반 타석부터 유리카운트 직구 공략 비율 유지");
+ points.push(metrics.obp < 0.33 ? "2. 볼카운트 1-0/2-1에서 출루 선택(볼 고르기) 비율 확대" : "2. 출루 흐름 유지를 위해 루상 상황별 진루타 우선");
+ points.push(metrics.slope < 0 ? "3. 최근 하락세 구간이므로 타석 루틴(호흡-시선-스타트) 고정" : "3. 현재 상승세 유지 위해 타석 전 루틴 템포를 동일하게 유지");
+ el.innerHTML = points.join("<br>");
 }
 
 async function analyzeBatter(dataGames, position){
@@ -395,6 +660,7 @@ async function analyzeBatter(dataGames, position){
  const consistency = Math.max(0, 1 - std*5);
  const obp = dataGames.reduce((s,g)=>s+((g.hits||0)+(g.bb||0)),0) / (dataGames.reduce((s,g)=>s+((g.ab||0)+(g.bb||0)+(g.hbp||0)),0) || 1);
  const score = Math.min(100, Math.max(0, Math.round((meanY*130)+(obp*100)+(nextAvg*120)+(consistency*80)+(slope*500))));
+ setConfidence(dataGames.length);
 
  setGauge(score, score>=80 ? "⭐ 타자 퍼포먼스 우수" : (score>=60 ? "📈 타자 성장 구간" : "⚠️ 타격 보완 필요"));
  document.getElementById('recentAnalysis').innerHTML = slope > 0 ? `📊 상승 기울기 (${slope.toFixed(4)})` : `📉 하락 기울기 (${slope.toFixed(4)})`;
@@ -403,6 +669,15 @@ async function analyzeBatter(dataGames, position){
  const typeIndex = isoArr[isoArr.length-1] > 0.200 ? 0 : (nextAvg > 0.320 ? 1 : 2);
  const typeText = ["💥 파워 히터","🎯 교타형","⚖️ 밸런스형"][typeIndex];
  document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}`;
+ const priorities = [];
+ if(obp < 0.33) priorities.push("출루율 개선: 볼넷/사구 포함 출루를 경기당 1회 이상 목표로 설정");
+ if(meanY < 0.270) priorities.push("컨택 품질 강화: 초구 스윙 선택보다 유리카운트 전개 비율을 늘리기");
+ if(slope < 0) priorities.push("하락 추세 대응: 최근 3경기 타격 루틴(템포/시선고정) 고정");
+ if(std > 0.085) priorities.push("기복 완화: 타석 전 체크리스트를 고정해 일관성 확보");
+ if(nextAvg < 0.240) priorities.push("다음 경기 대비: 첫 타석에서 안정 스윙으로 타이밍 재설정");
+ renderPriorities(priorities);
+ renderConditionInsight(dataGames, "batter");
+ renderGamePlanInsight("batter", { nextAvg, obp, slope });
 
  document.getElementById('modelMeta').innerHTML = `🧠 batter model · ${dataGames.length} games`;
  xs.dispose(); ys.dispose(); model.dispose();
@@ -481,6 +756,7 @@ async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint
  const topVeloScore = topVelo ? Math.min(100, Math.max(0, (topVelo-120)*2.5)) : 50;
  const nextEraBonus = Math.max(0, 100 - (nextEra*14));
  const score = Math.max(0, Math.min(100, Math.round((eraScore*0.27)+(whipScore*0.22)+(kScore*0.17)+(nextEraBonus*0.18)+(veloScore*0.08)+(topVeloScore*0.08))));
+ setConfidence(dataGames.length);
 
  setGauge(score, score>=80 ? "🔥 투수 퍼포먼스 우수" : (score>=60 ? "📈 투수 성장 구간" : "⚠️ 투수 보완 필요"));
  document.getElementById('recentAnalysis').innerHTML = `최근 평균 ERA ${meanEra.toFixed(2)} · WHIP ${meanWhip.toFixed(2)}${meanVelo ? ` · 평균구속 ${meanVelo.toFixed(1)}` : ""}${topVelo ? ` · 최고구속 ${topVelo.toFixed(1)}` : ""}`;
@@ -488,6 +764,16 @@ async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint
  const typeText = (meanVelo >= 138 || meanKRate >= 0.26) ? "💥 파워 피처" : (meanWhip <= 1.25 ? "🎯 제구형" : "⚖️ 밸런스형");
  const arsenalText = (pitchArsenal || []).length ? ` · 구종 ${pitchArsenal.join("/")}` : "";
  document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}${arsenalText}`;
+ const walksPerGame = dataGames.reduce((s,g)=>s + (g.pBb || 0) + (g.pHbp || 0), 0) / dataGames.length;
+ const priorities = [];
+ if(meanEra > 4.50) priorities.push("실점 억제 우선: 초반 이닝 선두타자 출루 관리 강화");
+ if(meanWhip > 1.45) priorities.push("주자 관리 개선: 볼넷·사구 허용을 경기당 2개 이하로 제한");
+ if(meanKRate < 0.18) priorities.push("결정구 비율 조정: 유리카운트에서 삼진 유도 패턴 강화");
+ if(walksPerGame > 2.2) priorities.push("제구 안정화: 좌우 코너 목표구역 루틴 고정");
+ if(nextEra > 4.50) priorities.push("다음 경기 대비: 초구 스트라이크 비율을 우선 목표로 설정");
+ renderPriorities(priorities);
+ renderConditionInsight(dataGames, "pitcher");
+ renderGamePlanInsight("pitcher", { nextEra, meanWhip, meanKRate });
  document.getElementById('modelMeta').innerHTML = `🧠 pitcher model · ${dataGames.length} games${throwHand ? ` · ${throwHand}` : ""}${releasePoint ? ` · ${releasePoint}` : ""}`;
  xs.dispose(); ys.dispose(); model.dispose();
 }
