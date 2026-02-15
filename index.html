@@ -1005,6 +1005,37 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  font-size:11px;
  color:#9a9a9a;
 }
+.entry-quick-row{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+ margin:0 0 10px;
+ padding:8px 10px;
+ border-radius:10px;
+ border:1px solid #343434;
+ background:#121212;
+}
+.entry-quick-copy{
+ font-size:11px;
+ color:#b7b7b7;
+}
+.quick-toggle-btn{
+ margin:0;
+ min-height:34px;
+ padding:7px 10px;
+ border-radius:10px;
+ border:1px solid #4b4b4b;
+ background:#252525;
+ color:#ececec;
+ font-size:11px;
+ font-weight:700;
+}
+.quick-toggle-btn.active{
+ background:linear-gradient(160deg,#f2f2f2,#dfdfdf);
+ border-color:#d6d6d6;
+ color:#141414;
+}
 .entry-core-grid{
  display:grid;
  grid-template-columns:1fr 1fr;
@@ -1081,6 +1112,55 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 }
 .entry-advanced{
  margin-top:8px;
+}
+body.game-day-mode #gameName,
+body.game-day-mode #gameCondition,
+body.game-day-mode .entry-collapse-btn,
+body.game-day-mode #batterAdvancedGroup,
+body.game-day-mode #pitcherAdvancedGroup,
+body.game-day-mode #pitcherVeloGroup{
+ display:none !important;
+}
+body.game-day-mode .entry-top p{
+ color:#f1c17a;
+}
+.shared-mode-banner{
+ display:none;
+ margin-bottom:12px;
+ border:1px solid #4a5f78;
+ border-radius:12px;
+ background:linear-gradient(145deg,#122030,#18293b);
+ color:#dce9f8;
+ padding:10px 12px;
+ font-size:12px;
+ line-height:1.45;
+}
+.shared-mode-banner strong{
+ color:#ffffff;
+}
+.coach-share-panel{
+ margin-top:10px;
+ border:1px solid #2f3f53;
+ border-radius:12px;
+ background:#121b25;
+ padding:10px;
+}
+.coach-share-panel p{
+ margin:0;
+ font-size:11px;
+ color:#a8bfd8;
+}
+.coach-share-grid{
+ margin-top:8px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+.coach-share-status{
+ min-height:17px;
+ margin-top:8px;
+ font-size:11px;
+ color:#9ac1ec;
 }
 @media (max-width: 460px){
  .entry-core-grid{
@@ -1233,6 +1313,82 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  color:#b5b5b5;
  line-height:1.6;
 }
+.today-schedule-banner{
+ display:none;
+ margin:0 0 12px;
+ border:1px solid #3f566f;
+ border-radius:12px;
+ background:linear-gradient(140deg,#111d2a,#1a2a3d);
+ padding:10px 12px;
+}
+.today-schedule-banner strong{
+ display:block;
+ font-size:12px;
+ color:#f4f7fc;
+ margin-bottom:4px;
+}
+.today-schedule-banner p{
+ margin:0;
+ font-size:12px;
+ color:#c8d8ea;
+ line-height:1.5;
+}
+.schedule-card{
+ margin-top:10px;
+ border:1px solid #2f3f53;
+ background:#121b25;
+ border-radius:12px;
+ padding:12px;
+}
+.schedule-form{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-top:8px;
+}
+.schedule-form .full{
+ grid-column:1 / -1;
+}
+.schedule-list{
+ margin-top:10px;
+ display:grid;
+ gap:8px;
+}
+.schedule-item{
+ border:1px solid #2c3848;
+ border-radius:10px;
+ padding:9px 10px;
+ background:#111822;
+}
+.schedule-item.today{
+ border-color:#6987a7;
+ box-shadow:0 0 0 1px rgba(105,135,167,0.35);
+}
+.schedule-item-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ font-size:11px;
+ color:#a2b6cc;
+}
+.schedule-item-title{
+ margin-top:3px;
+ font-size:13px;
+ color:#eff4fb;
+ font-weight:700;
+}
+.schedule-item-sub{
+ margin-top:2px;
+ font-size:11px;
+ color:#b7c7d8;
+}
+.schedule-empty{
+ text-align:center;
+ font-size:12px;
+ color:#778da6;
+ padding:8px 0 2px;
+}
 .stat-box.highlight{
   border:2px solid #ffffff;
   box-shadow:0 0 18px rgba(255,255,255,0.25);
@@ -1313,6 +1469,17 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  width:6px;
  height:6px;
  border-radius:50%;
+}
+.day.scheduled::before{
+ content:"";
+ position:absolute;
+ top:6px;
+ right:6px;
+ width:6px;
+ height:6px;
+ border-radius:50%;
+ background:#6fb8ff;
+ box-shadow:0 0 8px rgba(111,184,255,.6);
 }
 
 .day.heat-mid::after{
@@ -2321,6 +2488,71 @@ body.light .entry-card{
  background:linear-gradient(150deg,#fff7e9,#f8ecd8);
  border-color:#dfccb0;
 }
+body.light .today-schedule-banner{
+ border-color:#d9c3a5;
+ background:linear-gradient(140deg,#f8ebd7,#f2e3c8);
+}
+body.light .today-schedule-banner strong{
+ color:#4c3c2b;
+}
+body.light .today-schedule-banner p{
+ color:#785f43;
+}
+body.light .schedule-card{
+ border-color:#dbc5a7;
+ background:#fbf2e2;
+}
+body.light .schedule-item{
+ border-color:#ddc8aa;
+ background:#fff8eb;
+}
+body.light .schedule-item.today{
+ border-color:#b9936d;
+ box-shadow:0 0 0 1px rgba(185,147,109,0.3);
+}
+body.light .schedule-item-top{
+ color:#856c50;
+}
+body.light .schedule-item-title{
+ color:#4e3d2a;
+}
+body.light .schedule-item-sub,
+body.light .schedule-empty{
+ color:#8b7458;
+}
+body.light .entry-quick-row{
+ border-color:#d9c4a6;
+ background:#fcf5e8;
+}
+body.light .entry-quick-copy{
+ color:#866e51;
+}
+body.light .quick-toggle-btn{
+ border-color:#d5bc98;
+ background:#f7ecd9;
+ color:#5f4b34;
+}
+body.light .quick-toggle-btn.active{
+ background:linear-gradient(160deg,#7e5f3d,#9a7550);
+ border-color:#7e5f3d;
+ color:#fffaf0;
+}
+body.light .shared-mode-banner{
+ border-color:#cfbb9e;
+ background:linear-gradient(145deg,#f8edda,#f1e2c8);
+ color:#6b573f;
+}
+body.light .shared-mode-banner strong{
+ color:#4d3b28;
+}
+body.light .coach-share-panel{
+ border-color:#dbc5a7;
+ background:#fbf2e2;
+}
+body.light .coach-share-panel p,
+body.light .coach-share-status{
+ color:#82694b;
+}
 body.light .entry-top p,
 body.light .entry-group-title,
 body.light .input-subtitle,
@@ -2875,6 +3107,8 @@ body.light .sponsored-placeholder{
   </div>
 </div>
 <div class="container">
+<div id="sharedModeBanner" class="shared-mode-banner"></div>
+<div id="todayScheduleBanner" class="today-schedule-banner"></div>
 
 <div id="inputSection" class="section">
 <div class="section-hero input-hero">
@@ -2899,6 +3133,10 @@ body.light .sponsored-placeholder{
 <div class="entry-top">
   <h3>경기 기록 입력</h3>
   <p>핵심 기록 먼저 입력하고, 필요한 항목만 펼쳐서 입력하세요.</p>
+</div>
+<div class="entry-quick-row">
+  <span id="gameDayModeLabel" class="entry-quick-copy">일반 입력 모드</span>
+  <button type="button" id="gameDayModeBtn" class="quick-toggle-btn" onclick="toggleGameDayMode()">경기 당일 모드 켜기</button>
 </div>
 <div class="entry-core-grid">
   <input type="date" id="gameDate">
@@ -3058,6 +3296,18 @@ body.light .sponsored-placeholder{
 <div id="dayRecord" class="day-record"></div>
 </div>
 
+<div class="card schedule-card">
+  <h3>경기 일정 알림</h3>
+  <div class="schedule-form">
+    <input type="date" id="scheduleDate" aria-label="경기 일정 날짜">
+    <input type="text" id="scheduleOpponent" maxlength="30" placeholder="상대 팀/상대 선수">
+    <input class="full" type="text" id="schedulePlace" maxlength="40" placeholder="장소 (선택)">
+    <input class="full" type="text" id="scheduleMemo" maxlength="80" placeholder="메모 (선택)">
+  </div>
+  <button style="margin-top:8px;" onclick="saveSchedule()">일정 저장</button>
+  <div id="scheduleList" class="schedule-list"></div>
+</div>
+
 <div class="sponsored-slot">
   <div class="sponsored-label">SPONSORED</div>
   <div class="sponsored-placeholder"></div>
@@ -3207,6 +3457,16 @@ body.light .sponsored-placeholder{
         <button class="danger" onclick="resetAllRecords()">전체 기록 리셋</button>
         <button class="danger" onclick="resetToNewUser()">신규 사용자로 되돌리기</button>
       </div>
+      <div class="profile-label">코치 공유 링크(읽기 전용)</div>
+      <div class="coach-share-panel">
+        <p>현재 시즌 기록 중 선택한 기간만 읽기 전용 링크로 공유됩니다.</p>
+        <div class="coach-share-grid">
+          <input type="date" id="coachShareStart" aria-label="코치 공유 시작일">
+          <input type="date" id="coachShareEnd" aria-label="코치 공유 종료일">
+        </div>
+        <button class="upload-btn" style="margin-top:8px;" onclick="createCoachShareLink()">코치 공유 링크 복사</button>
+        <div id="coachShareStatus" class="coach-share-status"></div>
+      </div>
       <div class="profile-label">최근 기록</div>
       <div id="recordManageList" class="record-manage-list"></div>
     </div>
@@ -3323,6 +3583,10 @@ let onboardingPreviewTimers = [];
 const seasonSelectEl = document.getElementById("seasonSelect");
 let quotes = [];
 let deferredInstallPrompt = null;
+let gameDayMode = false;
+let readOnlyShareMode = false;
+let sharedPayloadMeta = null;
+let scheduleData = [];
 
 function openDB(){
   return new Promise((resolve,reject)=>{
@@ -3395,6 +3659,351 @@ function persistSeasonData(){
 
 function persistLastSeason(){
   void idbSet("lastSeasonKey", seasonKey);
+}
+
+function normalizeScheduleData(list){
+  if(!Array.isArray(list)) return [];
+  return list
+    .filter((item)=>item && typeof item === "object")
+    .map((item)=>({
+      id: String(item.id || `${Date.now()}-${Math.random().toString(36).slice(2,8)}`),
+      date: typeof item.date === "string" ? item.date : "",
+      opponent: String(item.opponent || "").trim(),
+      place: String(item.place || "").trim(),
+      memo: String(item.memo || "").trim(),
+      createdAt: item.createdAt || new Date().toISOString()
+    }))
+    .filter((item)=>item.date && item.opponent);
+}
+
+function persistScheduleData(){
+  void idbSet("scheduleData", scheduleData);
+}
+
+function getTodayIso(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+
+function ensureSeasonOptionExists(targetSeason){
+  if(!seasonSelectEl) return;
+  const target = String(targetSeason || "").trim();
+  if(!target) return;
+  const exists = Array.from(seasonSelectEl.options).some((opt)=>opt.value === target);
+  if(exists) return;
+  const opt = document.createElement("option");
+  opt.value = target;
+  opt.textContent = target;
+  seasonSelectEl.appendChild(opt);
+}
+
+function guardReadOnly(actionLabel){
+  if(!readOnlyShareMode) return false;
+  const action = actionLabel || "요청한";
+  alert(`코치 공유 링크는 읽기 전용입니다.\n${action} 작업은 원본 앱에서만 가능합니다.`);
+  return true;
+}
+
+function applyGameDayMode(mode, persist=true){
+  gameDayMode = !!mode;
+  document.body.classList.toggle("game-day-mode", gameDayMode);
+  const btn = document.getElementById("gameDayModeBtn");
+  const label = document.getElementById("gameDayModeLabel");
+  if(btn){
+    btn.classList.toggle("active", gameDayMode);
+    btn.innerText = gameDayMode ? "경기 당일 모드 끄기" : "경기 당일 모드 켜기";
+  }
+  if(label){
+    label.innerText = gameDayMode
+      ? "경기 당일 모드: 필수 입력만 빠르게 기록합니다."
+      : "일반 입력 모드";
+  }
+  if(persist && !readOnlyShareMode){
+    void idbSet("gameDayMode", gameDayMode);
+  }
+}
+
+function toggleGameDayMode(){
+  applyGameDayMode(!gameDayMode);
+}
+
+function encodeBase64Url(text){
+  const bytes = new TextEncoder().encode(text);
+  let binary = "";
+  bytes.forEach((b)=>{ binary += String.fromCharCode(b); });
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+function decodeBase64Url(text){
+  const normalized = String(text || "").replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, (ch)=>ch.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function parseSharedPayloadFromUrl(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("shared") !== "1") return null;
+  const rawPayload = params.get("payload");
+  if(!rawPayload) return null;
+  try{
+    const decoded = decodeBase64Url(rawPayload);
+    const parsed = JSON.parse(decoded);
+    if(!parsed || !Array.isArray(parsed.games)) return null;
+    const season = String(parsed.season || "2026");
+    const normalizedGames = parsed.games
+      .filter((g)=>g && typeof g === "object")
+      .map((g)=>({
+        ...g,
+        role: g.role === "pitcher" ? "pitcher" : "batter",
+        date: typeof g.date === "string" ? g.date : ""
+      }));
+    return {
+      ...parsed,
+      season,
+      games: normalizedGames
+    };
+  }catch(e){
+    return null;
+  }
+}
+
+function applySharedPayload(payload){
+  const season = String(payload?.season || "2026");
+  const sharedGames = Array.isArray(payload?.games) ? payload.games : [];
+  readOnlyShareMode = true;
+  sharedPayloadMeta = {
+    season,
+    rangeStart: payload?.rangeStart || "",
+    rangeEnd: payload?.rangeEnd || "",
+    createdAt: payload?.createdAt || ""
+  };
+
+  seasonKey = season;
+  allData = { [season]: sharedGames };
+  games = allData[seasonKey] || [];
+  selectedDate = null;
+  currentViewDate = new Date();
+  editingGame = null;
+  profileEditMode = false;
+  profileSubTab = "home";
+  quotes = [];
+
+  const sharedProfile = payload?.profile || {};
+  profileData = {
+    ...profileData,
+    name: (sharedProfile.name || "공유된 선수").trim() || "공유된 선수",
+    bio: "코치 공유 링크 열람 중",
+    role: sharedProfile.role === "pitcher" ? "pitcher" : "batter",
+    position: sharedProfile.position || "",
+    pitcherType: sharedProfile.pitcherType || "",
+    pitchArsenal: Array.isArray(sharedProfile.pitchArsenal) ? sharedProfile.pitchArsenal.slice(0,5) : [],
+    releasePoint: sharedProfile.releasePoint || "",
+    throwHand: sharedProfile.throwHand || "",
+    onboarded: true,
+    avatar: "",
+    photos: []
+  };
+}
+
+function applyReadOnlyShareModeUI(){
+  if(!readOnlyShareMode) return;
+  const banner = document.getElementById("sharedModeBanner");
+  if(banner){
+    const rangeText = sharedPayloadMeta?.rangeStart || sharedPayloadMeta?.rangeEnd
+      ? `${sharedPayloadMeta?.rangeStart || "시즌 시작"} ~ ${sharedPayloadMeta?.rangeEnd || "시즌 끝"}`
+      : "전체 기간";
+    banner.innerHTML = `<strong>코치 공유 링크(읽기 전용)</strong><br>${seasonKey} 시즌 · ${rangeText} 기록만 열람할 수 있습니다.`;
+    banner.style.display = "block";
+  }
+
+  const inputTab = document.querySelector(".tab[onclick*=\"inputSection\"]");
+  if(inputTab) inputTab.style.display = "none";
+  const quoteTab = document.querySelector(".tab[onclick*=\"quoteSection\"]");
+  if(quoteTab) quoteTab.style.display = "none";
+  const inputSection = document.getElementById("inputSection");
+  if(inputSection) inputSection.style.display = "none";
+  const scheduleCard = document.querySelector(".schedule-card");
+  if(scheduleCard) scheduleCard.style.display = "none";
+}
+
+async function copyTextWithFallback(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(e){}
+  const temp = document.createElement("textarea");
+  temp.value = text;
+  temp.style.position = "fixed";
+  temp.style.opacity = "0";
+  temp.style.pointerEvents = "none";
+  document.body.appendChild(temp);
+  temp.select();
+  let copied = false;
+  try{
+    copied = document.execCommand("copy");
+  }catch(e){}
+  document.body.removeChild(temp);
+  return copied;
+}
+
+async function createCoachShareLink(){
+  if(guardReadOnly("공유 링크 생성")) return;
+  const statusEl = document.getElementById("coachShareStatus");
+  const startEl = document.getElementById("coachShareStart");
+  const endEl = document.getElementById("coachShareEnd");
+  const start = (startEl?.value || "").trim();
+  const end = (endEl?.value || "").trim();
+
+  if(start && end && start > end){
+    if(statusEl) statusEl.innerText = "시작일이 종료일보다 늦습니다.";
+    return;
+  }
+
+  const seasonGames = (allData[seasonKey] || [])
+    .filter((g)=>g && typeof g === "object")
+    .filter((g)=>!start || (g.date || "") >= start)
+    .filter((g)=>!end || (g.date || "") <= end);
+
+  if(!seasonGames.length){
+    if(statusEl) statusEl.innerText = "선택한 기간에 공유할 기록이 없습니다.";
+    return;
+  }
+
+  const payload = {
+    v: 1,
+    season: seasonKey,
+    rangeStart: start || "",
+    rangeEnd: end || "",
+    createdAt: new Date().toISOString(),
+    profile: {
+      name: profileData.name || "Player",
+      role: profileData.role || "batter",
+      position: profileData.position || "",
+      pitcherType: profileData.pitcherType || "",
+      pitchArsenal: Array.isArray(profileData.pitchArsenal) ? profileData.pitchArsenal.slice(0,5) : [],
+      releasePoint: profileData.releasePoint || "",
+      throwHand: profileData.throwHand || ""
+    },
+    games: seasonGames
+  };
+
+  const encoded = encodeBase64Url(JSON.stringify(payload));
+  const shareUrl = `${window.location.origin}${window.location.pathname}?shared=1&payload=${encoded}`;
+
+  if(shareUrl.length > 7800){
+    if(statusEl) statusEl.innerText = "기록이 많아 링크가 너무 깁니다. 기간을 더 좁혀주세요.";
+    return;
+  }
+
+  const copied = await copyTextWithFallback(shareUrl);
+  if(statusEl){
+    statusEl.innerText = copied
+      ? "코치 공유 링크를 복사했습니다."
+      : "자동 복사에 실패해 링크를 알림으로 표시합니다.";
+  }
+  if(!copied){
+    alert(shareUrl);
+  }
+}
+
+function saveSchedule(){
+  if(guardReadOnly("일정 저장")) return;
+  const dateEl = document.getElementById("scheduleDate");
+  const opponentEl = document.getElementById("scheduleOpponent");
+  const placeEl = document.getElementById("schedulePlace");
+  const memoEl = document.getElementById("scheduleMemo");
+  const date = (dateEl?.value || "").trim();
+  const opponent = (opponentEl?.value || "").trim();
+  const place = (placeEl?.value || "").trim();
+  const memo = (memoEl?.value || "").trim();
+  if(!date || !opponent){
+    alert("날짜와 상대 정보를 입력해 주세요.");
+    return;
+  }
+  scheduleData.unshift({
+    id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,
+    date,
+    opponent,
+    place,
+    memo,
+    createdAt: new Date().toISOString()
+  });
+  scheduleData = normalizeScheduleData(scheduleData).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  persistScheduleData();
+  if(dateEl) dateEl.value = "";
+  if(opponentEl) opponentEl.value = "";
+  if(placeEl) placeEl.value = "";
+  if(memoEl) memoEl.value = "";
+  renderScheduleList();
+  renderTodayScheduleBanner();
+  if(document.querySelector(".section.active")?.id === "calendarSection"){
+    renderCalendar();
+  }
+}
+
+function deleteSchedule(id){
+  if(guardReadOnly("일정 삭제")) return;
+  if(!id) return;
+  scheduleData = scheduleData.filter((item)=>item.id !== id);
+  persistScheduleData();
+  renderScheduleList();
+  renderTodayScheduleBanner();
+  if(document.querySelector(".section.active")?.id === "calendarSection"){
+    renderCalendar();
+  }
+}
+
+function renderScheduleList(){
+  const listEl = document.getElementById("scheduleList");
+  const dateEl = document.getElementById("scheduleDate");
+  if(dateEl && !dateEl.value) dateEl.value = getTodayIso();
+  if(!listEl) return;
+  if(readOnlyShareMode){
+    listEl.innerHTML = `<div class="schedule-empty">공유 모드에서는 일정 기능이 비활성화됩니다.</div>`;
+    return;
+  }
+  const list = normalizeScheduleData(scheduleData).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  scheduleData = list;
+  if(!list.length){
+    listEl.innerHTML = `<div class="schedule-empty">저장된 일정이 없습니다.</div>`;
+    return;
+  }
+  const today = getTodayIso();
+  listEl.innerHTML = list.map((item)=>`
+    <div class="schedule-item ${item.date === today ? "today" : ""}">
+      <div class="schedule-item-top">
+        <span>${item.date}</span>
+        <button class="mini-btn danger" onclick="deleteSchedule('${item.id}')">삭제</button>
+      </div>
+      <div class="schedule-item-title">${item.opponent}전</div>
+      <div class="schedule-item-sub">${item.place ? `장소: ${item.place}` : "장소 미입력"}${item.memo ? ` · ${item.memo}` : ""}</div>
+    </div>
+  `).join("");
+}
+
+function renderTodayScheduleBanner(){
+  const banner = document.getElementById("todayScheduleBanner");
+  if(!banner) return;
+  if(readOnlyShareMode){
+    banner.style.display = "none";
+    banner.innerHTML = "";
+    return;
+  }
+  const today = getTodayIso();
+  const list = normalizeScheduleData(scheduleData).filter((item)=>item.date === today);
+  if(!list.length){
+    banner.style.display = "none";
+    banner.innerHTML = "";
+    return;
+  }
+  const names = list.map((item)=>`${item.opponent}전`).join(", ");
+  banner.innerHTML = `<strong>오늘 경기 알림</strong><p>오늘은 ${names} 입니다.${list.length > 1 ? " 일정 순서를 다시 확인해 주세요." : ""}</p>`;
+  banner.style.display = "block";
 }
 
 function applyTheme(theme, persist=true){
@@ -3596,20 +4205,44 @@ function setupAppInstall(){
 }
 
 async function initializeApp(){
+  const sharedPayload = parseSharedPayloadFromUrl();
+  if(sharedPayload){
+    applyTheme("light", false);
+    applySharedPayload(sharedPayload);
+    ensureSeasonOptionExists(seasonKey);
+    if(seasonSelectEl) seasonSelectEl.value = seasonKey;
+    const roleEl = document.getElementById("entryRole");
+    if(roleEl) roleEl.value = profileData.role || "batter";
+    changeEntryRole();
+    setStatsMode(profileData.role === "pitcher" ? "pitcher" : "batter");
+    applyGameDayMode(false, false);
+    renderQuotes();
+    render();
+    renderScheduleList();
+    renderTodayScheduleBanner();
+    applyReadOnlyShareModeUI();
+    setupAppInstall();
+    return;
+  }
+
   const savedTheme = await loadStoreValue("uiTheme", "light", ()=>readLegacyText("uiTheme", "light"));
   applyTheme(savedTheme, false);
   seasonKey = await loadStoreValue("lastSeasonKey", "2026", ()=>readLegacyText("lastSeasonKey", "2026"));
   allData = await loadStoreValue("seasonData", {2026:[],2027:[],2028:[]}, ()=>readLegacyJSON("seasonData",{2026:[],2027:[],2028:[]}));
   profileData = await loadStoreValue("profileData", profileData, ()=>readLegacyJSON("profileData", profileData));
   quotes = await loadStoreValue("quotes", [], ()=>readLegacyJSON("quotes", []));
+  scheduleData = await loadStoreValue("scheduleData", [], ()=>readLegacyJSON("scheduleData", []));
+  gameDayMode = await loadStoreValue("gameDayMode", false, ()=>readLegacyText("gameDayMode", "false") === "true");
 
   if(!allData[seasonKey]) allData[seasonKey] = [];
+  ensureSeasonOptionExists(seasonKey);
   games = allData[seasonKey] || [];
   if(!Array.isArray(profileData.photos)) profileData.photos = [];
   if(!Array.isArray(profileData.pitchArsenal)) profileData.pitchArsenal = [];
   if(typeof profileData.releasePoint !== "string") profileData.releasePoint = "";
   if(typeof profileData.throwHand !== "string") profileData.throwHand = "";
   if(!profileData.role) profileData.role = "batter";
+  scheduleData = normalizeScheduleData(scheduleData);
   if(typeof profileData.onboarded !== "boolean"){
     profileData.onboarded = profileData.name && profileData.name !== "Player";
   }
@@ -3621,7 +4254,10 @@ async function initializeApp(){
   if(profileData.role === "pitcher") setStatsMode("pitcher");
   else setStatsMode("batter");
   changeEntryRole();
+  applyGameDayMode(gameDayMode, false);
   renderQuotes();
+  renderScheduleList();
+  renderTodayScheduleBanner();
   render();
   setupAppInstall();
   setupOnboardingIfNeeded();
@@ -3688,6 +4324,10 @@ function renderProfile(){
 
   const safeName = (profileData.name || "Player").trim() || "Player";
   const safeBio = (profileData.bio || "나만의 플레이 스타일과 목표를 기록하세요.").trim() || "나만의 플레이 스타일과 목표를 기록하세요.";
+  if(readOnlyShareMode){
+    profileSubTab = "home";
+    profileEditMode = false;
+  }
 
   namePreview.innerText = safeName;
   bioPreview.innerText = safeBio;
@@ -3696,6 +4336,7 @@ function renderProfile(){
   const isHomeTab = profileSubTab !== "manage";
   homeTabBtn.classList.toggle("active", isHomeTab);
   manageTabBtn.classList.toggle("active", !isHomeTab);
+  manageTabBtn.style.display = readOnlyShareMode ? "none" : "";
   homePanel.classList.toggle("hidden", !isHomeTab);
   managePanel.classList.toggle("hidden", isHomeTab);
   editorPanel.classList.toggle("hidden", !profileEditMode);
@@ -3753,6 +4394,19 @@ function renderProfile(){
           <img src="${src}" alt="profile gallery photo ${idx+1}" loading="lazy" decoding="async">
         </div>
       `).join("");
+    }
+  }
+
+  const shareStartEl = document.getElementById("coachShareStart");
+  const shareEndEl = document.getElementById("coachShareEnd");
+  if(shareStartEl && shareEndEl && !readOnlyShareMode){
+    const dated = roleSeasonGames
+      .map((g)=>g.date)
+      .filter(Boolean)
+      .sort();
+    if(dated.length){
+      if(!shareStartEl.value) shareStartEl.value = dated[0];
+      if(!shareEndEl.value) shareEndEl.value = dated[dated.length-1];
     }
   }
 
@@ -3855,6 +4509,7 @@ function syncOnboardingSelectionUI(){
 }
 
 function startPositionEdit(){
+  if(guardReadOnly("포지션 수정")) return;
   const root = document.getElementById("onboarding");
   if(!root) return;
   onboardingMode = "position-edit";
@@ -4019,6 +4674,7 @@ function onboardingShowPreviewFromSelection(){
 }
 
 function finishOnboarding(){
+  if(guardReadOnly("온보딩 저장")) return;
   if(!onboardDraft.name || !onboardDraft.bio || !onboardDraft.role) return;
   if(onboardDraft.role === "batter" && !onboardDraft.position) return;
   if(onboardDraft.role === "pitcher" && (!onboardDraft.pitcherType || !(onboardDraft.pitchArsenal || []).length || !onboardDraft.releasePoint || !onboardDraft.throwHand)) return;
@@ -4046,11 +4702,16 @@ function finishOnboarding(){
 }
 
 function switchProfileSubTab(tab){
+  if(readOnlyShareMode && tab === "manage"){
+    alert("코치 공유 링크에서는 기록 열람만 가능합니다.");
+    return;
+  }
   profileSubTab = tab === "manage" ? "manage" : "home";
   renderProfile();
 }
 
 function toggleProfileEditor(force){
+  if(guardReadOnly("프로필 편집")) return;
   if(typeof force === "boolean"){
     profileEditMode = force;
   }else{
@@ -4060,6 +4721,7 @@ function toggleProfileEditor(force){
 }
 
 function saveProfile(){
+  if(guardReadOnly("프로필 수정")) return;
   const nameInput = document.getElementById("profileNameInput");
   const bioInput = document.getElementById("profileBioInput");
   profileData.name = (nameInput?.value || "").trim() || "Player";
@@ -4071,16 +4733,19 @@ function saveProfile(){
 }
 
 function triggerAvatarUpload(){
+  if(guardReadOnly("사진 업로드")) return;
   const input = document.getElementById("avatarFileInput");
   if(input) input.click();
 }
 
 function triggerGalleryUpload(){
+  if(guardReadOnly("사진 업로드")) return;
   const input = document.getElementById("galleryFileInput");
   if(input) input.click();
 }
 
 async function handleAvatarUpload(event){
+  if(guardReadOnly("사진 업로드")) return;
   const file = event.target.files?.[0];
   if(!file) return;
   try{
@@ -4092,6 +4757,7 @@ async function handleAvatarUpload(event){
 }
 
 async function handleGalleryUpload(event){
+  if(guardReadOnly("사진 업로드")) return;
   const files = Array.from(event.target.files || []);
   if(!files.length) return;
 
@@ -4113,17 +4779,20 @@ async function handleGalleryUpload(event){
 }
 
 function removeProfilePhoto(index){
+  if(guardReadOnly("사진 삭제")) return;
   profileData.photos = (profileData.photos || []).filter((_,i)=>i!==index);
   saveProfileData();
   renderProfile();
 }
 
 function switchToInputForEdit(){
+  if(guardReadOnly("기록 수정 이동")) return;
   const inputTab = document.querySelector(".tab[onclick*=\"inputSection\"]");
   if(inputTab) inputTab.click();
 }
 
 function resetCurrentSeasonRecords(){
+  if(guardReadOnly("시즌 초기화")) return;
   if(!confirm(`${seasonKey} 시즌 기록을 모두 초기화할까요?`)) return;
   allData[seasonKey] = [];
   games = allData[seasonKey];
@@ -4134,6 +4803,7 @@ function resetCurrentSeasonRecords(){
 }
 
 function resetAllRecords(){
+  if(guardReadOnly("전체 기록 초기화")) return;
   if(!confirm("모든 시즌 기록을 초기화할까요?")) return;
   Object.keys(allData).forEach((key)=>{ allData[key] = []; });
   games = allData[seasonKey] || [];
@@ -4144,6 +4814,7 @@ function resetAllRecords(){
 }
 
 async function resetToNewUser(){
+  if(guardReadOnly("신규 사용자 초기화")) return;
   if(!confirm("신규 사용자 상태로 되돌릴까요?")) return;
   if(!confirm("기록, 프로필, Mental Entry가 모두 초기화됩니다. 계속할까요?")) return;
 
@@ -4171,6 +4842,8 @@ async function resetToNewUser(){
     onboarded:false
   };
   quotes = [];
+  scheduleData = [];
+  gameDayMode = false;
 
   if(seasonSelectEl) seasonSelectEl.value = seasonKey;
   const roleEl = document.getElementById("entryRole");
@@ -4180,14 +4853,21 @@ async function resetToNewUser(){
   await idbSet("lastSeasonKey", seasonKey);
   await idbSet("profileData", profileData);
   await idbSet("quotes", quotes);
+  await idbSet("scheduleData", scheduleData);
+  await idbSet("gameDayMode", false);
 
   localStorage.removeItem("seasonData");
   localStorage.removeItem("lastSeasonKey");
   localStorage.removeItem("profileData");
   localStorage.removeItem("quotes");
+  localStorage.removeItem("scheduleData");
+  localStorage.removeItem("gameDayMode");
 
   resetGameForm();
+  applyGameDayMode(false, false);
   renderQuotes();
+  renderScheduleList();
+  renderTodayScheduleBanner();
   render();
   setupOnboardingIfNeeded();
 }
@@ -4207,6 +4887,7 @@ function formatEntryDate(createdAt){
 }
 
 function addQuote(){
+  if(guardReadOnly("멘탈 엔트리 추가")) return;
   const input = document.getElementById('quoteInput');
   const text = input.value.trim();
   if(!text) return;
@@ -4222,6 +4903,7 @@ function addQuote(){
 }
 
 function deleteQuote(index){
+  if(guardReadOnly("멘탈 엔트리 삭제")) return;
   quotes.splice(index,1);
   saveQuotes();
   renderQuotes();
@@ -4289,6 +4971,10 @@ function renderQuotes(){
 }
 
 function switchTab(id,el){
+if(readOnlyShareMode && (id === "inputSection" || id === "quoteSection")){
+  alert("코치 공유 링크에서는 기록 열람만 가능합니다.");
+  return;
+}
 document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -4298,6 +4984,7 @@ if(id === "statsSection"){
   return;
 }
 if(id === "calendarSection"){
+  renderScheduleList();
   renderCalendar();
   return;
 }
@@ -4381,6 +5068,7 @@ if(saveBtn) saveBtn.innerText = "경기 추가";
 }
 
 function startEditGame(season, index){
+ if(guardReadOnly("기록 수정")) return;
  const seasonStr = String(season);
  const list = allData[seasonStr] || [];
  const target = list[index];
@@ -4447,6 +5135,7 @@ function startEditGame(season, index){
 }
 
 function deleteGame(season, index){
+ if(guardReadOnly("기록 삭제")) return;
  const seasonStr = String(season);
  if(!allData[seasonStr] || !allData[seasonStr][index]) return;
  if(!confirm("이 경기 기록을 삭제할까요?")) return;
@@ -4489,6 +5178,7 @@ function formatOutsToInnings(outs){
 }
 
 function saveGame() {
+if(guardReadOnly("기록 저장")) return;
 const gameName = document.getElementById('gameName');
 persistLastSeason();
 if(!allData[seasonKey]) allData[seasonKey]=[];
@@ -4773,11 +5463,17 @@ document.getElementById("calendarTitle").innerText = `${year}년 ${month+1}월`;
 const firstDay = new Date(year, month, 1).getDay();
 const last=new Date(year,month+1,0);
 const recordMap={};
+const scheduleMap={};
 
 const calendarGames = getCalendarGames();
 calendarGames.forEach(g=>{
 if(!recordMap[g.date])recordMap[g.date]=[];
 recordMap[g.date].push(g);
+});
+scheduleData.forEach((item)=>{
+  if(!item?.date) return;
+  if(!scheduleMap[item.date]) scheduleMap[item.date] = [];
+  scheduleMap[item.date].push(item);
 });
 
 for(let i=0;i<firstDay;i++){
@@ -4803,12 +5499,16 @@ if(recordMap[dateStr].some(g=>g.result==='W')){
 div.classList.add("win");
 }
 }
+if(scheduleMap[dateStr]){
+div.classList.add("scheduled");
+div.title = scheduleMap[dateStr].map((item)=>`${item.opponent}전`).join(", ");
+}
 
 if(selectedDate===dateStr)div.classList.add("selected");
 
 div.onclick=()=>{
 selectedDate=dateStr;
-showDayRecord(recordMap[dateStr]||[]);
+showDayRecord(recordMap[dateStr]||[], dateStr);
 render();
 };
 
@@ -4816,11 +5516,23 @@ cal.appendChild(div);
 }
 }
 
-function showDayRecord(list) {
+function showDayRecord(list, dateStr = selectedDate) {
   const dayRecord = document.getElementById('dayRecord');
   dayRecord.classList.remove('active');
+  const daySchedules = normalizeScheduleData(scheduleData).filter((item)=>item.date === dateStr);
+  const scheduleBlock = daySchedules.length
+    ? `<div class="record-item" style="margin-bottom:10px;">
+        <div class="record-item-title">등록된 일정</div>
+        <div class="record-item-line">${daySchedules.map((item)=>`${item.opponent}전${item.place ? ` · ${item.place}` : ""}${item.memo ? ` · ${item.memo}` : ""}`).join("<br>")}</div>
+      </div>`
+    : "";
   if (!list.length) {
-    dayRecord.innerHTML = "<div style='text-align:center;color:#666'>기록 없음</div>";
+    dayRecord.innerHTML = scheduleBlock || "<div style='text-align:center;color:#666'>기록 없음</div>";
+    if(scheduleBlock){
+      setTimeout(() => {
+        dayRecord.classList.add('active');
+      }, 50);
+    }
     return;
   }
 
@@ -4920,6 +5632,7 @@ function showDayRecord(list) {
     const avgVeloD = veloListD.length ? (veloListD.reduce((a,b)=>a+b,0) / veloListD.length).toFixed(1) : null;
     const topVeloD = maxVeloListD.length ? Math.max(...maxVeloListD).toFixed(1) : null;
     dayRecord.innerHTML = `
+    ${scheduleBlock}
     ${titleBlock}
     <div class='stat-grid'>
       <div class='stat-box'><small>ERA</small><h2>${eraD}</h2></div>
@@ -4942,6 +5655,7 @@ function showDayRecord(list) {
     `;
   }else{
     dayRecord.innerHTML = `
+    ${scheduleBlock}
     ${titleBlock}
     <div class='stat-grid'>
       <div class='stat-box'><small>AVG</small><h2>${avg}</h2></div>
@@ -5029,6 +5743,8 @@ const activeSectionId = document.querySelector(".section.active")?.id || "profil
 const shouldRenderStats = activeSectionId === "statsSection";
 const shouldRenderCalendar = activeSectionId === "calendarSection";
 const shouldRenderProfile = activeSectionId === "profileSection";
+
+renderTodayScheduleBanner();
 
 const gameCardTitle = document.querySelector("#gameAvgChart")?.closest(".card")?.querySelector("h3");
 const cumCardTitle = document.querySelector("#cumulativeAvgChart")?.closest(".card")?.querySelector("h3");
