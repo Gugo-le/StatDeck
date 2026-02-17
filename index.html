@@ -527,12 +527,12 @@ button{
  max-width:46%;
  border:1px solid #2a2f38;
  border-radius:12px;
- background:linear-gradient(155deg,#131923,#101620);
+ background:#121821;
  padding:10px;
 }
 
 .profile-badge-panel .profile-badge-title{
- color:#aebcd2;
+ color:#c8c2b8;
 }
 
 .profile-badge-panel .profile-badges{
@@ -542,14 +542,14 @@ button{
 
 .profile-badge-title{
  font-size:11px;
- color:#9eabc0;
+ color:#b8b1a4;
  letter-spacing:.35px;
 }
 
 .profile-badge-count{
  font-size:10px;
- color:#cad4e4;
- border:1px solid #333d4d;
+ color:#d4cdc1;
+ border:1px solid #3c3a36;
  border-radius:999px;
  padding:3px 7px;
 }
@@ -559,29 +559,139 @@ button{
  width:auto;
  padding:6px 8px;
  border-radius:8px;
- border:1px solid #333d4d;
- background:#151c26;
- color:#d3dded;
+ border:1px solid #3b3834;
+ background:#1b1814;
+ color:#ddd3c4;
  font-size:10px;
  font-weight:700;
 }
 
 .profile-badges{
  margin-top:8px;
- display:flex;
- flex-wrap:wrap;
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
  gap:6px;
+ max-height:124px;
+ overflow:auto;
+ padding-right:2px;
 }
 
-.badge-chip{
- padding:5px 8px;
- border-radius:999px;
- border:1px solid #344055;
- background:linear-gradient(160deg,#182233,#111923);
- color:#dfe9fb;
+.profile-badge-chip{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ min-height:30px;
+ padding:4px 7px 4px 5px;
+ border-radius:10px;
+ border:1px solid #39352f;
+ background:#191612;
+ color:#ddd4c6;
  font-size:10px;
  font-weight:700;
- letter-spacing:.2px;
+ letter-spacing:.15px;
+ min-width:0;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+
+.profile-badge-medal{
+ --badge-bg:#2a2a2a;
+ --badge-ring:#6e6e6e;
+ --badge-ribbon:#3a3a3a;
+ width:18px;
+ height:18px;
+ border-radius:50%;
+ border:1px solid var(--badge-ring);
+ background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), transparent 42%), var(--badge-bg);
+ color:#f2f2f2;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ font-size:7px;
+ font-weight:800;
+ letter-spacing:.1px;
+ position:relative;
+ flex-shrink:0;
+}
+
+.profile-badge-medal::before,
+.profile-badge-medal::after{
+ display:none;
+}
+
+.profile-badge-empty{
+ grid-column:1 / -1;
+ padding:8px 9px;
+ border-radius:10px;
+ border:1px dashed #344055;
+ color:#afbfda;
+ font-size:10px;
+ line-height:1.45;
+ opacity:.88;
+}
+
+.profile-badge-medal.precision{
+ --badge-bg:#5a4732;
+ --badge-ring:#d9b98d;
+ --badge-ribbon:#433523;
+}
+
+.profile-badge-medal.power{
+ --badge-bg:#6a2a2a;
+ --badge-ring:#e08c8c;
+ --badge-ribbon:#4f1f1f;
+}
+
+.profile-badge-medal.onbase{
+ --badge-bg:#2d5a43;
+ --badge-ring:#8fd3ac;
+ --badge-ribbon:#234733;
+}
+
+.profile-badge-medal.multi{
+ --badge-bg:#4f3a6b;
+ --badge-ring:#c1a4e8;
+ --badge-ribbon:#3a2a4e;
+}
+
+.profile-badge-medal.era{
+ --badge-bg:#5a503f;
+ --badge-ring:#d4c5a0;
+ --badge-ribbon:#433b2f;
+}
+
+.profile-badge-medal.k{
+ --badge-bg:#6d3d1d;
+ --badge-ring:#efb088;
+ --badge-ribbon:#553016;
+}
+
+.profile-badge-medal.clutch{
+ --badge-bg:#6a2f44;
+ --badge-ring:#e6a6bc;
+ --badge-ribbon:#4f2433;
+}
+
+.profile-badge-medal.fire{
+ --badge-bg:#7a2d19;
+ --badge-ring:#f2a17f;
+ --badge-ribbon:#5d2213;
+}
+
+body:not(.light) .profile-badge-chip{
+ background:#191612;
+ border-color:#3a352e;
+ color:#ddd4c6;
+}
+
+body:not(.light) .profile-badge-medal{
+ background:var(--badge-bg);
+ border-color:rgba(224,205,176,0.42);
+ color:#f2e8d7;
+ box-shadow:none;
+ text-shadow:none;
+ filter:saturate(0.72) brightness(0.92);
 }
 
 @media (max-width:560px){
@@ -2652,7 +2762,7 @@ body.light .avatar-wrap{
 }
 body.light .profile-badge-panel{
  border-color:#d8c2a3;
- background:linear-gradient(155deg,#fbf1df,#f3e5cd);
+ background:#f8edd8;
 }
 body.light .profile-badge-count{
  border-color:#d6c0a1;
@@ -2664,10 +2774,16 @@ body.light .badge-guide-btn{
  background:#f8edda;
  color:#6b5238;
 }
-body.light .badge-chip{
+body.light .profile-badge-chip{
  border-color:#d4bf9f;
- background:linear-gradient(160deg,#faefdc,#f1e0c3);
+ background:#f6ead4;
  color:#6a533a;
+}
+body.light .profile-badge-empty{
+ border-color:#d4bf9f;
+ border-style:dashed;
+ color:#7c6449;
+ background:#f7ebd7;
 }
 body.light .profile-season-note{
  color:#7d654a;
@@ -4362,8 +4478,11 @@ function renderProfile(){
   const badges = getRoleBadges(roleSeasonGames, profileData.role || "batter");
   badgeCountEl.innerText = `${badges.length}개`;
   badgeListEl.innerHTML = badges.length
-    ? badges.map((b)=>`<span class="badge-chip">${b}</span>`).join("")
-    : `<span class="badge-chip" style="opacity:.7;">기록 누적 중 · 첫 뱃지 도전</span>`;
+    ? badges.map((name)=>{
+      const meta = getBadgeVisualMeta(name);
+      return `<span class="profile-badge-chip"><span class="profile-badge-medal ${meta.tone}">${meta.mark}</span>${name}</span>`;
+    }).join("")
+    : `<span class="profile-badge-empty">기록 누적 중 · 첫 뱃지 도전</span>`;
   gamesCountEl.innerText = String(roleSeasonGames.length);
   if(profileData.role === "pitcher"){
     metric1LabelEl.innerText = "ERA";
@@ -5344,6 +5463,20 @@ function getRoleBadges(roleGames, role){
   return badges.slice(0,4);
 }
 
+function getBadgeVisualMeta(name){
+  const map = {
+    "정교한 타격": { mark:"AVG", tone:"precision" },
+    "파워 배트": { mark:"HR", tone:"power" },
+    "출루 마스터": { mark:"OBP", tone:"onbase" },
+    "멀티히트 감각": { mark:"2H", tone:"multi" },
+    "ERA 장인": { mark:"ERA", tone:"era" },
+    "K 머신": { mark:"K", tone:"k" },
+    "클러치 마운드": { mark:"W", tone:"clutch" },
+    "파이어볼러": { mark:"145+", tone:"fire" }
+  };
+  return map[name] || { mark:"BDG", tone:"precision" };
+}
+
 function getRoleStreakText(roleGames, role){
   if(!roleGames.length) return "연속 기록 없음";
   if(role === "pitcher"){
@@ -5895,7 +6028,7 @@ if(shouldRenderStats && statsMode === "pitcher"){
     `;
   }
 
-  renderCharts(gameAvg,cumulativeAvg,highlightIndex,{min:0,max:0.6,baseline:0.3,reverse:false});
+  renderCharts(gameAvg,cumulativeAvg,highlightIndex,{min:0,max:1,baseline:0.3,reverse:false,dynamicBatterRange:true});
 }
 
 if(shouldRenderStats) renderWeeklyReport(batterGames,pitcherGames);
@@ -5910,14 +6043,41 @@ if(chart1)chart1.destroy();
 if(chart2)chart2.destroy();
 
  const options = Object.assign({min:0,max:1,baseline:null,reverse:false}, opts || {});
+ const isLight = document.body.classList.contains("light");
+ const primaryLine = isLight ? "#6e5438" : "#ffffff";
+ const secondaryLine = isLight ? "#8a6945" : "#cccccc";
+ const gridColor = isLight ? "rgba(122,96,67,0.24)" : "rgba(255,255,255,0.1)";
+ const tickColor = isLight ? "#6f573c" : "#b7c1d2";
+ const baselineColor = isLight ? "rgba(109,84,58,0.42)" : "rgba(255,255,255,0.3)";
+ const pointBg = isLight ? "#f8efdf" : "#111111";
+ const pointBorder = isLight ? "#7a5d3d" : "#ffffff";
+
+ if(options.dynamicBatterRange){
+  const values = [...g, ...c]
+    .map((v)=>Number(v))
+    .filter((v)=>Number.isFinite(v));
+  if(values.length){
+    const localMin = Math.max(0, Math.min(...values) - 0.03);
+    const localMax = Math.min(1, Math.max(...values) + 0.03);
+    const span = Math.max(0.18, localMax - localMin);
+    const center = (localMin + localMax) / 2;
+    options.min = Math.max(0, center - span/2);
+    options.max = Math.min(1, center + span/2);
+    if(options.max < 1 && options.max < 0.45) options.max = 0.45;
+    if(options.min > 0 && options.min > 0.2) options.min = 0.2;
+  }else{
+    options.min = 0;
+    options.max = 1;
+  }
+ }
 
 const gradient1 = gameAvgChart.getContext('2d').createLinearGradient(0,0,0,200);
-gradient1.addColorStop(0,'rgba(255,255,255,0.25)');
-gradient1.addColorStop(1,'rgba(255,255,255,0.02)');
+gradient1.addColorStop(0, isLight ? 'rgba(126,96,62,0.24)' : 'rgba(255,255,255,0.25)');
+gradient1.addColorStop(1, isLight ? 'rgba(126,96,62,0.05)' : 'rgba(255,255,255,0.02)');
 
 const gradient2 = cumulativeAvgChart.getContext('2d').createLinearGradient(0,0,0,200);
-gradient2.addColorStop(0,'rgba(200,200,200,0.25)');
-gradient2.addColorStop(1,'rgba(200,200,200,0.02)');
+gradient2.addColorStop(0, isLight ? 'rgba(140,109,73,0.22)' : 'rgba(200,200,200,0.25)');
+gradient2.addColorStop(1, isLight ? 'rgba(140,109,73,0.04)' : 'rgba(200,200,200,0.02)');
 
 const baseLinePlugin = {
  id:'baseLine',
@@ -5926,7 +6086,7 @@ const baseLinePlugin = {
   const {ctx,chartArea:{left,right},scales:{y}} = chart;
   const yPos = y.getPixelForValue(options.baseline);
   ctx.save();
-  ctx.strokeStyle='rgba(255,255,255,0.3)';
+  ctx.strokeStyle=baselineColor;
   ctx.setLineDash([6,6]);
   ctx.beginPath();
   ctx.moveTo(left,yPos);
@@ -5942,16 +6102,22 @@ chart1=new Chart(gameAvgChart,{
   labels:g.map((_,i)=>i+1),
   datasets:[{
    data:g,
-   borderColor:'#ffffff',
+   borderColor:primaryLine,
    backgroundColor:gradient1,
    fill:true,
    tension:0.35,
-   pointRadius:g.map((_,i)=>i===hIndex?6:3)
+   pointRadius:g.map((_,i)=>i===hIndex?6:3),
+   pointBackgroundColor:pointBg,
+   pointBorderColor:pointBorder,
+   pointBorderWidth:1.5
   }]
  },
  options:{
   plugins:{legend:{display:false}},
-  scales:{y:{min:options.min,max:options.max,reverse:options.reverse}}
+  scales:{
+   x:{grid:{color:gridColor},ticks:{color:tickColor}},
+   y:{min:options.min,max:options.max,reverse:options.reverse,grid:{color:gridColor},ticks:{color:tickColor}}
+  }
  },
  plugins:[baseLinePlugin]
 });
@@ -5962,16 +6128,22 @@ chart2=new Chart(cumulativeAvgChart,{
   labels:c.map((_,i)=>i+1),
   datasets:[{
    data:c,
-   borderColor:'#cccccc',
+   borderColor:secondaryLine,
    backgroundColor:gradient2,
    fill:true,
    tension:0.35,
-   pointRadius:c.map((_,i)=>i===hIndex?6:3)
+   pointRadius:c.map((_,i)=>i===hIndex?6:3),
+   pointBackgroundColor:pointBg,
+   pointBorderColor:pointBorder,
+   pointBorderWidth:1.5
   }]
  },
  options:{
   plugins:{legend:{display:false}},
-  scales:{y:{min:options.min,max:options.max,reverse:options.reverse}}
+  scales:{
+   x:{grid:{color:gridColor},ticks:{color:tickColor}},
+   y:{min:options.min,max:options.max,reverse:options.reverse,grid:{color:gridColor},ticks:{color:tickColor}}
+  }
  },
  plugins:[baseLinePlugin]
 });
