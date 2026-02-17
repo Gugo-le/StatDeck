@@ -387,6 +387,7 @@ button{
   <h3>다음 경기 운영 포인트</h3>
   <div id="gamePlanInsight" class="result"></div>
 </div>
+
 </div>
 
 <div class="sponsored-slot">
@@ -472,7 +473,13 @@ function resolveSeasonKey(lastSeasonKey){
 }
 
 function dataHash(data){
- return btoa(JSON.stringify(data));
+ const json = JSON.stringify(data);
+ const bytes = new TextEncoder().encode(json);
+ let binary = "";
+ for(let i=0;i<bytes.length;i++){
+  binary += String.fromCharCode(bytes[i]);
+ }
+ return btoa(binary);
 }
 
 function setDataInsufficient(message){
@@ -490,6 +497,8 @@ function setDataInsufficient(message){
  document.getElementById('confidenceBadge').className = "confidence-badge low";
  document.getElementById('confidenceBadge').textContent = "신뢰도 낮음";
  document.getElementById('confidenceText').textContent = "최소 5경기 이상 누적 필요";
+ document.getElementById('mseDisplay').innerHTML = "";
+ document.getElementById('modelMeta').innerHTML = "";
 }
 
 function setGauge(score, message){
@@ -499,6 +508,63 @@ function setGauge(score, message){
  const circumference = 440;
  const offset = circumference - (score/100)*circumference;
  gaugeCircle.style.strokeDashoffset = offset;
+}
+
+function setAnalyzingState(role){
+ document.getElementById('pregame').innerHTML = "분석 중...";
+ document.getElementById('scoreMsg').innerHTML = "AI 모델 계산 중";
+ document.getElementById('recentAnalysis').innerHTML = "최근 기록 추세 계산 중";
+ document.getElementById('slumpAnalysis').innerHTML = "슬럼프 위험도 계산 중";
+ document.getElementById('typeAnalysis').innerHTML = "유형 분석 중";
+ document.getElementById('priorityList').innerHTML = "<li>개선 우선순위 계산 중</li>";
+ document.getElementById('conditionInsight').innerHTML = "컨디션 연동 분석 중";
+ document.getElementById('gamePlanInsight').innerHTML = "다음 경기 운영 포인트 계산 중";
+ document.getElementById('mseDisplay').innerHTML = "모델 학습 중...";
+ document.getElementById('modelMeta').innerHTML = role === "pitcher" ? "🧠 pitcher model loading..." : "🧠 batter model loading...";
+}
+
+function fallbackPredictFromSeries(series){
+ const values = (series || []).map((v)=>Number(v)).filter((v)=>Number.isFinite(v));
+ if(!values.length) return 0;
+ const recent = values.slice(-3);
+ return recent.reduce((a,b)=>a+b,0) / recent.length;
+}
+
+function clamp(v, min, max){
+ return Math.min(max, Math.max(min, v));
+}
+
+function weightedRecentAverage(series){
+ const values = (series || []).map((v)=>Number(v)).filter((v)=>Number.isFinite(v));
+ if(!values.length) return 0;
+ const recent = values.slice(-5);
+ const weights = recent.map((_, i)=>i + 1);
+ const weightSum = weights.reduce((a,b)=>a+b,0);
+ const weighted = recent.reduce((sum,val,idx)=>sum + (val * weights[idx]),0) / weightSum;
+ return weighted;
+}
+
+function mean(values){
+ const nums = (values || []).map((v)=>Number(v)).filter((v)=>Number.isFinite(v));
+ if(!nums.length) return 0;
+ return nums.reduce((a,b)=>a+b,0) / nums.length;
+}
+
+function lastN(values, n){
+ const arr = Array.isArray(values) ? values : [];
+ return arr.slice(Math.max(0, arr.length - n));
+}
+
+function blendPrediction(modelPred, baselinePred, reliability){
+ if(!Number.isFinite(modelPred)) return baselinePred;
+ const w = clamp(reliability, 0.2, 0.8);
+ return (modelPred * w) + (baselinePred * (1 - w));
+}
+
+function predictionReliability(gamesCount, modelLoss){
+ const sampleScore = clamp((gamesCount - 4) / 20, 0, 1);
+ const lossScore = Number.isFinite(modelLoss) ? clamp(1 - (modelLoss * 8), 0, 1) : 0.5;
+ return (sampleScore * 0.65) + (lossScore * 0.35);
 }
 
 function getPitchVelocities(game){
@@ -597,17 +663,22 @@ function renderGamePlanInsight(role, metrics){
 
  if(role === "pitcher"){
   const points = [];
-  points.push(metrics.nextEra > 4.5 ? "1. 초반 9타자 구간은 코너 위주로 안전 운영" : "1. 초반 9타자 구간부터 승부구 비율 적극 운영");
-  points.push(metrics.meanWhip > 1.4 ? "2. 볼넷/사구 합계 목표를 경기당 2개 이하로 제한" : "2. 유리카운트에서 결정구 비율을 유지해 타자 카운트 선점");
-  points.push(metrics.meanKRate < 0.18 ? "3. 2스트라이크 이후 헛스윙 유도 구종 사용 빈도 증가" : "3. 삼진이 필요한 상황에선 주력 결정구 존 경계 공략");
+  const bbCap = Math.max(1, Math.round(metrics.walksPerGameTarget));
+  const kTarget = `${(metrics.kRateTarget*100).toFixed(1)}%`;
+  const arsenalText = metrics.mainArsenal ? `주력 ${metrics.mainArsenal}` : "주력 결정구";
+  points.push(`1. 다음 경기 목표 ERA는 ${metrics.eraTarget.toFixed(2)} 이하(현재 예측 ${metrics.nextEra.toFixed(2)})로 설정`);
+  points.push(`2. 사사구는 경기당 ${bbCap}개 이하(현재 ${metrics.walksPerGame.toFixed(1)}개)로 제한하고, 주자 있을 때는 초구 스트라이크 우선`);
+  points.push(`3. 삼진 유도율 목표를 ${kTarget}까지 끌어올리기 위해 2스트 이후 ${arsenalText} 비율을 증가`);
   el.innerHTML = points.join("<br>");
   return;
  }
 
  const points = [];
- points.push(metrics.nextAvg < 0.24 ? "1. 첫 타석은 강한 스윙보다 컨택 우선으로 타이밍 확보" : "1. 초반 타석부터 유리카운트 직구 공략 비율 유지");
- points.push(metrics.obp < 0.33 ? "2. 볼카운트 1-0/2-1에서 출루 선택(볼 고르기) 비율 확대" : "2. 출루 흐름 유지를 위해 루상 상황별 진루타 우선");
- points.push(metrics.slope < 0 ? "3. 최근 하락세 구간이므로 타석 루틴(호흡-시선-스타트) 고정" : "3. 현재 상승세 유지 위해 타석 전 루틴 템포를 동일하게 유지");
+ points.push(`1. 다음 경기 목표 타율은 ${metrics.avgTarget.toFixed(3)} 이상(현재 예측 ${metrics.nextAvg.toFixed(3)})으로 설정`);
+ points.push(`2. 출루율 목표는 ${metrics.obpTarget.toFixed(3)} 이상(현재 ${metrics.obp.toFixed(3)}) · 4타석 기준 최소 1회 출루 확보`);
+ points.push(metrics.slope < 0
+  ? `3. 최근 3경기 타율 ${metrics.recent3Avg.toFixed(3)}가 시즌 ${metrics.seasonAvg.toFixed(3)}보다 낮아, 첫 타석은 컨택 우선 루틴으로 시작`
+  : `3. 최근 3경기 타율 ${metrics.recent3Avg.toFixed(3)} 상승세 유지 위해 유리카운트(1-0/2-1) 직구 공략 템포 유지`);
  el.innerHTML = points.join("<br>");
 }
 
@@ -616,12 +687,13 @@ async function analyzeBatter(dataGames, position){
   setDataInsufficient("데이터 부족 · 타자 분석 최소 5경기 필요");
   return;
  }
+ setAnalyzingState("batter");
 
  document.getElementById("pregameTitle").innerText = "PRE-GAME PREDICTION (Batter)";
  document.getElementById("scoreTitle").innerText = "BATTER SCOUT SCORE";
  document.getElementById("typeTitle").innerText = "타자 유형 분석";
 
- const avgs = dataGames.map(g=> g.ab ? g.hits/g.ab : 0);
+ const avgs = dataGames.map(g=> g.ab ? clamp(g.hits/g.ab, 0, 1) : 0);
  const isoArr = dataGames.map(g=>{
   const singles = (g.hits||0) - (g.double||0) - (g.triple||0) - (g.hr||0);
   const tb = singles + (g.double||0)*2 + (g.triple||0)*3 + (g.hr||0)*4;
@@ -630,33 +702,52 @@ async function analyzeBatter(dataGames, position){
 
  const inputs = avgs.map((v,i)=> [v, isoArr[i]]);
  const labels = avgs.slice(1);
- const xs = tf.tensor2d(inputs.slice(0,-1));
- const ys = tf.tensor2d(labels, [labels.length,1]);
  const modelStorageKey = `indexeddb://statdeck-model-batter-${currentSeason}`;
  const hashStorageKey = `statdeck-model-hash-batter-${currentSeason}`;
-
- let model;
+ let modelLoss = null;
+ const baselineAvg = clamp(weightedRecentAverage(avgs), 0, 1);
+ let nextAvg = baselineAvg;
+ let model = null;
+ let xs = null;
+ let ys = null;
  const currentHash = dataHash(dataGames);
  const savedHash = (await idbGet(hashStorageKey)) || localStorage.getItem(hashStorageKey);
- try{
-  if(savedHash !== currentHash) throw new Error("retrain");
-  model = await tf.loadLayersModel(modelStorageKey);
- }catch(e){
-  model = tf.sequential();
-  model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[2]}));
-  model.add(tf.layers.dense({units:8, activation:'relu'}));
-  model.add(tf.layers.dense({units:1}));
-  model.compile({optimizer:'adam', loss:'meanSquaredError'});
-  const history = await model.fit(xs, ys, {epochs:80, verbose:0});
-  document.getElementById('mseDisplay').innerHTML = `Model MSE: ${history.history.loss.slice(-1)[0].toFixed(6)}`;
-  await model.save(modelStorageKey);
-  await idbSet(hashStorageKey, currentHash);
+ const canUseTf = typeof tf !== "undefined" && typeof tf.tensor2d === "function";
+ if(canUseTf){
+  try{
+   xs = tf.tensor2d(inputs.slice(0,-1));
+   ys = tf.tensor2d(labels, [labels.length,1]);
+   try{
+    if(savedHash !== currentHash) throw new Error("retrain");
+    model = await tf.loadLayersModel(modelStorageKey);
+   }catch(e){
+    model = tf.sequential();
+    model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[2]}));
+    model.add(tf.layers.dense({units:8, activation:'relu'}));
+    model.add(tf.layers.dense({units:1}));
+    model.compile({optimizer:'adam', loss:'meanSquaredError'});
+    const history = await model.fit(xs, ys, {epochs:80, verbose:0});
+    modelLoss = history.history.loss.slice(-1)[0];
+    document.getElementById('mseDisplay').innerHTML = `Model MSE: ${modelLoss.toFixed(6)}`;
+    await model.save(modelStorageKey);
+    await idbSet(hashStorageKey, currentHash);
+   }
+   const modelPred = tf.tidy(()=>{
+    const output = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
+    return output.dataSync()[0];
+   });
+   const reliability = predictionReliability(dataGames.length, modelLoss);
+   nextAvg = blendPrediction(modelPred, baselineAvg, reliability);
+   if(!Number.isFinite(modelLoss)){
+    document.getElementById('mseDisplay').innerHTML = `Model loaded · blended forecast (${Math.round(reliability*100)}%)`;
+   }
+  }catch(e){
+   document.getElementById('mseDisplay').innerHTML = "모델 학습 지연 · 통계 기반 예측으로 표시";
+  }
+ }else{
+  document.getElementById('mseDisplay').innerHTML = "AI 엔진 로딩 지연 · 통계 기반 예측으로 표시";
  }
-
- const nextAvg = tf.tidy(()=>{
-  const output = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
-  return output.dataSync()[0];
- });
+ nextAvg = clamp(nextAvg, 0, 1);
  document.getElementById('pregame').innerHTML = `🎯 다음 경기 예상 타율: <strong>${nextAvg.toFixed(3)}</strong>${position?` (${position})`:""}`;
 
  const xVals = avgs.map((_,i)=>i+1);
@@ -666,6 +757,10 @@ async function analyzeBatter(dataGames, position){
  const std = Math.sqrt(avgs.map(x => (x - meanY) ** 2).reduce((a,b)=>a+b,0) / avgs.length);
  const consistency = Math.max(0, 1 - std*5);
  const obp = dataGames.reduce((s,g)=>s+((g.hits||0)+(g.bb||0)),0) / (dataGames.reduce((s,g)=>s+((g.ab||0)+(g.bb||0)+(g.hbp||0)),0) || 1);
+ const recent3Avg = mean(lastN(avgs, 3));
+ const recent5Avg = mean(lastN(avgs, 5));
+ const seasonAvg = meanY;
+ const bbRate = dataGames.reduce((s,g)=>s+(g.bb||0),0) / (dataGames.reduce((s,g)=>(s + (g.ab||0) + (g.bb||0) + (g.hbp||0)),0) || 1);
  const score = Math.min(100, Math.max(0, Math.round((meanY*130)+(obp*100)+(nextAvg*120)+(consistency*80)+(slope*500))));
  setConfidence(dataGames.length);
 
@@ -677,17 +772,37 @@ async function analyzeBatter(dataGames, position){
  const typeText = ["💥 파워 히터","🎯 교타형","⚖️ 밸런스형"][typeIndex];
  document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}`;
  const priorities = [];
- if(obp < 0.33) priorities.push("출루율 개선: 볼넷/사구 포함 출루를 경기당 1회 이상 목표로 설정");
- if(meanY < 0.270) priorities.push("컨택 품질 강화: 초구 스윙 선택보다 유리카운트 전개 비율을 늘리기");
- if(slope < 0) priorities.push("하락 추세 대응: 최근 3경기 타격 루틴(템포/시선고정) 고정");
- if(std > 0.085) priorities.push("기복 완화: 타석 전 체크리스트를 고정해 일관성 확보");
- if(nextAvg < 0.240) priorities.push("다음 경기 대비: 첫 타석에서 안정 스윙으로 타이밍 재설정");
+ if(obp < 0.33){
+  priorities.push(`출루 우선: 현재 OBP ${obp.toFixed(3)} → 단기 목표 ${clamp(obp + 0.020, 0.300, 0.430).toFixed(3)} (4타석 1출루 기준)`);
+ }
+ if(slope < 0 || recent3Avg < seasonAvg - 0.02){
+  priorities.push(`타격 흐름 복구: 최근 3경기 AVG ${recent3Avg.toFixed(3)}가 시즌 ${seasonAvg.toFixed(3)} 대비 하락, 첫 타석 컨택 루틴 고정`);
+ }
+ if(std > 0.085){
+  priorities.push(`기복 관리: 경기별 편차 ${std.toFixed(3)}로 변동 큼, 타석 전 체크리스트 3단계(호흡-시선-스타트) 고정`);
+ }
+ if(bbRate < 0.08){
+  priorities.push(`카운트 운영: 볼넷 비율 ${(bbRate*100).toFixed(1)}%로 낮음, 1-0/2-1 카운트에서 존 관리 강화`);
+ }
+ if(nextAvg < 0.240){
+  priorities.push(`예측 대응: 다음 경기 예상 AVG ${nextAvg.toFixed(3)}로 낮음, 초반 2타석은 강스윙보다 배트 중심 컨택 우선`);
+ }
  renderPriorities(priorities);
  renderConditionInsight(dataGames, "batter");
- renderGamePlanInsight("batter", { nextAvg, obp, slope });
+ renderGamePlanInsight("batter", {
+  nextAvg,
+  obp,
+  slope,
+  recent3Avg,
+  seasonAvg,
+  avgTarget: clamp(Math.max(nextAvg, recent5Avg) + 0.010, 0.220, 0.420),
+  obpTarget: clamp(Math.max(obp, 0.320) + 0.015, 0.320, 0.460)
+ });
 
  document.getElementById('modelMeta').innerHTML = `🧠 batter model · ${dataGames.length} games`;
- xs.dispose(); ys.dispose(); model.dispose();
+ if(xs) xs.dispose();
+ if(ys) ys.dispose();
+ if(model) model.dispose();
 }
 
 async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint, throwHand){
@@ -695,6 +810,7 @@ async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint
   setDataInsufficient("데이터 부족 · 투수 분석 최소 5경기 필요");
   return;
  }
+ setAnalyzingState("pitcher");
 
  document.getElementById("pregameTitle").innerText = "PRE-GAME PREDICTION (Pitcher)";
  document.getElementById("scoreTitle").innerText = "PITCHER SCOUT SCORE";
@@ -719,39 +835,60 @@ async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint
 
  const inputs = eras.map((v,i)=> [v, whips[i], velos[i], maxVelos[i]]);
  const labels = eras.slice(1);
- const xs = tf.tensor2d(inputs.slice(0,-1));
- const ys = tf.tensor2d(labels, [labels.length,1]);
  const modelStorageKey = `indexeddb://statdeck-model-pitcher-${currentSeason}`;
  const hashStorageKey = `statdeck-model-hash-pitcher-${currentSeason}`;
-
- let model;
+ let modelLoss = null;
+ const baselineEra = Math.max(0, weightedRecentAverage(eras));
+ let nextEra = baselineEra;
+ let model = null;
+ let xs = null;
+ let ys = null;
  const currentHash = dataHash(dataGames);
  const savedHash = (await idbGet(hashStorageKey)) || localStorage.getItem(hashStorageKey);
- try{
-  if(savedHash !== currentHash) throw new Error("retrain");
-  model = await tf.loadLayersModel(modelStorageKey);
- }catch(e){
-  model = tf.sequential();
-  model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[4]}));
-  model.add(tf.layers.dense({units:8, activation:'relu'}));
-  model.add(tf.layers.dense({units:1}));
-  model.compile({optimizer:'adam', loss:'meanSquaredError'});
-  const history = await model.fit(xs, ys, {epochs:90, verbose:0});
-  document.getElementById('mseDisplay').innerHTML = `Model MSE: ${history.history.loss.slice(-1)[0].toFixed(6)}`;
-  await model.save(modelStorageKey);
-  await idbSet(hashStorageKey, currentHash);
+ const canUseTf = typeof tf !== "undefined" && typeof tf.tensor2d === "function";
+ if(canUseTf){
+  try{
+   xs = tf.tensor2d(inputs.slice(0,-1));
+   ys = tf.tensor2d(labels, [labels.length,1]);
+   try{
+    if(savedHash !== currentHash) throw new Error("retrain");
+    model = await tf.loadLayersModel(modelStorageKey);
+   }catch(e){
+    model = tf.sequential();
+    model.add(tf.layers.dense({units:16, activation:'relu', inputShape:[4]}));
+    model.add(tf.layers.dense({units:8, activation:'relu'}));
+    model.add(tf.layers.dense({units:1}));
+    model.compile({optimizer:'adam', loss:'meanSquaredError'});
+    const history = await model.fit(xs, ys, {epochs:90, verbose:0});
+    modelLoss = history.history.loss.slice(-1)[0];
+    document.getElementById('mseDisplay').innerHTML = `Model MSE: ${modelLoss.toFixed(6)}`;
+    await model.save(modelStorageKey);
+    await idbSet(hashStorageKey, currentHash);
+   }
+   const modelPred = tf.tidy(()=>{
+    const pred = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
+    return pred.dataSync()[0];
+   });
+   const reliability = predictionReliability(dataGames.length, modelLoss);
+   nextEra = blendPrediction(modelPred, baselineEra, reliability);
+   if(!Number.isFinite(modelLoss)){
+    document.getElementById('mseDisplay').innerHTML = `Model loaded · blended forecast (${Math.round(reliability*100)}%)`;
+   }
+  }catch(e){
+   document.getElementById('mseDisplay').innerHTML = "모델 학습 지연 · 통계 기반 예측으로 표시";
+  }
+ }else{
+  document.getElementById('mseDisplay').innerHTML = "AI 엔진 로딩 지연 · 통계 기반 예측으로 표시";
  }
-
- const nextEra = tf.tidy(()=>{
-  const pred = model.predict(tf.tensor2d([inputs[inputs.length-1]]));
-  return pred.dataSync()[0];
- });
+ nextEra = clamp(nextEra, 0, 12);
  const profileTag = [pitcherType, throwHand, releasePoint].filter(Boolean).join(" · ");
  document.getElementById('pregame').innerHTML = `🎯 다음 경기 예상 ERA: <strong>${nextEra.toFixed(2)}</strong>${profileTag?` (${profileTag})`:""}`;
 
  const meanEra = eras.reduce((a,b)=>a+b,0)/eras.length;
  const meanWhip = whips.reduce((a,b)=>a+b,0)/whips.length;
  const meanKRate = kRates.reduce((a,b)=>a+b,0)/kRates.length;
+ const recent3Era = mean(lastN(eras, 3));
+ const recent5Era = mean(lastN(eras, 5));
  const veloSamples = velos.filter((v)=>v>0);
  const topVeloSamples = maxVelos.filter((v)=>v>0);
  const meanVelo = veloSamples.length ? (veloSamples.reduce((a,b)=>a+b,0)/veloSamples.length) : 0;
@@ -772,35 +909,62 @@ async function analyzePitcher(dataGames, pitcherType, pitchArsenal, releasePoint
  const arsenalText = (pitchArsenal || []).length ? ` · 구종 ${pitchArsenal.join("/")}` : "";
  document.getElementById('typeAnalysis').innerHTML = `AI 예측 유형: ${typeText}${arsenalText}`;
  const walksPerGame = dataGames.reduce((s,g)=>s + (g.pBb || 0) + (g.pHbp || 0), 0) / dataGames.length;
+ const walksPer9 = dataGames.reduce((s,g)=>s + (g.pBb || 0) + (g.pHbp || 0), 0) * 27 / (dataGames.reduce((s,g)=>s + (g.ipOuts || 0),0) || 1);
+ const mainArsenal = Array.isArray(pitchArsenal) ? pitchArsenal.slice(0,2).join("/") : "";
  const priorities = [];
- if(meanEra > 4.50) priorities.push("실점 억제 우선: 초반 이닝 선두타자 출루 관리 강화");
- if(meanWhip > 1.45) priorities.push("주자 관리 개선: 볼넷·사구 허용을 경기당 2개 이하로 제한");
- if(meanKRate < 0.18) priorities.push("결정구 비율 조정: 유리카운트에서 삼진 유도 패턴 강화");
- if(walksPerGame > 2.2) priorities.push("제구 안정화: 좌우 코너 목표구역 루틴 고정");
- if(nextEra > 4.50) priorities.push("다음 경기 대비: 초구 스트라이크 비율을 우선 목표로 설정");
+ if(meanEra > 4.50 || recent3Era > meanEra + 0.3){
+  priorities.push(`실점 관리: 최근 3경기 ERA ${recent3Era.toFixed(2)}가 시즌 ${meanEra.toFixed(2)} 대비 높음, 초반 이닝 선두타자 출루 억제 우선`);
+ }
+ if(meanWhip > 1.45 || walksPerGame > 2.2){
+  priorities.push(`주자 억제: WHIP ${meanWhip.toFixed(2)} · 사사구 ${walksPerGame.toFixed(1)}개/경기 → 목표 ${Math.max(1, Math.round(walksPerGame - 0.5))}개 이하`);
+ }
+ if(meanKRate < 0.18){
+  priorities.push(`결정력 강화: 현재 삼진율 ${(meanKRate*100).toFixed(1)}% → 목표 ${(clamp(meanKRate + 0.02, 0.18, 0.32)*100).toFixed(1)}% (2스트 유인구 비율 상승)`);
+ }
+ if(walksPer9 > 4.2){
+  priorities.push(`제구 안정화: 9이닝당 사사구 ${walksPer9.toFixed(2)}개로 높음, 릴리스 포인트(${releasePoint || "기본"}) 반복성 점검`);
+ }
+ if(nextEra > 4.50){
+  priorities.push(`예측 대응: 다음 경기 ERA ${nextEra.toFixed(2)} 예상, 초구 스트라이크/유리카운트 선점 운영 강화`);
+ }
  renderPriorities(priorities);
  renderConditionInsight(dataGames, "pitcher");
- renderGamePlanInsight("pitcher", { nextEra, meanWhip, meanKRate });
+ renderGamePlanInsight("pitcher", {
+  nextEra,
+  meanWhip,
+  meanKRate,
+  walksPerGame,
+  mainArsenal,
+  eraTarget: clamp(Math.min(nextEra, recent5Era) - 0.25, 2.20, 4.80),
+  walksPerGameTarget: Math.max(1, walksPerGame - 0.5),
+  kRateTarget: clamp(Math.max(meanKRate, 0.18) + 0.02, 0.18, 0.35)
+ });
  document.getElementById('modelMeta').innerHTML = `🧠 pitcher model · ${dataGames.length} games${throwHand ? ` · ${throwHand}` : ""}${releasePoint ? ` · ${releasePoint}` : ""}`;
- xs.dispose(); ys.dispose(); model.dispose();
+ if(xs) xs.dispose();
+ if(ys) ys.dispose();
+ if(model) model.dispose();
 }
 
 async function analyze(){
- const profileData = (await idbGet("profileData")) || JSON.parse(localStorage.getItem("profileData") || "{}");
- const params = new URLSearchParams(location.search);
- const role = params.get("role") || profileData.role || "batter";
- const position = params.get("position") || profileData.position || "";
- const pitcherType = params.get("pitcherType") || profileData.pitcherType || "";
- const pitchArsenalParam = params.get("pitchArsenal");
- const pitchArsenal = pitchArsenalParam ? pitchArsenalParam.split(",").filter(Boolean) : (Array.isArray(profileData.pitchArsenal) ? profileData.pitchArsenal : []);
- const releasePoint = params.get("releasePoint") || profileData.releasePoint || "";
- const throwHand = params.get("throwHand") || profileData.throwHand || "";
- const roleGames = games.filter((g)=>(g.role || "batter") === role);
- const targetGames = roleGames.length ? roleGames : games;
- if(role === "pitcher"){
-  await analyzePitcher(targetGames, pitcherType, pitchArsenal, releasePoint, throwHand);
- }else{
-  await analyzeBatter(targetGames, position);
+ try{
+  const profileData = (await idbGet("profileData")) || JSON.parse(localStorage.getItem("profileData") || "{}");
+  const params = new URLSearchParams(location.search);
+  const role = params.get("role") || profileData.role || "batter";
+  const position = params.get("position") || profileData.position || "";
+  const pitcherType = params.get("pitcherType") || profileData.pitcherType || "";
+  const pitchArsenalParam = params.get("pitchArsenal");
+  const pitchArsenal = pitchArsenalParam ? pitchArsenalParam.split(",").filter(Boolean) : (Array.isArray(profileData.pitchArsenal) ? profileData.pitchArsenal : []);
+  const releasePoint = params.get("releasePoint") || profileData.releasePoint || "";
+  const throwHand = params.get("throwHand") || profileData.throwHand || "";
+  const roleGames = games.filter((g)=>(g.role || "batter") === role);
+  const targetGames = roleGames.length ? roleGames : games;
+  if(role === "pitcher"){
+   await analyzePitcher(targetGames, pitcherType, pitchArsenal, releasePoint, throwHand);
+  }else{
+   await analyzeBatter(targetGames, position);
+  }
+ }catch(e){
+  setDataInsufficient("분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
  }
 }
 
@@ -809,10 +973,11 @@ async function initializeAnalytics(){
  const lastSeason = (await idbGet("lastSeasonKey")) || localStorage.getItem("lastSeasonKey");
  currentSeason = resolveSeasonKey(lastSeason);
  if(!currentSeason){
-  setDataInsufficient("데이터 없음");
-  return;
- }
- games = seasonData[currentSeason] || [];
+ setDataInsufficient("데이터 없음");
+ return;
+}
+games = seasonData[currentSeason] || [];
+ setAnalyzingState("batter");
  analyze();
 }
 
