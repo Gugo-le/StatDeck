@@ -1115,37 +1115,6 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
  font-size:11px;
  color:#9a9a9a;
 }
-.entry-quick-row{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:8px;
- margin:0 0 10px;
- padding:8px 10px;
- border-radius:10px;
- border:1px solid #343434;
- background:#121212;
-}
-.entry-quick-copy{
- font-size:11px;
- color:#b7b7b7;
-}
-.quick-toggle-btn{
- margin:0;
- min-height:34px;
- padding:7px 10px;
- border-radius:10px;
- border:1px solid #4b4b4b;
- background:#252525;
- color:#ececec;
- font-size:11px;
- font-weight:700;
-}
-.quick-toggle-btn.active{
- background:linear-gradient(160deg,#f2f2f2,#dfdfdf);
- border-color:#d6d6d6;
- color:#141414;
-}
 .entry-core-grid{
  display:grid;
  grid-template-columns:1fr 1fr;
@@ -1222,17 +1191,6 @@ button{width:100%;padding:12px;border:none;border-radius:12px;background:#ffffff
 }
 .entry-advanced{
  margin-top:8px;
-}
-body.game-day-mode #gameName,
-body.game-day-mode #gameCondition,
-body.game-day-mode .entry-collapse-btn,
-body.game-day-mode #batterAdvancedGroup,
-body.game-day-mode #pitcherAdvancedGroup,
-body.game-day-mode #pitcherVeloGroup{
- display:none !important;
-}
-body.game-day-mode .entry-top p{
- color:#f1c17a;
 }
 .shared-mode-banner{
  display:none;
@@ -2630,23 +2588,6 @@ body.light .schedule-item-sub,
 body.light .schedule-empty{
  color:#8b7458;
 }
-body.light .entry-quick-row{
- border-color:#d9c4a6;
- background:#fcf5e8;
-}
-body.light .entry-quick-copy{
- color:#866e51;
-}
-body.light .quick-toggle-btn{
- border-color:#d5bc98;
- background:#f7ecd9;
- color:#5f4b34;
-}
-body.light .quick-toggle-btn.active{
- background:linear-gradient(160deg,#7e5f3d,#9a7550);
- border-color:#7e5f3d;
- color:#fffaf0;
-}
 body.light .shared-mode-banner{
  border-color:#cfbb9e;
  background:linear-gradient(145deg,#f8edda,#f1e2c8);
@@ -3250,10 +3191,6 @@ body.light .sponsored-placeholder{
   <h3>경기 기록 입력</h3>
   <p>핵심 기록 먼저 입력하고, 필요한 항목만 펼쳐서 입력하세요.</p>
 </div>
-<div class="entry-quick-row">
-  <span id="gameDayModeLabel" class="entry-quick-copy">일반 입력 모드</span>
-  <button type="button" id="gameDayModeBtn" class="quick-toggle-btn" onclick="toggleGameDayMode()">경기 당일 모드 켜기</button>
-</div>
 <div class="entry-core-grid">
   <input type="date" id="gameDate">
   <input type="text" id="gameName" placeholder="경기 이름">
@@ -3573,6 +3510,8 @@ body.light .sponsored-placeholder{
         <button class="danger" onclick="resetAllRecords()">전체 기록 리셋</button>
         <button class="danger" onclick="resetToNewUser()">신규 사용자로 되돌리기</button>
       </div>
+      <div class="profile-label">인스타 공유 (1:1)</div>
+      <button class="upload-btn" onclick="downloadSeasonShareSquare()">기록 카드 PNG 저장</button>
       <div class="profile-label">코치 공유 링크(읽기 전용)</div>
       <div class="coach-share-panel">
         <p>현재 시즌 기록 중 선택한 기간만 읽기 전용 링크로 공유됩니다.</p>
@@ -3699,7 +3638,6 @@ let onboardingPreviewTimers = [];
 const seasonSelectEl = document.getElementById("seasonSelect");
 let quotes = [];
 let deferredInstallPrompt = null;
-let gameDayMode = false;
 let readOnlyShareMode = false;
 let sharedPayloadMeta = null;
 let scheduleData = [];
@@ -3821,29 +3759,6 @@ function guardReadOnly(actionLabel){
   const action = actionLabel || "요청한";
   alert(`코치 공유 링크는 읽기 전용입니다.\n${action} 작업은 원본 앱에서만 가능합니다.`);
   return true;
-}
-
-function applyGameDayMode(mode, persist=true){
-  gameDayMode = !!mode;
-  document.body.classList.toggle("game-day-mode", gameDayMode);
-  const btn = document.getElementById("gameDayModeBtn");
-  const label = document.getElementById("gameDayModeLabel");
-  if(btn){
-    btn.classList.toggle("active", gameDayMode);
-    btn.innerText = gameDayMode ? "경기 당일 모드 끄기" : "경기 당일 모드 켜기";
-  }
-  if(label){
-    label.innerText = gameDayMode
-      ? "경기 당일 모드: 필수 입력만 빠르게 기록합니다."
-      : "일반 입력 모드";
-  }
-  if(persist && !readOnlyShareMode){
-    void idbSet("gameDayMode", gameDayMode);
-  }
-}
-
-function toggleGameDayMode(){
-  applyGameDayMode(!gameDayMode);
 }
 
 function encodeBase64Url(text){
@@ -4348,7 +4263,6 @@ async function initializeApp(){
   profileData = await loadStoreValue("profileData", profileData, ()=>readLegacyJSON("profileData", profileData));
   quotes = await loadStoreValue("quotes", [], ()=>readLegacyJSON("quotes", []));
   scheduleData = await loadStoreValue("scheduleData", [], ()=>readLegacyJSON("scheduleData", []));
-  gameDayMode = await loadStoreValue("gameDayMode", false, ()=>readLegacyText("gameDayMode", "false") === "true");
 
   if(!allData[seasonKey]) allData[seasonKey] = [];
   ensureSeasonOptionExists(seasonKey);
@@ -4370,7 +4284,6 @@ async function initializeApp(){
   if(profileData.role === "pitcher") setStatsMode("pitcher");
   else setStatsMode("batter");
   changeEntryRole();
-  applyGameDayMode(gameDayMode, false);
   renderQuotes();
   renderScheduleList();
   renderTodayScheduleBanner();
@@ -4962,7 +4875,6 @@ async function resetToNewUser(){
   };
   quotes = [];
   scheduleData = [];
-  gameDayMode = false;
 
   if(seasonSelectEl) seasonSelectEl.value = seasonKey;
   const roleEl = document.getElementById("entryRole");
@@ -4973,17 +4885,14 @@ async function resetToNewUser(){
   await idbSet("profileData", profileData);
   await idbSet("quotes", quotes);
   await idbSet("scheduleData", scheduleData);
-  await idbSet("gameDayMode", false);
 
   localStorage.removeItem("seasonData");
   localStorage.removeItem("lastSeasonKey");
   localStorage.removeItem("profileData");
   localStorage.removeItem("quotes");
   localStorage.removeItem("scheduleData");
-  localStorage.removeItem("gameDayMode");
 
   resetGameForm();
-  applyGameDayMode(false, false);
   renderQuotes();
   renderScheduleList();
   renderTodayScheduleBanner();
@@ -5578,6 +5487,254 @@ async function copyInviteLink(){
   }else{
     alert(`복사 권한이 없어 링크만 안내합니다:\n${appUrl}`);
   }
+}
+
+function splitCanvasText(ctx, text, maxWidth){
+  const words = String(text || "").split(" ");
+  const lines = [];
+  let line = "";
+  for(const w of words){
+    const candidate = line ? `${line} ${w}` : w;
+    if(ctx.measureText(candidate).width <= maxWidth){
+      line = candidate;
+    }else{
+      if(line) lines.push(line);
+      line = w;
+    }
+  }
+  if(line) lines.push(line);
+  return lines;
+}
+
+function drawCanvasWrapped(ctx, text, x, y, maxWidth, lineHeight, maxLines=2){
+  const lines = splitCanvasText(ctx, text, maxWidth).slice(0, maxLines);
+  lines.forEach((line, idx)=>{
+    ctx.fillText(line, x, y + (idx * lineHeight));
+  });
+  return y + (lines.length * lineHeight);
+}
+
+function getBadgeCanvasColors(tone){
+  const map = {
+    precision:{bg:"#34516d", ring:"#8eb7df", text:"#eaf2ff"},
+    power:{bg:"#6a2a2a", ring:"#e08c8c", text:"#fff1f1"},
+    onbase:{bg:"#2d5a43", ring:"#8fd3ac", text:"#ecfff3"},
+    multi:{bg:"#4f3a6b", ring:"#c1a4e8", text:"#f4ecff"},
+    era:{bg:"#3a4f6f", ring:"#9fc1ea", text:"#eef5ff"},
+    k:{bg:"#6d3d1d", ring:"#efb088", text:"#fff4ea"},
+    clutch:{bg:"#6a2f44", ring:"#e6a6bc", text:"#fff0f6"},
+    fire:{bg:"#7a2d19", ring:"#f2a17f", text:"#fff2eb"}
+  };
+  return map[tone] || {bg:"#2a2a2a", ring:"#6e6e6e", text:"#f2f2f2"};
+}
+
+function drawBadgeMedal(ctx, cx, cy, mark, tone){
+  const colors = getBadgeCanvasColors(tone);
+  ctx.beginPath();
+  ctx.arc(cx, cy, 38, 0, Math.PI*2);
+  ctx.fillStyle = colors.bg;
+  ctx.fill();
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = colors.ring;
+  ctx.stroke();
+  ctx.fillStyle = "rgba(255,255,255,0.25)";
+  ctx.beginPath();
+  ctx.arc(cx-10, cy-12, 11, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = colors.text;
+  ctx.font = "700 20px Inter, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(mark || "BDG", cx, cy+1);
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+}
+
+function buildSeasonShareSnapshot(){
+  const role = profileData.role || "batter";
+  const seasonGames = (allData[seasonKey] || []).filter((g)=>(g.role || "batter") === role);
+  if(!seasonGames.length) return null;
+
+  const wins = seasonGames.filter((g)=>g.result === "W").length;
+  const winRate = seasonGames.length ? ((wins / seasonGames.length) * 100).toFixed(1) : "0.0";
+  const badges = getRoleBadges(seasonGames, role).slice(0,3);
+
+  if(role === "pitcher"){
+    const outs = seasonGames.reduce((s,g)=>s + (g.ipOuts || 0), 0);
+    const er = seasonGames.reduce((s,g)=>s + (g.er || 0), 0);
+    const ra = seasonGames.reduce((s,g)=>s + (g.ra || 0), 0);
+    const so = seasonGames.reduce((s,g)=>s + (g.so || 0), 0);
+    const h = seasonGames.reduce((s,g)=>s + (g.pHits || 0), 0);
+    const bb = seasonGames.reduce((s,g)=>s + (g.pBb || 0), 0);
+    const hbp = seasonGames.reduce((s,g)=>s + (g.pHbp || 0), 0);
+    const hr = seasonGames.reduce((s,g)=>s + (g.pHr || 0), 0);
+    const bf = outs + h + bb + hbp;
+    const era = outs ? ((er * 27) / outs).toFixed(2) : "0.00";
+    const whip = outs ? ((h + bb + hbp) / ((outs / 3) || 1)).toFixed(2) : "0.00";
+    const kRate = bf ? ((so / bf) * 100).toFixed(1) : "0.0";
+    return {
+      role,
+      title: "SEASON PITCHING CARD",
+      main1Label: "ERA",
+      main1Value: era,
+      main2Label: "WHIP",
+      main2Value: whip,
+      rows: [
+        `경기 ${seasonGames.length} · 승률 ${winRate}%`,
+        `이닝 ${formatOutsToInnings(outs)} · SO ${so} · 실점 ${ra}`,
+        `피안타 ${h} · 사사구 ${bb+hbp} · 피홈런 ${hr}`
+      ],
+      badges
+    };
+  }
+
+  const ab = seasonGames.reduce((s,g)=>s + (g.ab || 0), 0);
+  const pa = seasonGames.reduce((s,g)=>s + getGamePA(g), 0);
+  const hits = seasonGames.reduce((s,g)=>s + (g.hits || 0), 0);
+  const hr = seasonGames.reduce((s,g)=>s + (g.hr || 0), 0);
+  const rbi = seasonGames.reduce((s,g)=>s + (g.rbi || 0), 0);
+  const run = seasonGames.reduce((s,g)=>s + (g.run || 0), 0);
+  const sb = seasonGames.reduce((s,g)=>s + (g.sb || 0), 0);
+  const bb = seasonGames.reduce((s,g)=>s + (g.bb || 0), 0);
+  const hbp = seasonGames.reduce((s,g)=>s + (g.hbp || 0), 0);
+  const singles = seasonGames.reduce((s,g)=>s + ((g.hits||0) - (g.double||0) - (g.triple||0) - (g.hr||0)), 0);
+  const doubles = seasonGames.reduce((s,g)=>s + (g.double || 0), 0);
+  const triples = seasonGames.reduce((s,g)=>s + (g.triple || 0), 0);
+  const tb = singles + doubles*2 + triples*3 + hr*4;
+  const avg = ab ? (hits / ab).toFixed(3) : "0.000";
+  const obp = pa ? ((hits + bb + hbp) / pa).toFixed(3) : "0.000";
+  const slg = ab ? (tb / ab).toFixed(3) : "0.000";
+  const ops = (Number(obp) + Number(slg)).toFixed(3);
+  return {
+    role,
+    title: "SEASON BATTING CARD",
+    main1Label: "AVG",
+    main1Value: avg,
+    main2Label: "OPS",
+    main2Value: ops,
+    rows: [
+      `경기 ${seasonGames.length} · 승률 ${winRate}% · 타석 ${pa}`,
+      `안타 ${hits} · 홈런 ${hr} · 타점 ${rbi} · 득점 ${run}`,
+      `출루율 ${obp} · 장타율 ${slg} · 도루 ${sb}`
+    ],
+    badges
+  };
+}
+
+async function downloadSeasonShareSquare(){
+  const snapshot = buildSeasonShareSnapshot();
+  if(!snapshot){
+    alert("공유할 시즌 기록이 없습니다.");
+    return;
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1080;
+  const ctx = canvas.getContext("2d");
+
+  const bg = ctx.createLinearGradient(0,0,1080,1080);
+  if(snapshot.role === "pitcher"){
+    bg.addColorStop(0, "#121a24");
+    bg.addColorStop(1, "#1d2a3a");
+  }else{
+    bg.addColorStop(0, "#f2e5cf");
+    bg.addColorStop(1, "#e7d6b8");
+  }
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,1080,1080);
+
+  ctx.fillStyle = snapshot.role === "pitcher" ? "rgba(255,255,255,0.08)" : "rgba(72,52,33,0.08)";
+  ctx.fillRect(56,56,968,968);
+  ctx.strokeStyle = snapshot.role === "pitcher" ? "rgba(255,255,255,0.16)" : "rgba(84,63,41,0.22)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(56,56,968,968);
+
+  const darkText = snapshot.role === "pitcher" ? "#edf3ff" : "#3f2f1f";
+  const subText = snapshot.role === "pitcher" ? "#b7c7dd" : "#6d563d";
+
+  ctx.fillStyle = darkText;
+  ctx.font = "800 48px Inter, sans-serif";
+  ctx.fillText("StatDeck", 96, 132);
+  ctx.fillStyle = subText;
+  ctx.font = "600 24px Inter, sans-serif";
+  ctx.fillText(`${seasonKey} 시즌 · ${snapshot.title}`, 96, 172);
+
+  ctx.fillStyle = snapshot.role === "pitcher" ? "#24344b" : "#efe2cb";
+  ctx.fillRect(96,216,888,220);
+  ctx.strokeStyle = snapshot.role === "pitcher" ? "#3b516f" : "#d4bf9d";
+  ctx.strokeRect(96,216,888,220);
+
+  ctx.fillStyle = subText;
+  ctx.font = "700 24px Inter, sans-serif";
+  ctx.fillText(snapshot.main1Label, 136, 268);
+  ctx.fillText(snapshot.main2Label, 560, 268);
+  ctx.fillStyle = darkText;
+  ctx.font = "800 92px Inter, sans-serif";
+  ctx.fillText(snapshot.main1Value, 128, 372);
+  ctx.fillText(snapshot.main2Value, 552, 372);
+
+  let y = 500;
+  ctx.fillStyle = subText;
+  ctx.font = "700 24px Inter, sans-serif";
+  ctx.fillText("SEASON SNAPSHOT", 96, y);
+  y += 40;
+  ctx.fillStyle = darkText;
+  ctx.font = "600 33px Inter, sans-serif";
+  snapshot.rows.forEach((row)=>{
+    y = drawCanvasWrapped(ctx, row, 96, y, 888, 46, 2);
+    y += 14;
+  });
+
+  y += 12;
+  ctx.fillStyle = subText;
+  ctx.font = "700 24px Inter, sans-serif";
+  ctx.fillText("BADGES", 96, y);
+  y += 40;
+  if(snapshot.badges.length){
+    const badgeMetas = snapshot.badges.slice(0,3).map((name)=>getBadgeVisualMeta(name));
+    const startX = 160;
+    const gap = 120;
+    badgeMetas.forEach((meta, idx)=>{
+      drawBadgeMedal(ctx, startX + (idx * gap), y + 18, meta.mark, meta.tone);
+    });
+    y += 86;
+  }else{
+    ctx.fillStyle = darkText;
+    ctx.font = "600 28px Inter, sans-serif";
+    ctx.fillText("업적 뱃지 누적 중", 96, y+18);
+    y += 46;
+  }
+
+  ctx.fillStyle = subText;
+  ctx.font = "500 22px Inter, sans-serif";
+  ctx.fillText((profileData.name || "Player").trim() || "Player", 96, 990);
+  ctx.fillText("Track. Analyze. Dominate the Diamond.", 540, 990);
+
+  const fileName = `statdeck-season-${seasonKey}-${Date.now()}.png`;
+  canvas.toBlob(async (blob)=>{
+    if(!blob){
+      alert("PNG 생성에 실패했습니다.");
+      return;
+    }
+    const file = new File([blob], fileName, { type:"image/png" });
+    if(navigator.canShare && navigator.canShare({ files:[file] })){
+      try{
+        await navigator.share({
+          files:[file],
+          title:"StatDeck Season Card",
+          text:`${seasonKey} 시즌 기록 카드`
+        });
+        return;
+      }catch(e){}
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }, "image/png");
 }
 
 function renderCalendar(){
