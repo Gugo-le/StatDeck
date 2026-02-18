@@ -2998,6 +2998,442 @@ body.light .sponsored-label{
 body.light .sponsored-placeholder{
  color:#8b7458;
 }
+
+.timing-trainer-card{
+ border:1px solid #2b2b2b;
+ background:
+  radial-gradient(circle at 10% -20%, rgba(193,18,31,0.16), transparent 45%),
+  radial-gradient(circle at 120% 110%, rgba(40,110,180,0.15), transparent 38%),
+  linear-gradient(145deg,#111111,#171717);
+}
+
+.timing-launcher-wrap{
+ display:grid;
+ gap:8px;
+}
+
+.timing-trainer-shell.hidden{
+ display:none;
+}
+
+.timing-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:flex-start;
+ gap:10px;
+ margin-bottom:10px;
+}
+
+.timing-head p{
+ margin:6px 0 0;
+ font-size:12px;
+ color:#ababab;
+ line-height:1.5;
+}
+
+.timing-kpi-row{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:8px;
+ margin-bottom:10px;
+}
+
+.timing-scorebar{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-bottom:10px;
+}
+
+.timing-counts,
+.timing-board{
+ border:1px solid #2b2b2b;
+ border-radius:10px;
+ background:#111111;
+ padding:9px 10px;
+}
+
+.timing-counts{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+}
+
+.timing-count-item{
+ font-size:11px;
+ color:#9f9f9f;
+}
+
+.timing-count-item strong{
+ display:inline-block;
+ margin-left:5px;
+ color:#f3f3f3;
+ font-size:14px;
+ min-width:18px;
+ text-align:right;
+}
+
+.timing-board{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+}
+
+.timing-board-title{
+ font-size:10px;
+ color:#989898;
+}
+
+.timing-board-score{
+ font-size:14px;
+ color:#f2f2f2;
+ font-weight:700;
+ letter-spacing:.2px;
+}
+
+.timing-kpi{
+ border:1px solid #2b2b2b;
+ border-radius:10px;
+ background:#121212;
+ padding:8px 7px;
+ text-align:center;
+}
+
+.timing-kpi small{
+ display:block;
+ color:#8d8d8d;
+ font-size:10px;
+ margin-bottom:3px;
+}
+
+.timing-kpi strong{
+ font-size:14px;
+ color:#f0f0f0;
+}
+
+.timing-controls{
+ display:grid;
+ grid-template-columns:1fr auto;
+ gap:8px;
+ margin-bottom:10px;
+}
+
+.timing-controls select{
+ margin:0;
+}
+
+.timing-fixed-meta{
+ border:1px solid #2f2f2f;
+ border-radius:10px;
+ background:#121212;
+ padding:9px 10px;
+ font-size:11px;
+ color:#b4b4b4;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ white-space:nowrap;
+}
+
+.timing-stage{
+ border:1px solid #2f2f2f;
+ border-radius:14px;
+ background:#0f0f0f;
+ padding:10px;
+ margin-bottom:10px;
+}
+
+.timing-stage-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ font-size:11px;
+ color:#a9a9a9;
+ margin-bottom:7px;
+}
+
+.timing-stage-badges{
+ display:flex;
+ align-items:center;
+ gap:6px;
+ flex-wrap:wrap;
+ justify-content:flex-end;
+}
+
+.timing-badge{
+ padding:4px 9px;
+ border-radius:999px;
+ border:1px solid #3b3b3b;
+ background:#151515;
+ color:#dfdfdf;
+ font-size:10px;
+ font-weight:700;
+ letter-spacing:.4px;
+}
+
+.timing-badge.perfect{
+ border-color:#266b47;
+ background:#193624;
+ color:#d6f5e4;
+}
+
+.timing-badge.early{
+ border-color:#6f5a2a;
+ background:#342d1a;
+ color:#f5e9cb;
+}
+
+.timing-badge.late{
+ border-color:#6f2a2a;
+ background:#351c1c;
+ color:#ffd7d7;
+}
+
+.timing-badge.outcome{
+ border-color:#2e4e71;
+ background:#162433;
+ color:#d8ecff;
+}
+
+.timing-badge.outcome.hit{
+ border-color:#356b4d;
+ background:#1a3627;
+ color:#d7f5e4;
+}
+
+.timing-badge.outcome.homerun{
+ border-color:#7b5e1f;
+ background:#3b2f14;
+ color:#ffe8b3;
+}
+
+.timing-badge.outcome.out{
+ border-color:#6f2a2a;
+ background:#351d1d;
+ color:#ffd3d3;
+}
+
+.timing-outcome-banner{
+ margin-top:7px;
+ border:1px solid #2f2f2f;
+ border-radius:9px;
+ background:#121212;
+ padding:7px 10px;
+ text-align:center;
+ font-size:13px;
+ font-weight:800;
+ letter-spacing:.2px;
+ color:#e8e8e8;
+}
+
+.timing-outcome-banner.hit{
+ border-color:#2f6e4c;
+ background:#173226;
+ color:#daf6e8;
+}
+
+.timing-outcome-banner.homerun{
+ border-color:#8e6e26;
+ background:#3f3113;
+ color:#ffe8b0;
+}
+
+.timing-outcome-banner.out{
+ border-color:#7a3131;
+ background:#391d1d;
+ color:#ffd8d8;
+}
+
+.timing-canvas{
+ width:100%;
+ height:160px;
+ display:block;
+ border:1px solid #2a2a2a;
+ border-radius:10px;
+ background:linear-gradient(180deg,#101522,#0d1018 45%,#121212 45%,#121212 100%);
+}
+
+.timing-action-row{
+ display:grid;
+ grid-template-columns:1fr auto auto;
+ gap:8px;
+ margin-bottom:10px;
+}
+
+.timing-action-row button{
+ margin-top:0;
+}
+
+.timing-hint{
+ font-size:11px;
+ color:#858585;
+ text-align:center;
+ padding:2px 4px 0;
+}
+
+.timing-last-list{
+ margin-top:10px;
+ display:grid;
+ gap:6px;
+}
+
+.timing-last-item{
+ border:1px solid #2b2b2b;
+ border-radius:9px;
+ background:#121212;
+ padding:7px 9px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ font-size:11px;
+ color:#cfcfcf;
+}
+
+.timing-last-item span{
+ color:#949494;
+ font-size:10px;
+}
+
+body.light .timing-trainer-card{
+ border-color:#d7c1a2;
+ background:
+  radial-gradient(circle at 12% -18%, rgba(193,18,31,0.12), transparent 45%),
+  radial-gradient(circle at 110% 110%, rgba(32,93,155,0.12), transparent 40%),
+  linear-gradient(145deg,#fbf2e1,#f4e6ce);
+}
+
+body.light .timing-head p,
+body.light .timing-stage-head,
+body.light .timing-hint,
+body.light .timing-last-item span{
+ color:#7b6548;
+}
+
+body.light .timing-kpi,
+body.light .timing-stage,
+body.light .timing-last-item,
+body.light .timing-fixed-meta{
+ border-color:#d8c2a4;
+ background:#fbf1df;
+}
+
+body.light .timing-counts,
+body.light .timing-board{
+ border-color:#d8c2a4;
+ background:#fbf1df;
+}
+
+body.light .timing-count-item{
+ color:#7b6548;
+}
+
+body.light .timing-count-item strong,
+body.light .timing-board-score{
+ color:#453523;
+}
+
+body.light .timing-board-title{
+ color:#7b6548;
+}
+
+body.light .timing-kpi strong{
+ color:#443424;
+}
+
+body.light .timing-badge{
+ border-color:#d1ba9a;
+ background:#f8ecd7;
+ color:#634c33;
+}
+
+body.light .timing-badge.perfect{
+ border-color:#7ca786;
+ background:#e8f3e5;
+ color:#26533b;
+}
+
+body.light .timing-badge.early{
+ border-color:#c4ad72;
+ background:#f8f0dd;
+ color:#6d5628;
+}
+
+body.light .timing-badge.late{
+ border-color:#cb9f9f;
+ background:#fae6e6;
+ color:#7a3434;
+}
+
+body.light .timing-badge.outcome{
+ border-color:#b8cfe7;
+ background:#eaf2fb;
+ color:#355272;
+}
+
+body.light .timing-badge.outcome.hit{
+ border-color:#9fc8ad;
+ background:#e9f5ed;
+ color:#2f5d43;
+}
+
+body.light .timing-badge.outcome.homerun{
+ border-color:#d3bd82;
+ background:#fff4d9;
+ color:#6d5520;
+}
+
+body.light .timing-badge.outcome.out{
+ border-color:#d9aaaa;
+ background:#fce9e9;
+ color:#7a3434;
+}
+
+body.light .timing-outcome-banner{
+ border-color:#d8c2a4;
+ background:#fbf1df;
+ color:#483726;
+}
+
+body.light .timing-outcome-banner.hit{
+ border-color:#9ec7ab;
+ background:#e9f5ed;
+ color:#2f5c42;
+}
+
+body.light .timing-outcome-banner.homerun{
+ border-color:#d4bd81;
+ background:#fff4d8;
+ color:#6b5220;
+}
+
+body.light .timing-outcome-banner.out{
+ border-color:#d9aaaa;
+ background:#fce9e9;
+ color:#7a3434;
+}
+
+body.light .timing-canvas{
+ border-color:#d7c2a3;
+ background:linear-gradient(180deg,#e9efe0,#dde7d4 45%,#f2e7d2 45%,#f2e7d2 100%);
+}
+
+@media (max-width:560px){
+ .timing-kpi-row{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+ }
+ .timing-action-row{
+  grid-template-columns:1fr 1fr;
+ }
+ .timing-action-row button:first-child{
+  grid-column:1 / -1;
+ }
+ .timing-controls{
+  grid-template-columns:1fr;
+ }
+}
 </style>
 </head>
 <body class="light">
@@ -3510,6 +3946,11 @@ body.light .sponsored-placeholder{
         <button class="danger" onclick="resetAllRecords()">전체 기록 리셋</button>
         <button class="danger" onclick="resetToNewUser()">신규 사용자로 되돌리기</button>
       </div>
+      <div class="profile-label">타격 타이밍 훈련</div>
+      <div class="timing-launcher-wrap">
+        <button id="timingTrainerLauncherBtn" type="button" class="upload-btn" onclick="toggleTimingTrainerPanel()">타이밍 훈련 열기</button>
+        <div id="timingTrainerShell" class="timing-trainer-shell hidden"></div>
+      </div>
       <div class="profile-label">인스타 공유 (1:1)</div>
       <button class="upload-btn" onclick="downloadSeasonShareSquare()">기록 카드 PNG 저장</button>
       <div class="profile-label">코치 공유 링크(읽기 전용)</div>
@@ -3641,6 +4082,77 @@ let deferredInstallPrompt = null;
 let readOnlyShareMode = false;
 let sharedPayloadMeta = null;
 let scheduleData = [];
+let timingTrainerData = {
+  sessions:0,
+  totalSwings:0,
+  perfect:0,
+  early:0,
+  late:0,
+  bestStreak:0,
+  lastAvgOffsetMs:null,
+  recentResults:[]
+};
+let timingTrainerMounted = false;
+let timingTrainerPanelOpen = false;
+const TIMING_PITCH_TYPES = [
+  { name:"직구", minSpeed:140, maxSpeed:160, flightScale:1.0, timingAdjustMs:0, cueColor:"#8fc4ff", arcDrop:1.5, arcWave:0, breakLateY:1, liftY:0, wobbleY:0, wobbleX:0, wobbleFreq:0 },
+  { name:"슬라이더", minSpeed:124, maxSpeed:138, flightScale:1.08, timingAdjustMs:26, cueColor:"#ffd48f", arcDrop:6, arcWave:6.5, breakLateY:10, liftY:0, wobbleY:0, wobbleX:0, wobbleFreq:0 },
+  { name:"커브", minSpeed:112, maxSpeed:130, flightScale:1.16, timingAdjustMs:42, cueColor:"#c7b2ff", arcDrop:18, arcWave:3, breakLateY:24, liftY:0, wobbleY:0, wobbleX:0, wobbleFreq:0 },
+  { name:"체인지업", minSpeed:118, maxSpeed:136, flightScale:1.13, timingAdjustMs:36, cueColor:"#99e0b9", arcDrop:8, arcWave:2, breakLateY:11, liftY:7.5, wobbleY:0, wobbleX:0, wobbleFreq:0 },
+  { name:"스플리터", minSpeed:126, maxSpeed:139, flightScale:0.97, timingAdjustMs:-8, cueColor:"#ffafaf", arcDrop:14, arcWave:0.8, breakLateY:30, liftY:0, wobbleY:0, wobbleX:0, wobbleFreq:0 },
+  { name:"너클볼", minSpeed:100, maxSpeed:128, flightScale:1.22, timingAdjustMs:48, cueColor:"#e5f3ff", arcDrop:6, arcWave:0.5, breakLateY:8, liftY:0, wobbleY:8.5, wobbleX:11, wobbleFreq:12.5 }
+];
+const timingTrainer = {
+  running:false,
+  awaitingRelease:false,
+  pitchActive:false,
+  pitchCount:0,
+  speedKmh:135,
+  pitchType:"직구",
+  cueColor:"#8fc4ff",
+  releaseTimer:null,
+  rafId:null,
+  releaseAt:0,
+  flightMs:0,
+  targetMs:0,
+  perfectWindowMs:45,
+  swingTaken:false,
+  swingAnimActive:false,
+  swingAnimStartAt:0,
+  swingAnimMs:260,
+  hitBallActive:false,
+  pendingContact:false,
+  contactLaunchAt:0,
+  contactOutcome:"",
+  contactTone:"",
+  contactQuality:0,
+  contactDistanceM:0,
+  currentPitchMeta:null,
+  hitBallX:0,
+  hitBallY:74,
+  hitBallVx:0,
+  hitBallVy:0,
+  hitGravity:0.0065,
+  lastFrameAt:0,
+  ballX:0,
+  ballY:74,
+  ballBaseX:0,
+  bestContactX:0,
+  bestContactY:74,
+  pitchSeed:0,
+  swingCueActive:false,
+  balls:0,
+  strikes:0,
+  outs:0,
+  inning:1,
+  half:"B",
+  scoreFor:0,
+  scoreAgainst:0,
+  bases:[0,0,0],
+  sessionResults:[],
+  currentStreak:0,
+  bestSessionStreak:0
+};
 
 function openDB(){
   return new Promise((resolve,reject)=>{
@@ -3732,6 +4244,37 @@ function normalizeScheduleData(list){
 
 function persistScheduleData(){
   void idbSet("scheduleData", scheduleData);
+}
+
+function normalizeTimingTrainerData(data){
+  const safe = data && typeof data === "object" ? data : {};
+  return {
+    sessions: Number.isFinite(+safe.sessions) ? Math.max(0, Math.floor(+safe.sessions)) : 0,
+    totalSwings: Number.isFinite(+safe.totalSwings) ? Math.max(0, Math.floor(+safe.totalSwings)) : 0,
+    perfect: Number.isFinite(+safe.perfect) ? Math.max(0, Math.floor(+safe.perfect)) : 0,
+    early: Number.isFinite(+safe.early) ? Math.max(0, Math.floor(+safe.early)) : 0,
+    late: Number.isFinite(+safe.late) ? Math.max(0, Math.floor(+safe.late)) : 0,
+    bestStreak: Number.isFinite(+safe.bestStreak) ? Math.max(0, Math.floor(+safe.bestStreak)) : 0,
+    lastAvgOffsetMs: Number.isFinite(+safe.lastAvgOffsetMs) ? +safe.lastAvgOffsetMs : null,
+    recentResults: Array.isArray(safe.recentResults)
+      ? safe.recentResults
+        .filter((entry)=>entry && typeof entry === "object")
+        .map((entry)=>({
+          label: String(entry.label || ""),
+          tone: String(entry.tone || ""),
+          outcome: String(entry.outcome || ""),
+          distanceM: Number.isFinite(+entry.distanceM) ? +entry.distanceM : null,
+          offsetMs: Number.isFinite(+entry.offsetMs) ? +entry.offsetMs : 0,
+          speedKmh: Number.isFinite(+entry.speedKmh) ? +entry.speedKmh : 0,
+          pitchType: String(entry.pitchType || "")
+        }))
+        .slice(0, 12)
+      : []
+  };
+}
+
+function persistTimingTrainerData(){
+  void idbSet("timingTrainerData", timingTrainerData);
 }
 
 function getTodayIso(){
@@ -4251,6 +4794,7 @@ async function initializeApp(){
     render();
     renderScheduleList();
     renderTodayScheduleBanner();
+    initializeTimingTrainer();
     applyReadOnlyShareModeUI();
     setupAppInstall();
     return;
@@ -4263,6 +4807,7 @@ async function initializeApp(){
   profileData = await loadStoreValue("profileData", profileData, ()=>readLegacyJSON("profileData", profileData));
   quotes = await loadStoreValue("quotes", [], ()=>readLegacyJSON("quotes", []));
   scheduleData = await loadStoreValue("scheduleData", [], ()=>readLegacyJSON("scheduleData", []));
+  timingTrainerData = await loadStoreValue("timingTrainerData", timingTrainerData, ()=>readLegacyJSON("timingTrainerData", timingTrainerData));
 
   if(!allData[seasonKey]) allData[seasonKey] = [];
   ensureSeasonOptionExists(seasonKey);
@@ -4288,6 +4833,7 @@ async function initializeApp(){
   renderScheduleList();
   renderTodayScheduleBanner();
   render();
+  initializeTimingTrainer();
   setupAppInstall();
   setupOnboardingIfNeeded();
 }
@@ -4738,6 +5284,19 @@ function switchProfileSubTab(tab){
     alert("코치 공유 링크에서는 기록 열람만 가능합니다.");
     return;
   }
+  if(tab !== "manage" && timingTrainer.running){
+    stopTimingTrainerSession(false);
+  }
+  if(tab !== "manage" && timingTrainerPanelOpen){
+    const shell = document.getElementById("timingTrainerShell");
+    const launcherBtn = document.getElementById("timingTrainerLauncherBtn");
+    if(shell){
+      shell.classList.add("hidden");
+      shell.style.display = "";
+    }
+    if(launcherBtn) launcherBtn.innerText = "타이밍 훈련 열기";
+    timingTrainerPanelOpen = false;
+  }
   profileSubTab = tab === "manage" ? "manage" : "home";
   renderProfile();
 }
@@ -4875,6 +5434,7 @@ async function resetToNewUser(){
   };
   quotes = [];
   scheduleData = [];
+  timingTrainerData = normalizeTimingTrainerData({});
 
   if(seasonSelectEl) seasonSelectEl.value = seasonKey;
   const roleEl = document.getElementById("entryRole");
@@ -4885,18 +5445,21 @@ async function resetToNewUser(){
   await idbSet("profileData", profileData);
   await idbSet("quotes", quotes);
   await idbSet("scheduleData", scheduleData);
+  await idbSet("timingTrainerData", timingTrainerData);
 
   localStorage.removeItem("seasonData");
   localStorage.removeItem("lastSeasonKey");
   localStorage.removeItem("profileData");
   localStorage.removeItem("quotes");
   localStorage.removeItem("scheduleData");
+  localStorage.removeItem("timingTrainerData");
 
   resetGameForm();
   renderQuotes();
   renderScheduleList();
   renderTodayScheduleBanner();
   render();
+  initializeTimingTrainer();
   setupOnboardingIfNeeded();
 }
 
@@ -5007,6 +5570,9 @@ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 el.classList.add('active');
+if(id !== "profileSection" && timingTrainer.running){
+  stopTimingTrainerSession(false);
+}
 if(id === "statsSection"){
   render();
   return;
@@ -5022,6 +5588,10 @@ if(id === "profileSection"){
 }
 if(id === "quoteSection"){
   renderQuotes();
+}
+if(id === "profileSection" && timingTrainerPanelOpen){
+  updateTimingTrainerStatsUI();
+  renderTimingTrainerCanvas();
 }
 }
 
@@ -5203,6 +5773,905 @@ function formatOutsToInnings(outs){
   const whole = Math.floor(safeOuts / 3);
   const remain = safeOuts % 3;
   return remain ? `${whole}.${remain}` : `${whole}`;
+}
+
+function getTimingTrainerMarkup(){
+  return `
+  <div class="card timing-trainer-card">
+    <div class="timing-head">
+      <div>
+        <h3>타격 타이밍 트레이너</h3>
+      </div>
+      <div id="timingPitchCounter" class="timing-badge">READY</div>
+    </div>
+    <div class="timing-kpi-row">
+      <div class="timing-kpi"><small>평균 오차</small><strong id="timingAvgOffset">-</strong></div>
+      <div class="timing-kpi"><small>Perfect</small><strong id="timingPerfectRate">0%</strong></div>
+      <div class="timing-kpi"><small>Best Streak</small><strong id="timingBestStreak">0</strong></div>
+      <div class="timing-kpi"><small>총 스윙</small><strong id="timingTotalSwings">0</strong></div>
+    </div>
+    <div class="timing-scorebar">
+      <div class="timing-counts">
+        <div class="timing-count-item">B<strong id="timingBalls">0</strong></div>
+        <div class="timing-count-item">S<strong id="timingStrikes">0</strong></div>
+        <div class="timing-count-item">O<strong id="timingOuts">0</strong></div>
+      </div>
+      <div class="timing-board">
+        <div>
+          <div class="timing-board-title" id="timingInningText">B1</div>
+          <div class="timing-board-score" id="timingScoreText">ME 0 : 0 OPP</div>
+        </div>
+      </div>
+    </div>
+    <div class="timing-controls">
+      <div class="timing-fixed-meta">1이닝 모드 (3아웃 종료)</div>
+      <div class="timing-fixed-meta">직구 140~160 · 변화구 &lt; 140</div>
+    </div>
+    <div class="timing-stage">
+      <div class="timing-stage-head">
+        <span id="timingPhaseText">시작 버튼을 누르면 랜덤 타이밍으로 릴리즈됩니다.</span>
+        <div class="timing-stage-badges">
+          <span id="timingJudgeBadge" class="timing-badge">WAIT</span>
+          <span id="timingOutcomeBadge" class="timing-badge outcome">RESULT</span>
+        </div>
+      </div>
+      <canvas id="timingCanvas" class="timing-canvas" width="900" height="280"></canvas>
+      <div id="timingOutcomeBanner" class="timing-outcome-banner">결과 대기중</div>
+      <div class="timing-hint">가이드 원이 켜질 때 타이밍을 맞춰 스페이스바 또는 스윙</div>
+    </div>
+    <div class="timing-action-row">
+      <button id="timingStartBtn" type="button" onclick="startTimingTrainerSession()">세션 시작</button>
+      <button id="timingSwingBtn" type="button" class="upload-btn" onclick="timingTrainerSwing()">스윙</button>
+      <button id="timingStopBtn" type="button" class="upload-btn" onclick="stopTimingTrainerSession(true)">정지</button>
+    </div>
+    <button type="button" class="entry-collapse-btn" onclick="resetTimingTrainerStats()">훈련 기록 초기화</button>
+    <div id="timingLastResults" class="timing-last-list"></div>
+  </div>
+  `;
+}
+
+function mountTimingTrainerUI(){
+  const shell = document.getElementById("timingTrainerShell");
+  if(!shell) return false;
+  const alreadyMounted = !!shell.querySelector("#timingCanvas");
+  if(!alreadyMounted){
+    shell.innerHTML = getTimingTrainerMarkup();
+  }
+  timingTrainerMounted = true;
+  return true;
+}
+
+function toggleTimingTrainerPanel(){
+  if(guardReadOnly("타격 타이밍 훈련")) return;
+  const shell = document.getElementById("timingTrainerShell");
+  const launcherBtn = document.getElementById("timingTrainerLauncherBtn");
+  if(!shell || !launcherBtn) return;
+
+  if(!timingTrainerPanelOpen){
+    const mounted = mountTimingTrainerUI();
+    if(!mounted) return;
+    shell.classList.remove("hidden");
+    shell.style.display = "block";
+    timingTrainerPanelOpen = true;
+    launcherBtn.innerText = "타이밍 훈련 닫기";
+    initializeTimingTrainer();
+    updateTimingTrainerStatsUI();
+    renderTimingTrainerCanvas();
+    return;
+  }
+
+  if(timingTrainer.running) stopTimingTrainerSession(false);
+  shell.classList.add("hidden");
+  shell.style.display = "";
+  timingTrainerPanelOpen = false;
+  launcherBtn.innerText = "타이밍 훈련 열기";
+}
+
+function getTimingTrainerElements(){
+  return {
+    canvas: document.getElementById("timingCanvas"),
+    phase: document.getElementById("timingPhaseText"),
+    judge: document.getElementById("timingJudgeBadge"),
+    outcomeBadge: document.getElementById("timingOutcomeBadge"),
+    outcomeBanner: document.getElementById("timingOutcomeBanner"),
+    counter: document.getElementById("timingPitchCounter"),
+    avgOffset: document.getElementById("timingAvgOffset"),
+    perfectRate: document.getElementById("timingPerfectRate"),
+    bestStreak: document.getElementById("timingBestStreak"),
+    totalSwings: document.getElementById("timingTotalSwings"),
+    balls: document.getElementById("timingBalls"),
+    strikes: document.getElementById("timingStrikes"),
+    outs: document.getElementById("timingOuts"),
+    inning: document.getElementById("timingInningText"),
+    score: document.getElementById("timingScoreText"),
+    startBtn: document.getElementById("timingStartBtn"),
+    swingBtn: document.getElementById("timingSwingBtn"),
+    stopBtn: document.getElementById("timingStopBtn"),
+    lastList: document.getElementById("timingLastResults")
+  };
+}
+
+function setTimingJudge(label, tone){
+  const { judge } = getTimingTrainerElements();
+  if(!judge) return;
+  judge.textContent = label;
+  judge.className = `timing-badge${tone ? ` ${tone}` : ""}`;
+}
+
+function setTimingOutcomeDisplay(outcome){
+  const { outcomeBadge, outcomeBanner } = getTimingTrainerElements();
+  if(!outcomeBadge || !outcomeBanner) return;
+  const text = String(outcome || "RESULT");
+  let tone = "";
+  if(/홈런/.test(text)) tone = "homerun";
+  else if(/아웃|병살/.test(text)) tone = "out";
+  else if(/루타|안타|볼넷|파울/.test(text)) tone = "hit";
+  outcomeBadge.textContent = text;
+  outcomeBadge.className = `timing-badge outcome${tone ? ` ${tone}` : ""}`;
+  outcomeBanner.textContent = text === "RESULT" ? "결과 대기중" : text;
+  outcomeBanner.className = `timing-outcome-banner${tone ? ` ${tone}` : ""}`;
+}
+
+function updateTimingTrainerButtons(){
+  const { startBtn, swingBtn, stopBtn } = getTimingTrainerElements();
+  if(startBtn) startBtn.disabled = timingTrainer.running;
+  if(swingBtn) swingBtn.disabled = !timingTrainer.running;
+  if(stopBtn) stopBtn.disabled = !timingTrainer.running;
+}
+
+function resetTimingGameState(){
+  timingTrainer.balls = 0;
+  timingTrainer.strikes = 0;
+  timingTrainer.outs = 0;
+  timingTrainer.inning = 1;
+  timingTrainer.half = "B";
+  timingTrainer.scoreFor = 0;
+  timingTrainer.scoreAgainst = 0;
+  timingTrainer.bases = [0,0,0];
+}
+
+function updateTimingGameUI(){
+  const { balls, strikes, outs, inning, score } = getTimingTrainerElements();
+  if(balls) balls.textContent = String(timingTrainer.balls);
+  if(strikes) strikes.textContent = String(timingTrainer.strikes);
+  if(outs) outs.textContent = String(timingTrainer.outs);
+  if(inning) inning.textContent = `${timingTrainer.half}${timingTrainer.inning}`;
+  if(score) score.textContent = `ME ${timingTrainer.scoreFor} : ${timingTrainer.scoreAgainst} OPP`;
+}
+
+function advanceInningIfNeeded(){
+  if(timingTrainer.outs < 3) return false;
+  timingTrainer.outs = 3;
+  timingTrainer.balls = 0;
+  timingTrainer.strikes = 0;
+  timingTrainer.bases = [0,0,0];
+  return true;
+}
+
+function addStrike(){
+  timingTrainer.strikes += 1;
+  if(timingTrainer.strikes >= 3){
+    timingTrainer.strikes = 0;
+    timingTrainer.balls = 0;
+    timingTrainer.outs += 1;
+    advanceInningIfNeeded();
+  }
+}
+
+function addBall(){
+  timingTrainer.balls += 1;
+  if(timingTrainer.balls >= 4){
+    timingTrainer.balls = 0;
+    timingTrainer.strikes = 0;
+    // walk: forced advancement
+    if(timingTrainer.bases[0] && timingTrainer.bases[1] && timingTrainer.bases[2]) timingTrainer.scoreFor += 1;
+    timingTrainer.bases = [
+      1,
+      timingTrainer.bases[0] ? 1 : timingTrainer.bases[1],
+      timingTrainer.bases[1] ? 1 : timingTrainer.bases[2]
+    ];
+  }
+}
+
+function registerBattedOutcome(outcome){
+  if(outcome === "파울"){
+    timingTrainer.balls = 0;
+    if(timingTrainer.strikes < 2) timingTrainer.strikes += 1;
+    return;
+  }
+  timingTrainer.balls = 0;
+  timingTrainer.strikes = 0;
+  const b1 = timingTrainer.bases[0];
+  const b2 = timingTrainer.bases[1];
+  const b3 = timingTrainer.bases[2];
+  if(outcome === "병살타"){
+    timingTrainer.outs += 2;
+    if(timingTrainer.outs > 3) timingTrainer.outs = 3;
+    timingTrainer.bases = [0,0,b3 ? 1 : 0];
+    advanceInningIfNeeded();
+    return;
+  }
+  if(outcome === "직선타 아웃" || outcome === "플라이 아웃"){
+    timingTrainer.outs += 1;
+    advanceInningIfNeeded();
+    return;
+  }
+  if(outcome === "땅볼"){
+    if(Math.random() < 0.68){
+      timingTrainer.outs += 1;
+      advanceInningIfNeeded();
+      return;
+    }
+    outcome = "1루타";
+  }
+  if(outcome === "1루타"){
+    timingTrainer.scoreFor += b3;
+    timingTrainer.bases = [1, b1, b2];
+    return;
+  }
+  if(outcome === "2루타"){
+    timingTrainer.scoreFor += b2 + b3;
+    timingTrainer.bases = [0,1,b1];
+    return;
+  }
+  if(outcome === "3루타"){
+    timingTrainer.scoreFor += b1 + b2 + b3;
+    timingTrainer.bases = [0,0,1];
+    return;
+  }
+  if(outcome === "홈런"){
+    timingTrainer.scoreFor += 1 + b1 + b2 + b3;
+    timingTrainer.bases = [0,0,0];
+  }
+}
+
+function renderTimingTrainerCanvas(nowTs){
+  const { canvas } = getTimingTrainerElements();
+  if(!canvas) return;
+  const now = Number.isFinite(nowTs) ? nowTs : performance.now();
+  const rect = canvas.getBoundingClientRect();
+  const width = Math.max(320, Math.floor(rect.width || canvas.clientWidth || 320));
+  const height = 160;
+  if(canvas.width !== width * 2 || canvas.height !== height * 2){
+    canvas.width = width * 2;
+    canvas.height = height * 2;
+  }
+  const ctx = canvas.getContext("2d");
+  if(!ctx) return;
+  ctx.save();
+  ctx.scale(2, 2);
+
+  ctx.clearRect(0,0,width,height);
+  ctx.fillStyle = "rgba(255,255,255,0.08)";
+  ctx.fillRect(16, 72, width - 32, 4);
+  ctx.fillStyle = "rgba(255,255,255,0.15)";
+  ctx.fillRect(12, 68, 8, 12);
+  ctx.fillRect(width - 20, 68, 8, 12);
+
+  for(let i=0; i<10; i++){
+    ctx.fillStyle = `rgba(255,255,255,${0.04 + (i * 0.008)})`;
+    ctx.fillRect(16 + i * ((width - 32) / 10), 74, 2, 8);
+  }
+
+  ctx.fillStyle = "rgba(255,255,255,0.22)";
+  ctx.font = "600 10px Inter, sans-serif";
+  ctx.fillText("PITCHER", 14, 62);
+  ctx.fillText("PLATE", width - 46, 62);
+
+  const bestX = timingTrainer.bestContactX > 0 ? timingTrainer.bestContactX : (width - 30);
+  const bestY = timingTrainer.bestContactY || 74;
+  ctx.beginPath();
+  ctx.arc(bestX, bestY, 9, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(255,215,94,0.75)";
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(bestX, bestY, 3.2, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255,215,94,0.9)";
+  ctx.fill();
+  ctx.fillStyle = "rgba(255,221,140,0.92)";
+  ctx.font = "700 9px Inter, sans-serif";
+  ctx.fillText("BEST", Math.max(10, bestX - 12), Math.max(12, bestY - 12));
+
+  const cueX = width - 26;
+  const cueY = 74;
+  ctx.beginPath();
+  ctx.arc(cueX, cueY, timingTrainer.swingCueActive ? 14 : 10, 0, Math.PI * 2);
+  ctx.strokeStyle = timingTrainer.swingCueActive ? (timingTrainer.cueColor || "#9fd4ff") : "rgba(255,255,255,0.2)";
+  ctx.lineWidth = timingTrainer.swingCueActive ? 2.5 : 1.2;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(width - 44, 97);
+  ctx.lineTo(width - 14, 83);
+  ctx.strokeStyle = timingTrainer.swingCueActive ? "#f6f6f6" : "rgba(255,255,255,0.35)";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  if(timingTrainer.hitBallActive){
+    const x = Math.min(width + 30, Math.max(-30, timingTrainer.hitBallX || 20));
+    const y = Math.min(height + 30, Math.max(-30, timingTrainer.hitBallY || 74));
+    ctx.beginPath();
+    ctx.arc(x, y, 6.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.strokeStyle = "#c1121f";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }else if(timingTrainer.pitchActive || timingTrainer.swingTaken){
+    const x = Math.min(width - 20, Math.max(20, timingTrainer.ballX || 20));
+    const y = Math.min(height - 14, Math.max(14, timingTrainer.ballY || 74));
+    ctx.beginPath();
+    ctx.arc(x, y, 6.5, 0, Math.PI * 2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.strokeStyle = "#c1121f";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  const batPivotX = width - 12;
+  const batPivotY = 100;
+  const batLen = 56;
+  const readyAngle = -0.95;
+  const loadAngle = -0.45;
+  const contactAngle = -1.9;
+  const followAngle = -2.55;
+  let batAngle = readyAngle;
+  if(timingTrainer.swingAnimActive){
+    const raw = Math.min(1, Math.max(0, (now - timingTrainer.swingAnimStartAt) / timingTrainer.swingAnimMs));
+    if(raw < 0.2){
+      const t = raw / 0.2;
+      batAngle = readyAngle + ((loadAngle - readyAngle) * t);
+    }else if(raw < 0.58){
+      const t = (raw - 0.2) / 0.38;
+      const eased = 1 - Math.pow(1 - t, 3);
+      batAngle = loadAngle + ((contactAngle - loadAngle) * eased);
+    }else{
+      const t = (raw - 0.58) / 0.42;
+      const eased = 1 - Math.pow(1 - t, 2);
+      batAngle = contactAngle + ((followAngle - contactAngle) * eased);
+    }
+    if(raw >= 1){
+      timingTrainer.swingAnimActive = false;
+    }
+  }
+  const batTipX = batPivotX + (Math.cos(batAngle) * batLen);
+  const batTipY = batPivotY + (Math.sin(batAngle) * batLen);
+  ctx.beginPath();
+  ctx.moveTo(batPivotX, batPivotY);
+  ctx.lineTo(batTipX, batTipY);
+  ctx.strokeStyle = "rgba(0,0,0,0.45)";
+  ctx.lineWidth = 11;
+  ctx.lineCap = "round";
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(batPivotX, batPivotY);
+  ctx.lineTo(batTipX, batTipY);
+  ctx.strokeStyle = "#f8ddab";
+  ctx.lineWidth = 7;
+  ctx.lineCap = "round";
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(batPivotX, batPivotY, 3.4, 0, Math.PI * 2);
+  ctx.fillStyle = "#ffd786";
+  ctx.fill();
+  ctx.restore();
+}
+
+function updateTimingTrainerStatsUI(sessionSummary){
+  const { avgOffset, perfectRate, bestStreak, totalSwings, lastList, counter, phase } = getTimingTrainerElements();
+  const swings = timingTrainerData.totalSwings || 0;
+  const perfect = timingTrainerData.perfect || 0;
+  const perfectPct = swings ? Math.round((perfect / swings) * 100) : 0;
+  const avg = timingTrainerData.lastAvgOffsetMs;
+  if(avgOffset){
+    avgOffset.textContent = Number.isFinite(avg) ? `${avg > 0 ? "+" : ""}${Math.round(avg)}ms` : "-";
+  }
+  if(perfectRate) perfectRate.textContent = `${perfectPct}%`;
+  if(bestStreak) bestStreak.textContent = String(timingTrainerData.bestStreak || 0);
+  if(totalSwings) totalSwings.textContent = String(swings);
+
+  const recent = Array.isArray(timingTrainerData.recentResults) ? timingTrainerData.recentResults.slice(0,6) : [];
+  if(lastList){
+    if(!recent.length){
+      lastList.innerHTML = `<div class="timing-last-item">최근 세션이 없습니다.<span>세션을 시작해 보세요.</span></div>`;
+    }else{
+      lastList.innerHTML = recent.map((entry, idx)=>{
+        const label = entry.label || "-";
+        const outcome = entry.outcome ? ` · ${entry.outcome}` : "";
+        const distance = Number.isFinite(+entry.distanceM) ? ` ${Math.round(+entry.distanceM)}m` : "";
+        const offset = Number.isFinite(+entry.offsetMs) ? `${+entry.offsetMs > 0 ? "+" : ""}${Math.round(+entry.offsetMs)}ms` : "-";
+        const speed = Number.isFinite(+entry.speedKmh) ? `${Math.round(+entry.speedKmh)}km/h` : "-";
+        const pitchType = entry.pitchType ? `${entry.pitchType} ` : "";
+        return `<div class="timing-last-item">${idx+1}. ${label}${outcome}${distance} · ${offset}<span>${pitchType}${speed}</span></div>`;
+      }).join("");
+    }
+  }
+
+  if(sessionSummary && counter){
+    counter.textContent = sessionSummary;
+  }else if(!timingTrainer.running && counter){
+    counter.textContent = "READY";
+  }
+  if(!timingTrainer.running && phase && !sessionSummary){
+    phase.textContent = "시작 버튼을 누르면 직구 140~160, 변화구/너클볼 140 미만으로 릴리즈됩니다.";
+  }
+  updateTimingGameUI();
+}
+
+function resetTimingTrainerRuntime(){
+  if(timingTrainer.releaseTimer){
+    clearTimeout(timingTrainer.releaseTimer);
+    timingTrainer.releaseTimer = null;
+  }
+  if(timingTrainer.rafId){
+    cancelAnimationFrame(timingTrainer.rafId);
+    timingTrainer.rafId = null;
+  }
+  timingTrainer.awaitingRelease = false;
+  timingTrainer.pitchActive = false;
+  timingTrainer.swingTaken = false;
+  timingTrainer.swingCueActive = false;
+  timingTrainer.swingAnimActive = false;
+  timingTrainer.hitBallActive = false;
+  timingTrainer.pendingContact = false;
+  timingTrainer.contactLaunchAt = 0;
+  timingTrainer.contactOutcome = "";
+  timingTrainer.contactTone = "";
+  timingTrainer.contactQuality = 0;
+  timingTrainer.contactDistanceM = 0;
+  timingTrainer.currentPitchMeta = null;
+  timingTrainer.lastFrameAt = 0;
+  timingTrainer.ballX = 20;
+  timingTrainer.ballY = 74;
+  timingTrainer.ballBaseX = 20;
+  timingTrainer.bestContactX = 0;
+  timingTrainer.bestContactY = 74;
+  timingTrainer.pitchSeed = 0;
+}
+
+function kmhToFlightMs(speedKmh){
+  const metersPerSec = Math.max(15, Number(speedKmh) / 3.6);
+  const distanceM = 18.44;
+  return (distanceM / metersPerSec) * 1000;
+}
+
+function getRandomTimingPitch(){
+  const pitch = TIMING_PITCH_TYPES[Math.floor(Math.random() * TIMING_PITCH_TYPES.length)] || TIMING_PITCH_TYPES[0];
+  const min = Number.isFinite(+pitch.minSpeed) ? +pitch.minSpeed : 120;
+  const max = Number.isFinite(+pitch.maxSpeed) ? +pitch.maxSpeed : 139;
+  const lower = Math.min(min, max);
+  const upper = Math.max(min, max);
+  const speedKmh = lower + Math.floor(Math.random() * (upper - lower + 1));
+  return { pitch, speedKmh };
+}
+
+function computePitchY(progress, pitchMeta){
+  const meta = pitchMeta || {};
+  const p = Math.max(0, Math.min(1, progress));
+  const arcDrop = Number(meta.arcDrop || 0);
+  const arcWave = Number(meta.arcWave || 0);
+  const breakLateY = Number(meta.breakLateY || 0);
+  const wave = Math.sin(p * Math.PI) * arcWave;
+  const drop = Math.pow(p, 1.55) * arcDrop;
+  const lateBreakFactor = Math.max(0, (p - 0.62) / 0.38);
+  const lateBreak = Math.pow(lateBreakFactor, 1.4) * breakLateY;
+  const lift = Math.sin(p * Math.PI) * Number(meta.liftY || 0);
+  const wobbleFreq = Number(meta.wobbleFreq || 0);
+  const wobbleAmpY = Number(meta.wobbleY || 0);
+  const wobble = wobbleFreq && wobbleAmpY
+    ? Math.sin((p * wobbleFreq) + (timingTrainer.pitchSeed || 0)) * wobbleAmpY
+    : 0;
+  return 74 + wave + drop + lateBreak - lift + wobble;
+}
+
+function computePitchX(baseX, progress, pitchMeta){
+  const meta = pitchMeta || {};
+  const wobbleAmpX = Number(meta.wobbleX || 0);
+  const wobbleFreq = Number(meta.wobbleFreq || 0);
+  if(!wobbleAmpX || !wobbleFreq) return baseX;
+  const p = Math.max(0, Math.min(1, progress));
+  const chaotic = Math.sin((p * wobbleFreq * 1.6) + ((timingTrainer.pitchSeed || 0) * 0.7));
+  const smooth = Math.sin((p * wobbleFreq) + (timingTrainer.pitchSeed || 0));
+  return baseX + ((smooth * 0.65 + chaotic * 0.35) * wobbleAmpX);
+}
+
+function classifyBattedBall(contactScore, delta){
+  const score = Math.max(0, Math.min(1, Number(contactScore) || 0));
+  const absDelta = Math.abs(Number(delta) || 0);
+  const random = Math.random();
+  const canDoublePlay = timingTrainer.bases[0] === 1 && timingTrainer.outs <= 1;
+  if(canDoublePlay && score < 0.56 && random < 0.16){
+    return { outcome:"병살타", tone:"late", contact:true };
+  }
+  if(score >= 0.72 && random < 0.1) return { outcome:"직선타 아웃", tone:"late", contact:true };
+  if(score >= 0.62 && random >= 0.1 && random < 0.2) return { outcome:"플라이 아웃", tone:"early", contact:true };
+  if(score < 0.22) return { outcome:"파울", tone:"early", contact:true };
+  if(score < 0.38) return { outcome:"땅볼", tone:"late", contact:true };
+  if(score >= 0.92 && absDelta <= 20 && random > 0.42) return { outcome:"홈런", tone:"perfect", contact:true };
+  if(score >= 0.78 && random > 0.64) return { outcome:"3루타", tone:"perfect", contact:true };
+  if(score >= 0.62 && random > 0.42) return { outcome:"2루타", tone:"perfect", contact:true };
+  if(score >= 0.42) return { outcome:"1루타", tone:"perfect", contact:true };
+  return { outcome:"파울", tone:"early", contact:true };
+}
+
+function computeBattedBallDistance(outcome, contactQuality){
+  const q = Math.max(0, Math.min(1, Number(contactQuality) || 0));
+  let min = 8;
+  let max = 45;
+  if(outcome === "땅볼"){
+    min = 8; max = 42;
+  }else if(outcome === "병살타"){
+    min = 12; max = 40;
+  }else if(outcome === "직선타 아웃"){
+    min = 70; max = 105;
+  }else if(outcome === "플라이 아웃"){
+    min = 80; max = 115;
+  }else if(outcome === "파울"){
+    min = 12; max = 60;
+  }else if(outcome === "1루타"){
+    min = 55; max = 105;
+  }else if(outcome === "2루타"){
+    min = 95; max = 130;
+  }else if(outcome === "3루타"){
+    min = 120; max = 145;
+  }else if(outcome === "홈런"){
+    min = 95; max = 130;
+  }
+  const base = min + ((max - min) * q);
+  const jitter = (Math.random() * 8) - 4;
+  return Math.max(5, Math.round(base + jitter));
+}
+
+function startBatSwingAnimation(startAt){
+  timingTrainer.swingAnimActive = true;
+  timingTrainer.swingAnimStartAt = Number.isFinite(startAt) ? startAt : performance.now();
+}
+
+function launchHitBallAnimation(contactQuality, outcome, distanceM, fromX, fromY){
+  const quality = Math.max(0, Math.min(1, Number(contactQuality) || 0));
+  const startX = Number.isFinite(fromX) ? fromX : (timingTrainer.ballX || 20);
+  const startY = Number.isFinite(fromY) ? fromY : (timingTrainer.ballY || 74);
+  const hitOutcome = outcome || "1루타";
+  const distanceScale = Math.max(0.7, Math.min(1.55, (Number(distanceM) || 60) / 100));
+  let vx = -3.2 - (quality * 2.1) - (Math.random() * 0.8);
+  let vy = -2.1 - (quality * 2.4) - (Math.random() * 0.7);
+  if(hitOutcome === "파울"){
+    vx = -1.6 - (Math.random() * 1.2);
+    vy = -1.2 - (Math.random() * 0.9);
+  }else if(hitOutcome === "땅볼"){
+    vx = -2.4 - (quality * 1.1);
+    vy = -0.15 - (Math.random() * 0.25);
+  }else if(hitOutcome === "2루타"){
+    vx = -4.5 - (quality * 1.3);
+    vy = -3.0 - (Math.random() * 1.0);
+  }else if(hitOutcome === "3루타"){
+    vx = -5.2 - (quality * 1.4);
+    vy = -3.5 - (Math.random() * 1.2);
+  }else if(hitOutcome === "홈런"){
+    vx = -6.2 - (quality * 1.4);
+    vy = -4.6 - (Math.random() * 1.4);
+  }
+  timingTrainer.hitBallActive = true;
+  timingTrainer.hitBallX = startX;
+  timingTrainer.hitBallY = startY;
+  timingTrainer.hitBallVx = vx * distanceScale;
+  timingTrainer.hitBallVy = vy * Math.min(1.35, distanceScale + 0.1);
+}
+
+function nextTimingPitch(){
+  if(!timingTrainer.running || timingTrainer.outs >= 3) return;
+  const { phase } = getTimingTrainerElements();
+  if(phase) phase.textContent = "투수 준비중...";
+  setTimingJudge("WAIT", "");
+  setTimingOutcomeDisplay("RESULT");
+  timingTrainer.awaitingRelease = true;
+  timingTrainer.pitchActive = false;
+  timingTrainer.swingTaken = false;
+  timingTrainer.pendingContact = false;
+  timingTrainer.contactQuality = 0;
+  timingTrainer.contactDistanceM = 0;
+  timingTrainer.hitBallActive = false;
+  timingTrainer.releaseTimer = setTimeout(()=>{
+    releaseTimingPitch();
+  }, 850 + Math.random() * 1500);
+}
+
+function animateTimingPitch(frameTs){
+  const now = Number.isFinite(frameTs) ? frameTs : performance.now();
+  const dt = timingTrainer.lastFrameAt ? (now - timingTrainer.lastFrameAt) : 16;
+  timingTrainer.lastFrameAt = now;
+  const { phase, canvas } = getTimingTrainerElements();
+  const width = Math.max(320, Math.floor(canvas?.getBoundingClientRect().width || 320));
+
+  if(timingTrainer.pitchActive){
+    const elapsed = now - timingTrainer.releaseAt;
+    const progress = Math.min(1, elapsed / timingTrainer.flightMs);
+    const cueDelta = Math.abs(elapsed - timingTrainer.targetMs);
+    timingTrainer.swingCueActive = cueDelta <= 120;
+    timingTrainer.ballBaseX = 20 + (progress * (width - 40));
+    timingTrainer.ballX = computePitchX(timingTrainer.ballBaseX, progress, timingTrainer.currentPitchMeta);
+    timingTrainer.ballY = computePitchY(progress, timingTrainer.currentPitchMeta);
+
+    if(progress >= 1 && !timingTrainer.swingTaken){
+      resolveTimingSwing(now, true);
+    }else if(phase){
+      phase.textContent = timingTrainer.swingCueActive
+        ? `지금 스윙 타이밍 (${timingTrainer.pitchType} ${timingTrainer.speedKmh}km/h) · BEST 마커 근처`
+        : `릴리즈! 타이밍 맞춰 스윙하세요. (${timingTrainer.pitchType})`;
+    }
+  }else{
+    timingTrainer.swingCueActive = false;
+  }
+
+  if(timingTrainer.pendingContact && now >= timingTrainer.contactLaunchAt){
+    launchHitBallAnimation(
+      timingTrainer.contactQuality || (timingTrainer.contactTone === "perfect" ? 0.95 : timingTrainer.contactTone === "late" ? 0.35 : 0.55),
+      timingTrainer.contactOutcome,
+      timingTrainer.contactDistanceM,
+      timingTrainer.ballX,
+      timingTrainer.ballY
+    );
+    timingTrainer.pendingContact = false;
+    timingTrainer.swingTaken = false;
+  }
+
+  if(timingTrainer.hitBallActive){
+    const factor = Math.max(0.6, Math.min(2.2, dt / 16));
+    timingTrainer.hitBallX += timingTrainer.hitBallVx * factor;
+    timingTrainer.hitBallY += timingTrainer.hitBallVy * factor;
+    timingTrainer.hitBallVy += timingTrainer.hitGravity * dt;
+    if(timingTrainer.hitBallX < -40 || timingTrainer.hitBallY > 190 || timingTrainer.hitBallY < -40){
+      timingTrainer.hitBallActive = false;
+      timingTrainer.swingTaken = false;
+    }
+  }
+
+  renderTimingTrainerCanvas(now);
+
+  const needNextFrame = timingTrainer.pitchActive || timingTrainer.hitBallActive || timingTrainer.swingAnimActive || timingTrainer.pendingContact;
+  if(!needNextFrame){
+    timingTrainer.rafId = null;
+    timingTrainer.lastFrameAt = 0;
+    return;
+  }
+  timingTrainer.rafId = requestAnimationFrame(animateTimingPitch);
+}
+
+function releaseTimingPitch(){
+  if(!timingTrainer.running) return;
+  const randomPitch = getRandomTimingPitch();
+  timingTrainer.pitchType = randomPitch.pitch.name;
+  timingTrainer.speedKmh = randomPitch.speedKmh;
+  timingTrainer.cueColor = randomPitch.pitch.cueColor || "#9fd4ff";
+  timingTrainer.currentPitchMeta = randomPitch.pitch;
+  timingTrainer.awaitingRelease = false;
+  timingTrainer.pitchActive = true;
+  timingTrainer.swingTaken = false;
+  timingTrainer.swingCueActive = false;
+  timingTrainer.releaseAt = performance.now();
+  timingTrainer.pitchSeed = Math.random() * Math.PI * 2;
+  timingTrainer.ballBaseX = 20;
+  timingTrainer.ballX = 20;
+  timingTrainer.flightMs = kmhToFlightMs(timingTrainer.speedKmh) * (randomPitch.pitch.flightScale || 1);
+  timingTrainer.targetMs = (timingTrainer.flightMs - 142) + (randomPitch.pitch.timingAdjustMs || 0);
+  timingTrainer.perfectWindowMs = Math.max(30, Math.min(52, 54 - ((timingTrainer.speedKmh - 120) * 0.35)));
+  timingTrainer.ballY = 74;
+  const { canvas } = getTimingTrainerElements();
+  const width = Math.max(320, Math.floor(canvas?.getBoundingClientRect().width || 320));
+  const pTarget = Math.max(0, Math.min(1, timingTrainer.targetMs / Math.max(1, timingTrainer.flightMs)));
+  const baseX = 20 + (pTarget * (width - 40));
+  timingTrainer.bestContactX = computePitchX(baseX, pTarget, timingTrainer.currentPitchMeta);
+  timingTrainer.bestContactY = computePitchY(pTarget, timingTrainer.currentPitchMeta);
+  if(!timingTrainer.rafId){
+    timingTrainer.rafId = requestAnimationFrame(animateTimingPitch);
+  }
+}
+
+function resolveTimingSwing(swingAt, autoMiss=false){
+  if(!timingTrainer.pitchActive) return;
+  timingTrainer.pitchActive = false;
+  timingTrainer.swingTaken = true;
+  startBatSwingAnimation(swingAt);
+  const delta = autoMiss ? 260 : (swingAt - timingTrainer.releaseAt - timingTrainer.targetMs);
+  let label = "LATE";
+  let tone = "late";
+  if(Math.abs(delta) <= timingTrainer.perfectWindowMs){
+    label = "PERFECT";
+    tone = "perfect";
+  }else if(delta < 0){
+    label = "EARLY";
+    tone = "early";
+  }
+  timingTrainer.currentStreak = label === "PERFECT" ? timingTrainer.currentStreak + 1 : 0;
+  timingTrainer.bestSessionStreak = Math.max(timingTrainer.bestSessionStreak, timingTrainer.currentStreak);
+  setTimingJudge(label, tone);
+  const { counter, phase } = getTimingTrainerElements();
+  if(counter){
+    counter.textContent = `OUT ${Math.min(3, timingTrainer.outs)}/3`;
+  }
+  if(phase){
+    const offsetText = `${delta > 0 ? "+" : ""}${Math.round(delta)}ms`;
+    phase.textContent = autoMiss
+      ? `${timingTrainer.pitchType} ${timingTrainer.speedKmh}km/h · 스윙 누락: ${offsetText} (${label})`
+      : `${timingTrainer.pitchType} ${timingTrainer.speedKmh}km/h · 스윙 판정: ${offsetText} (${label})`;
+  }
+
+  let outcome = "파울";
+  let phaseTail = "";
+  let outcomeDisplay = "RESULT";
+  if(!autoMiss){
+    const contactScore = 1 - Math.min(1, Math.abs(delta) / Math.max(1, timingTrainer.perfectWindowMs * 2.1));
+    const batted = classifyBattedBall(contactScore, delta);
+    outcome = batted.outcome;
+    let distanceM = computeBattedBallDistance(outcome, contactScore);
+    if(distanceM >= 120){
+      outcome = "홈런";
+      distanceM = Math.max(120, distanceM);
+    }
+    registerBattedOutcome(outcome);
+    if(batted.contact){
+      timingTrainer.pendingContact = true;
+      timingTrainer.contactLaunchAt = swingAt + Math.round(timingTrainer.swingAnimMs * 0.34);
+      timingTrainer.contactOutcome = outcome;
+      timingTrainer.contactTone = batted.tone;
+      timingTrainer.contactQuality = contactScore;
+      timingTrainer.contactDistanceM = distanceM;
+      phaseTail = `${outcome} ${distanceM}m`;
+      outcomeDisplay = phaseTail;
+    }else{
+      phaseTail = `${outcome} ${distanceM}m`;
+      outcomeDisplay = phaseTail;
+      timingTrainer.swingTaken = false;
+    }
+    timingTrainer.sessionResults.push({
+      label,
+      tone,
+      outcome,
+      distanceM,
+      offsetMs: delta,
+      speedKmh: timingTrainer.speedKmh,
+      pitchType: timingTrainer.pitchType
+    });
+  }else{
+    const calledBall = Math.random() < 0.38;
+    if(calledBall){
+      addBall();
+      outcome = "볼";
+      phaseTail = "볼";
+      outcomeDisplay = "볼";
+    }else{
+      addStrike();
+      outcome = "스트라이크";
+      phaseTail = "스트라이크";
+      outcomeDisplay = "스트라이크";
+    }
+    timingTrainer.sessionResults.push({
+      label,
+      tone,
+      outcome,
+      distanceM: null,
+      offsetMs: delta,
+      speedKmh: timingTrainer.speedKmh,
+      pitchType: timingTrainer.pitchType
+    });
+  }
+  if(phase && phaseTail){
+    phase.textContent += ` · ${phaseTail}`;
+  }
+  setTimingOutcomeDisplay(outcomeDisplay);
+  updateTimingGameUI();
+  timingTrainer.pitchCount += 1;
+  renderTimingTrainerCanvas();
+
+  if(timingTrainer.outs >= 3){
+    finalizeTimingTrainerSession();
+    return;
+  }
+  const delay = timingTrainer.pendingContact || timingTrainer.hitBallActive ? 980 : 650;
+  timingTrainer.releaseTimer = setTimeout(()=>{
+    nextTimingPitch();
+  }, delay);
+}
+
+function finalizeTimingTrainerSession(){
+  const results = timingTrainer.sessionResults.slice();
+  const swingCount = results.length;
+  const perfectCount = results.filter((r)=>r.label === "PERFECT").length;
+  const earlyCount = results.filter((r)=>r.label === "EARLY").length;
+  const lateCount = results.filter((r)=>r.label === "LATE").length;
+  const avgOffset = swingCount
+    ? results.reduce((sum, item)=>sum + (item.offsetMs || 0), 0) / swingCount
+    : null;
+
+  timingTrainerData.sessions += 1;
+  timingTrainerData.totalSwings += swingCount;
+  timingTrainerData.perfect += perfectCount;
+  timingTrainerData.early += earlyCount;
+  timingTrainerData.late += lateCount;
+  timingTrainerData.bestStreak = Math.max(timingTrainerData.bestStreak, timingTrainer.bestSessionStreak);
+  timingTrainerData.lastAvgOffsetMs = Number.isFinite(avgOffset) ? avgOffset : timingTrainerData.lastAvgOffsetMs;
+  timingTrainerData.recentResults = [
+    ...results.slice().reverse(),
+    ...(timingTrainerData.recentResults || [])
+  ].slice(0,12);
+  persistTimingTrainerData();
+
+  const perfectRate = swingCount ? Math.round((perfectCount / swingCount) * 100) : 0;
+  stopTimingTrainerSession(false);
+  updateTimingTrainerStatsUI(`INNING END · ${timingTrainer.scoreFor}점 · P ${perfectRate}%`);
+  setTimingOutcomeDisplay("이닝 종료");
+}
+
+function startTimingTrainerSession(){
+  if(guardReadOnly("타격 타이밍 훈련")) return;
+  const { counter, phase } = getTimingTrainerElements();
+  timingTrainer.pitchCount = 0;
+  timingTrainer.sessionResults = [];
+  timingTrainer.currentStreak = 0;
+  timingTrainer.bestSessionStreak = 0;
+  timingTrainer.running = true;
+  resetTimingTrainerRuntime();
+  resetTimingGameState();
+  if(counter) counter.textContent = "OUT 0/3";
+  if(phase) phase.textContent = "세션 시작. 첫 릴리즈를 기다리세요.";
+  setTimingJudge("WAIT", "");
+  setTimingOutcomeDisplay("RESULT");
+  updateTimingTrainerButtons();
+  updateTimingGameUI();
+  renderTimingTrainerCanvas();
+  nextTimingPitch();
+}
+
+function stopTimingTrainerSession(showStoppedText){
+  resetTimingTrainerRuntime();
+  timingTrainer.running = false;
+  updateTimingTrainerButtons();
+  if(showStoppedText){
+    const { phase, counter } = getTimingTrainerElements();
+    if(phase) phase.textContent = "세션이 정지되었습니다. 다시 시작할 수 있습니다.";
+    if(counter) counter.textContent = "READY";
+    setTimingJudge("STOP", "");
+  }
+}
+
+function timingTrainerSwing(){
+  if(!timingTrainer.running) return;
+  if(timingTrainer.awaitingRelease){
+    startBatSwingAnimation(performance.now());
+    if(!timingTrainer.rafId) timingTrainer.rafId = requestAnimationFrame(animateTimingPitch);
+    const { phase } = getTimingTrainerElements();
+    if(phase) phase.textContent = "아직 릴리즈 전입니다. 조금 더 기다리세요.";
+    setTimingJudge("EARLY TAP", "early");
+    return;
+  }
+  if(!timingTrainer.pitchActive) return;
+  resolveTimingSwing(performance.now(), false);
+}
+
+function resetTimingTrainerStats(){
+  if(guardReadOnly("훈련 기록 초기화")) return;
+  if(!confirm("타격 타이밍 훈련 기록을 초기화할까요?")) return;
+  timingTrainerData = normalizeTimingTrainerData({});
+  resetTimingGameState();
+  persistTimingTrainerData();
+  updateTimingTrainerStatsUI();
+  setTimingJudge("WAIT", "");
+  setTimingOutcomeDisplay("RESULT");
+}
+
+function initializeTimingTrainer(){
+  timingTrainerData = normalizeTimingTrainerData(timingTrainerData);
+  resetTimingTrainerRuntime();
+  resetTimingGameState();
+  timingTrainer.running = false;
+  timingTrainer.pitchType = "직구";
+  timingTrainer.speedKmh = 135;
+  timingTrainer.cueColor = "#8fc4ff";
+  updateTimingTrainerButtons();
+  updateTimingTrainerStatsUI();
+  setTimingOutcomeDisplay("RESULT");
+  renderTimingTrainerCanvas();
 }
 
 function saveGame() {
@@ -6345,10 +7814,22 @@ function closeModal(){
 }
 
 document.addEventListener("keydown",(e)=>{
+  if((e.code === "Space" || e.key === " ") && timingTrainer.running){
+    const active = document.activeElement;
+    const isTyping = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT");
+    if(!isTyping){
+      e.preventDefault();
+      timingTrainerSwing();
+    }
+  }
   if(e.key !== "Escape") return;
   closeModal();
   closeBadgeGuideModal();
   closeInstallGuideModal();
+});
+
+window.addEventListener("resize", ()=>{
+  if(!timingTrainer.running) renderTimingTrainerCanvas();
 });
 </script>
 </body>
