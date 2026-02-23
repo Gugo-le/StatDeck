@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StatDeck 콘텐츠 허브 | 야구 기록 활용 가이드</title>
+  <meta name="description" content="StatDeck 운영 목적, 야구 기록 작성 원칙, 지표 해석법, 주간 리뷰 루틴, 학부모·코치 공유 방법을 정리한 콘텐츠 허브입니다.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://statdeckbb.vercel.app/insights.html">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="StatDeck 콘텐츠 허브 | 야구 기록 활용 가이드">
+  <meta property="og:description" content="경기 기록을 실제 훈련 의사결정으로 연결하는 방법을 정리했습니다.">
+  <meta property="og:url" content="https://statdeckbb.vercel.app/insights.html">
+  <meta property="og:site_name" content="StatDeck">
+  <meta name="theme-color" content="#efe3cc">
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#faf7f2;
+      color:#1f1a14;
+      line-height:1.72;
+      padding:22px 16px 60px;
+    }
+    .wrap{
+      max-width:860px;
+      margin:0 auto;
+      background:#fff;
+      border:1px solid #e9dfd1;
+      border-radius:18px;
+      padding:24px;
+      box-shadow:0 8px 24px rgba(40,28,10,.06);
+    }
+    h1,h2{line-height:1.28;color:#21180f}
+    h1{font-size:30px;margin:0 0 12px}
+    h2{font-size:22px;margin:34px 0 10px}
+    .meta{
+      color:#6f5d47;
+      font-size:14px;
+      margin:0 0 20px;
+    }
+    p{margin:0 0 14px}
+    ul{
+      margin:0 0 14px 20px;
+      padding:0;
+    }
+    li{margin:0 0 6px}
+    .box{
+      background:#fcf6eb;
+      border:1px solid #ecdcbf;
+      border-radius:12px;
+      padding:14px 16px;
+      margin:14px 0;
+    }
+    .links{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid #ece2d6;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    a{
+      color:#5b3c10;
+      text-decoration:none;
+      border-bottom:1px solid rgba(91,60,16,.3);
+    }
+    a:hover{opacity:.8}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>StatDeck 콘텐츠 허브</h1>
+    <p class="meta">작성자: StatDeck 운영자 구현승 · 최종 업데이트: 2026-02-23</p>
+
+    <p>이 페이지는 StatDeck을 처음 사용하는 선수, 학부모, 코치가 기록 앱을 단순 입력 도구가 아니라 훈련 의사결정 도구로 활용할 수 있도록 만든 안내 문서입니다. 실제 경기 데이터를 어떤 기준으로 입력하고, 어떤 순서로 해석하고, 다음 훈련 계획으로 이어갈지까지 한 번에 정리했습니다.</p>
+
+    <h2>1. StatDeck을 만든 목적</h2>
+    <p>아마추어 야구 환경에서는 경기를 많이 치러도 개인 데이터가 흩어져 있어 성장 흐름을 확인하기 어렵습니다. StatDeck은 선수 개인이 시즌 기록을 직접 남기고, 주간 단위로 변화 폭을 비교해서 훈련 우선순위를 찾는 데 목적이 있습니다.</p>
+    <div class="box">
+      핵심 목표는 세 가지입니다.
+      <ul>
+        <li>기록 누락 없는 경기 로그 관리</li>
+        <li>타격/투구 지표를 같은 화면에서 비교</li>
+        <li>멘탈 메모와 경기 결과를 함께 확인</li>
+      </ul>
+    </div>
+
+    <h2>2. 정확한 기록을 위한 입력 원칙</h2>
+    <p>지표의 신뢰도는 입력 정확도에 따라 결정됩니다. 타석 결과는 경기 직후 24시간 안에 입력하고, 투구 기록은 이닝·실점·사사구를 우선 확정한 뒤 구속과 세부 이벤트를 보완하는 방식이 오차를 줄입니다.</p>
+    <ul>
+      <li>타자: 안타 유형(단타/2루타/3루타/홈런)과 볼넷, 삼진을 먼저 입력</li>
+      <li>투수: 이닝(아웃카운트), 자책점, 볼넷, 피안타를 먼저 입력</li>
+      <li>공통: 경기명, 날짜, 상대팀을 항상 채워서 회차 추적 가능하게 유지</li>
+    </ul>
+
+    <h2>3. 지표 해석 우선순위</h2>
+    <p>수치가 많아질수록 핵심 지표부터 좁혀 봐야 합니다. 타자는 AVG보다 OBP와 OPS를 우선 확인하면 출루와 장타의 균형을 동시에 볼 수 있고, 투수는 ERA와 WHIP을 함께 보면 실점 관리와 주자 관리 상태를 빠르게 파악할 수 있습니다.</p>
+    <div class="box">
+      <strong>주간 체크 예시</strong>
+      <ul>
+        <li>타자: OBP 하락 + 삼진 증가가 동시에 나타나는지 확인</li>
+        <li>투수: WHIP 상승 + 볼넷 증가가 같이 나타나는지 확인</li>
+        <li>공통: 승패보다 지표 방향성(개선/정체/악화)에 집중</li>
+      </ul>
+    </div>
+
+    <h2>4. 주간 리뷰 루틴(10분)</h2>
+    <p>경기 수가 적은 주에도 루틴을 유지하는 것이 중요합니다. 주 1회, 같은 요일에 10분만 투자해서 아래 순서로 리뷰하면 기록 유지율이 올라갑니다.</p>
+    <ol>
+      <li>지난 7일 경기 입력 누락 확인</li>
+      <li>핵심 지표 2개만 선택해 이전 주와 비교</li>
+      <li>멘탈 탭에 한 줄 회고 작성</li>
+      <li>다음 훈련 목표 1개 설정</li>
+    </ol>
+
+    <h2>5. 학부모/코치 공유 시 권장 방법</h2>
+    <p>선수 본인이 전체 기록을 모두 공개할 필요는 없습니다. 기간 제한 공유 링크를 사용해 필요한 경기 구간만 전달하면 피드백 품질을 유지하면서 개인정보 노출을 줄일 수 있습니다.</p>
+    <ul>
+      <li>공유 전: 날짜 범위를 정확히 지정</li>
+      <li>공유 후: 목표 지표 1~2개를 텍스트로 함께 전달</li>
+      <li>리뷰 후: 다음 경기 전까지 액션 아이템 1개만 실행</li>
+    </ul>
+
+    <h2>6. 자주 묻는 질문(FAQ)</h2>
+    <p><strong>Q. 기록이 적은데 통계가 의미가 있나요?</strong><br>표본이 작을 때는 절대 수치보다 변화 방향을 보시면 됩니다. 3~5경기 단위 비교만으로도 훈련 방향 설정에 충분합니다.</p>
+    <p><strong>Q. 포지션을 바꾸면 기존 기록은 어떻게 되나요?</strong><br>기존 시즌 기록은 유지되고, 포지션 기준 배지와 일부 표시 지표가 새 기준에 맞춰 재계산됩니다.</p>
+    <p><strong>Q. 광고가 과도하게 보이지 않게 할 수 있나요?</strong><br>StatDeck은 경기 입력과 통계 확인 흐름을 우선으로 구성하며, 화면 핵심 입력 영역을 가리는 광고 배치를 지양합니다.</p>
+
+    <div class="links">
+      <a href="index.html">홈으로 돌아가기</a>
+      <a href="guide.html">사용설명서</a>
+      <a href="routine.html">주간 루틴 가이드</a>
+      <a href="metrics.html">지표 해석 가이드</a>
+      <a href="contact.html">문의/지원</a>
+      <a href="privacy.html">개인정보처리방침</a>
+    </div>
+  </main>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://statdeckbb.vercel.app/</loc>
-    <lastmod>2026-02-15</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -35,5 +35,23 @@
     <lastmod>2026-02-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://statdeckbb.vercel.app/insights.html</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://statdeckbb.vercel.app/routine.html</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://statdeckbb.vercel.app/metrics.html</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
